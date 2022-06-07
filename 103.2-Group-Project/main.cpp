@@ -10,12 +10,17 @@
 #include "discount.h"
 
 /*Global Variables*/
-const int menuSize = 7;
-int selectionHighlight = 0;
-string mainMenu[menuSize] = { "Login", "Register", "Feedback", "Food Menu", "Admin", "Discount", "Exit" };
+const int menuSize_main = 7;
+int selectionHighlight_main = 0;
+string mainMenuPrint_main[menuSize_main] = { "Login", "Register", "Feedback", "Food Menu", "Admin", "Discount", "Exit" };
 
 int main()
 {
+	BeginProgram();
+}
+
+void BeginProgram() {
+	system("cls");
 	PrintArray_MainMenu();
 	cout << "\nWelcome to School Lunch Ordering System.\nUse the arrow keys to navigate the menu.\n";
 	ArrowSelectionMenu_MainMenu();
@@ -30,16 +35,16 @@ void WriteInColor(unsigned short color, string outputString)
 }
 
 void PrintArray_MainMenu() {
-	for (int i = 0; i < menuSize; i++)
+	for (int i = 0; i < menuSize_main; i++)
 	{
-		if (i == selectionHighlight)
+		if (i == selectionHighlight_main)
 		{
-			WriteInColor(3, mainMenu[selectionHighlight]);
+			WriteInColor(3, mainMenuPrint_main[selectionHighlight_main]);
 			cout << endl;
 		}
 		else
 		{
-			WriteInColor(15, mainMenu[i]);
+			WriteInColor(15, mainMenuPrint_main[i]);
 			cout << endl;
 		}
 	}
@@ -49,8 +54,9 @@ void PrintArray_MainMenu() {
 void ArrowSelectionMenu_MainMenu() {
 	//cout << "Use arrow keys to make selection\n\n";
 	int ch, ch2;
+	bool loop = true;
 
-	while (1)
+	while (loop)
 	{
 		ch = _getch();
 
@@ -63,24 +69,24 @@ void ArrowSelectionMenu_MainMenu() {
 			{
 			case KEY_UP:
 				//This key is assigned to increase the highlighted number by 1;
-				if (selectionHighlight > 0)
+				if (selectionHighlight_main > 0)
 				{
-					selectionHighlight--;
+					selectionHighlight_main--;
 				}
 				else
 				{
-					selectionHighlight = (menuSize - 1);
+					selectionHighlight_main = (menuSize_main - 1);
 				}
 				break;
 			case KEY_DOWN:
 				//This key is assigned to decrease the highlighted number by 1
-				if (selectionHighlight < (menuSize - 1))
+				if (selectionHighlight_main < (menuSize_main - 1))
 				{
-					selectionHighlight++;
+					selectionHighlight_main++;
 				}
 				else
 				{
-					selectionHighlight = 0;
+					selectionHighlight_main = 0;
 				}
 				break;
 			default:
@@ -91,7 +97,7 @@ void ArrowSelectionMenu_MainMenu() {
 			system("cls");
 			PrintArray_MainMenu();
 
-			switch (selectionHighlight)
+			switch (selectionHighlight_main)
 			{
 			case 0:
 				cout << "\nRun the login.cpp main function\n";
@@ -103,10 +109,10 @@ void ArrowSelectionMenu_MainMenu() {
 				cout << "\nRun the feedback.cpp main function\n";
 				break;
 			case 3:
-				cout << "\nRun the menu.cpp main function\n";
+				cout << "\nRun the menu.cpp main function, then end the loop.\n";
 				break;
 			case 4:
-				cout << "\nRun the admin.cpp main function\n";
+				cout << "\nRun the admin.cpp main function, view Admin menu, then re-run main menu when returning to main menu.\n";
 				break;
 			case 5:
 				cout << "\nRun the discount.cpp main function\n";
@@ -118,7 +124,7 @@ void ArrowSelectionMenu_MainMenu() {
 
 			break;
 		case 13:
-			switch (selectionHighlight)
+			switch (selectionHighlight_main)
 			{
 			case 0:
 				loginMain();                //Calls main function from login.cpp
@@ -130,9 +136,11 @@ void ArrowSelectionMenu_MainMenu() {
 				feedbackMain();             //Calls main function from feedback.cpp
 				break;
 			case 3:
+				loop = false;
 				menuMain();                 //Calls main function from menu.cpp
 				break;
 			case 4:
+				loop = false;
 				adminMain();                //Calls main function from admin.cpp
 				break;
 			case 5:

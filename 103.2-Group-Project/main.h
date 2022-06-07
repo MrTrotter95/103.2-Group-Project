@@ -16,6 +16,7 @@ using std::endl;
 using std::string;
 
 /*Prototypes*/
+void BeginProgram();
 void WriteInColor(unsigned short color, string outputString);
 void PrintArray_MainMenu();
 void ArrowSelectionMenu_MainMenu();
