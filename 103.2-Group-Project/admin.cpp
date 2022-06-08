@@ -2,6 +2,7 @@
 #include "admin.h"
 
 /*Global Variables*/
+//Alistair - 08.06.22 test push to remote repository. Comment can be deleted after
 const int menuSize_admin = 7;
 int selectionHighlight_admin = 0;
 string mainMenuPrint_admin[menuSize_admin] = { "Accounts", "Food Menu", "Feedback", "Sales Reports", "Inventory Reports", "Discount", "Return to Main Menu" };

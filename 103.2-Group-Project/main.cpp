@@ -14,6 +14,7 @@ const int menuSize_main = 7;
 int selectionHighlight_main = 0;
 string mainMenuPrint_main[menuSize_main] = { "Login", "Register", "Feedback", "Food Menu", "Admin", "Discount", "Exit" };
 
+
 int main()
 {
 	BeginProgram();
