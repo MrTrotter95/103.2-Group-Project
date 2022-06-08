@@ -8,7 +8,7 @@ Assignment 103.1 Group Project.
 
   • Brooklyn
 
-  • Jordan
+  • Jayden is smart
 
 
 
