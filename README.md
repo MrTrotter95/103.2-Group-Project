@@ -8,13 +8,7 @@ Assignment 103.1 Group Project.
 
   • Brooklyn
 
-<<<<<<< Updated upstream
-  • Jayden
-=======
   • Jordan
-
->>>>>>> Stashed changes
-
 
 
 ### Program Description: 
