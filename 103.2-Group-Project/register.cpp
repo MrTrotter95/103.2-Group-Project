@@ -3,8 +3,8 @@
 
 class User {
 public:
-    int I_UserId = 0;
-    char C_Gender = 'N';
+    int I_UserId = 1;
+    char C_Gender = 'O';
     long int I_PhoneNum = 0;
     int I_dob = 0;
     string S_email = "";
@@ -14,45 +14,61 @@ public:
     bool B_isComplaint = false;
     bool B_isCompliment = false;
     float F_tab = 0;
-    //A linked list to store children? Because they will have a first name, last name, etc?
+    int I_accessLevel = 1; // 1 Parent, 2 staff, 3 admin
 
     //Default Constructor
     User() {
-
+    
     }
     //Constructor
-    User(char gender, long int phoneNum, int dob, string email, string password) {
+    User(char gender, long int phoneNum, int dob, string email, string password, int accessLevel) {
         C_Gender = gender;
         I_PhoneNum = phoneNum;
         I_dob = dob;
         S_email = email;
         S_password = password;
+        I_accessLevel = accessLevel;
+        //implement the functionality to write to the csv file
     }
-
 
     void accountCreated() {
-        cout << "Your account has been succesfully created!\n";
-        cout << "Your username to login is " << S_email;
+        cout << "\nYour account has been succesfully created!\n";
+        cout << "Your username to login is: " << S_email;
+        cout << "\nYour Access level is: " << I_accessLevel << endl;
     }
 };
 
-class Admin : public User {
-public:
-    //Bool is changed to true when an admin account is created. Used to confirm access to admin login screen.?
-    bool B_isAdmin = false;
+void saveLoginDetails(User account) {
+    std::fstream fout;
 
-    //constructor with paremeters
-    Admin(char gender, long int phoneNum, int dob, string email, string password, bool isAdmin) {
-        S_email = email;
-        S_password = password;
-        B_isAdmin = isAdmin;
-    }
+    std::string filename = "login.csv";
+    fout.open(filename, std::ios::out);
 
-    void adminCreated() {
-        cout << "Your admin account has been succesfully created!\n";
-        cout << "Your username to login is " << S_email;
-    }
-};
+
+
+    fout.close();
+
+    /*
+    // file pointer
+    std::fstream fout;
+    std::fstream fin;
+
+    // opens an existing csv file or creates a new file.
+    fout.open("login.csv", std::ios::out | std::ios::app);
+
+    fin.open("login.csv", std::ios::in);
+
+    fin.is_open();
+    while (!fin.eof()) {
+        getline(fin, userId, ',');
+    }*/
+
+
+    fout << account.I_UserId << ", "
+         << account.S_email << ", "
+         << account.S_password << ", "
+         << account.I_accessLevel << "\n";
+}
 
 /* START OF CLASS USER PSUEDO CODE
 
@@ -114,133 +130,99 @@ void registerMain()
 {
     cout << "register.cpp connected..\n";
 
+    // user Variables to handle user input for registration
     char input_Gender;
     long int input_PhoneNum;
     int input_dob;
     string input_email;
     string input_password;
+    int userAccType; // To Determine what account they would like to create
 
-    int userAccType = 0, InputUserPin, adminPin = 1234;
-    cout << "What type of account would you like to create?\n1. Admin\n2. Parent\n\nInput: ";
+    int InputUserPin;
+    int adminPin = 1234;
+    
+    cout << "What type of account would you like to create?\n1. Parent\n2. Staff\n3. Admin\n: ";
     cin >> userAccType;
     if (userAccType == 1) {
-        cout << "Please enter pin: ";
-        cin >> InputUserPin;
-        if (InputUserPin != adminPin) {
-            cout << "Pin is not correct, Please try again.\n";
-        }
-        else if (InputUserPin == adminPin) {
-            cout << "Pin is correct: You are creating an admin account please complete the following:\n";
-            cout << "Please tell us your gender\nF\nM\nO\n ";
-            cin >> input_Gender;
-            //While loop to ensure the userinput is a valid number
-            while (std::cin.fail()) {
-                std::cout << "\nPlease input a valid option" << std::endl;
-                std::cin.clear();
-                std::cin.ignore(256, '\n');
-                std::cin >> input_Gender;
-            };
-
-            cout << "\nPlease tell us your phone number: ";
-            cin >> input_PhoneNum;
-            //While loop to ensure the userinput is a valid number
-            while (std::cin.fail()) {
-                std::cout << "\nPlease input a valid integer" << std::endl;
-                std::cin.clear();
-                std::cin.ignore(256, '\n');
-                std::cin >> input_PhoneNum;
-            };
-
-            cout << "\nPlease tell us your date of birth: ";
-            cin >> input_dob;
-            //While loop to ensure the userinput is a valid number
-            while (std::cin.fail()) {
-                std::cout << "\nPlease input a valid integer" << std::endl;
-                std::cin.clear();
-                std::cin.ignore(256, '\n');
-                std::cin >> input_dob;
-            };
-
-            cout << "\nPlease tell us your email address. Your email will be your username: ";
-            cin >> input_email;
-            //While loop to ensure the userinput is a valid number
-            while (std::cin.fail()) {
-                std::cout << "\nPlease input a valid string" << std::endl;
-                std::cin.clear();
-                std::cin.ignore(256, '\n');
-                std::cin >> input_email;
-            };
-
-            cout << "\nPlease input your password: ";
-            cin >> input_password;
-            //While loop to ensure the userinput is a valid number
-            while (std::cin.fail()) {
-                std::cout << "\nPlease input a valid string" << std::endl;
-                std::cin.clear();
-                std::cin.ignore(256, '\n');
-                std::cin >> input_password;
-            };
-
-            //Pass the user input in the constructor.
-            bool isAdmin = true;
-            Admin adminAccount(input_Gender, input_PhoneNum, input_dob, input_email, input_password, isAdmin);
-            adminAccount.accountCreated();
-        }
-    }
-    else if (userAccType == 2) {
-        cout << "Please tell us your gender\nF\nM\nO\n ";
+        cout << "--- Creating Parent account ---\n\n";
+        cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
         cin >> input_Gender;
-        //While loop to ensure the userinput is a valid number
-        while (std::cin.fail()) {
-            std::cout << "\nPlease input a valid option" << std::endl;
-            std::cin.clear();
-            std::cin.ignore(256, '\n');
-            std::cin >> input_Gender;
-        };
 
-        cout << "\nPlease tell us your phone number: ";
+        cout << "\n--- Please enter your phone number ---\nNumber:";
         cin >> input_PhoneNum;
-        //While loop to ensure the userinput is a valid number
-        while (std::cin.fail()) {
-            std::cout << "\nPlease input a valid integer" << std::endl;
-            std::cin.clear();
-            std::cin.ignore(256, '\n');
-            std::cin >> input_PhoneNum;
-        };
 
-        cout << "\nPlease tell us your date of birth: ";
+        cout << "\n--- Please enter your date of birth ---\nDOB:";
         cin >> input_dob;
-        //While loop to ensure the userinput is a valid number
-        while (std::cin.fail()) {
-            std::cout << "\nPlease input a valid integer" << std::endl;
-            std::cin.clear();
-            std::cin.ignore(256, '\n');
-            std::cin >> input_dob;
-        };
 
-        cout << "\nPlease tell us your email address. Your email will be your username: ";
+        cout << "\n--- Please enter your email address ---\nEmail:";
         cin >> input_email;
-        //While loop to ensure the userinput is a valid number
-        while (std::cin.fail()) {
-            std::cout << "\nPlease input a valid string" << std::endl;
-            std::cin.clear();
-            std::cin.ignore(256, '\n');
-            std::cin >> input_email;
-        };
 
-        cout << "\nPlease input your password: ";
+        cout << "\n--- Please input your password ---\nPassword:";
         cin >> input_password;
-        //While loop to ensure the userinput is a valid number
-        while (std::cin.fail()) {
-            std::cout << "\nPlease input a valid string" << std::endl;
-            std::cin.clear();
-            std::cin.ignore(256, '\n');
-            std::cin >> input_password;
-        };
 
         //Pass the user input in the constructor.
-        User account(input_Gender, input_PhoneNum, input_dob, input_email, input_password);
-        account.accountCreated();
+        User account(input_Gender, input_PhoneNum, input_dob, input_email, input_password, userAccType);
+        saveLoginDetails(account);
+    }
+    else if (userAccType == 2) {
+        cout << "--- Creating Staff account ---\n\n";
+        cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
+        cin >> input_Gender;
+
+        cout << "\n--- Please enter your phone number ---\nNumber:";
+        cin >> input_PhoneNum;
+
+        cout << "\n--- Please enter your date of birth ---\nDOB:";
+        cin >> input_dob;
+
+        cout << "\n--- Please enter your email address ---\nEmail:";
+        cin >> input_email;
+
+        cout << "\n--- Please input your password ---\nPassword:";
+        cin >> input_password;
+
+        //Pass the user input in the constructor.
+        User account(input_Gender, input_PhoneNum, input_dob, input_email, input_password, userAccType);
+        saveLoginDetails(account);
+    }
+    else if (userAccType == 3) {
+        cout << "Please enter pin: ";
+        cin >> InputUserPin;
+        //While loop to ensure the userinput is a valid number
+        int counter = 0;
+        while (std::cin.fail()) {
+            std::cout << "\nPlease input a valid integer" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(256, '\n');
+            std::cin >> InputUserPin;
+        }
+        if (InputUserPin != adminPin) {
+            cout << "Pin is not correct, Please try again.\n";
+            //Implement Functionality to try again / go back to main menu
+        }
+        else if (InputUserPin == adminPin) {
+            cout << "--- Pin entered correctly ---\n";
+            cout << "--- Creating Admin Account ---\n";
+            cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
+            cin >> input_Gender;
+
+            cout << "\n--- Please enter your phone number ---\nNumber:";
+            cin >> input_PhoneNum;
+
+            cout << "\n--- Please enter your date of birth ---\nDOB:";
+            cin >> input_dob;
+
+            cout << "\n--- Please enter your email address ---\nEmail:";
+            cin >> input_email;
+
+            cout << "\n--- Please input your password ---\nPassword:";
+            cin >> input_password;
+
+            //Pass the user input in the constructor.
+            User account(input_Gender, input_PhoneNum, input_dob, input_email, input_password, userAccType);
+            saveLoginDetails(account);
+            
+        }
     }
 
 

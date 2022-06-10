@@ -1,2 +1,13 @@
-﻿  register.cpp
-  103.2-Group-Project.vcxproj -> C:\Users\alist\GitHub\103.2-Group-Project\Debug\103.2-Group-Project.exe
+﻿  admin.cpp
+  discount.cpp
+  feedback.cpp
+  login.cpp
+  main.cpp
+  menu.cpp
+  register.cpp
+C:\Users\270176708\source\GitHub\GroupAssignment\103.2-Group-Project\register.cpp(58,5): error C2065: 'stringstream': undeclared identifier
+C:\Users\270176708\source\GitHub\GroupAssignment\103.2-Group-Project\register.cpp(58,18): error C2146: syntax error: missing ';' before identifier 's'
+C:\Users\270176708\source\GitHub\GroupAssignment\103.2-Group-Project\register.cpp(58,18): error C3861: 's': identifier not found
+C:\Users\270176708\source\GitHub\GroupAssignment\103.2-Group-Project\register.cpp(60,20): error C2065: 's': undeclared identifier
+C:\Users\270176708\source\GitHub\GroupAssignment\103.2-Group-Project\register.cpp(60,12): error C3861: 'getline': identifier not found
+  Generating Code...

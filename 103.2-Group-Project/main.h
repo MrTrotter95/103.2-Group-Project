@@ -4,6 +4,8 @@
 #include <conio.h>
 #include <Windows.h>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 /*Defines*/
 #define KEY_UP 72
