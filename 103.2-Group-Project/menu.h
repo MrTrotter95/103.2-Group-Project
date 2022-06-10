@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 using std::cout; using std::cin;
 
 /*list variables needed during menu
@@ -47,9 +48,12 @@ global to start but will localise when needed*/
 * give option to make new order
 * link goes to order using orderID in param that links to alistairs func to contact
 */
-struct Payment {
-	bool status; //?
+class Child {
+	string name;
+	int classroom;
+	Diet requirement;
 };
+
 class Order {
 	int id;
 	Child name;
@@ -57,7 +61,6 @@ class Order {
 	Child Diet;
 	Menu lunchItem;
 	Menu snackItem;
-	Payment status;
 };
 
 enum Diet {
@@ -68,33 +71,47 @@ string preference;//help with word to describe vegetarian , vegan or fine for me
 };
 
 
-class Menu {
 
-	struct lunchItem {
-		string foodType;
-		string name;
-		Diet requirement;
-		float price;
-		char size;
+struct Menu {
+	enum LunchItems{
+	Sandwich = 1,
+	Pasta = 2,
+	Soup = 4
+	};
 
+	enum SnackItems {
+		Chips = 1,
+		Cookie = 2,
+		Muffin = 4,
+		Fruit = 8
+	};
+
+	enum DrinkItems {
+		Juice = 1,
+		Hot = 2,
+		Smoothie = 4,
+		Water = 8
 	};
 
 
-	struct snackItem {
-		string foodType;
-		string name;
-		Diet requirement;
-		float price;
+std::vector<std::string> sandwichOptions{"Ham","Cheese & Onion","Bacon & Egg","Veggie mix"};
+std::vector<std::string> pastaOptions{ "Spaghetti Bolagnese","Bacon Cabonara","Mac & Cheese","Chicken bake"};
+std::vector<std::string> soupOptions{ "Pumpkin","Hearty Beef","Broccoli Cheese","Chicken Noodle" };
 
-	};
+std::vector<std::string> chipOptions{ "Twisties","Salt & Vinegar","Ready Salted","Kettle Chicken" };
+std::vector<std::string> cookieOptions{ "Choc","Triple Choc Chip","Vegan Cocoa Chip"};
+std::vector<std::string> muffinOptions{ "Blueberry","Spiced Apple","Cheese"};
+std::vector<std::string> fruitOptions{ "Apple","Banana","Orange","Pear" };
 
-};
 
-class Child {
-	string name;
-	int classroom;
-	Diet requirement;
-};
+std::vector<std::string> juiceOptions{ "Orange","Apple"};
+std::vector<std::string> hotOptions{ "Hot Chocolate","Hot Blackcurrent" };
+std::vector<std::string> smoothieOptions{ "Blueberry & Banana","Vegan Milkshake","Choc Peanut" };
+std::vector<std::string> waterOptions{ "Kiwi-Blue 250ml","Pump 750ml","Pump Sparkling Water"};
+
+
+}
+
 
 
 
