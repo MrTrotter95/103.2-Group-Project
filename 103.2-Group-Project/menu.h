@@ -48,35 +48,40 @@ global to start but will localise when needed*/
 * give option to make new order
 * link goes to order using orderID in param that links to alistairs func to contact
 */
-class Child {
-	string name;
-	int classroom;
-	Diet requirement;
-};
+//class Child {
+//	string name;
+//	int classroom;
+//	Diet requirement;
+//};
+//
+//class Order {
+//	int orderId;
+//	OrderTime time;
+//	Child name;
+//	Child classroom;
+//	Child Diet;
+//	Menu lunchItems;
+//	Menu snackItems;
+//};
 
-class Order {
-	int id;
-	Child name;
-	Child classroom;
-	Child Diet;
-	Menu lunchItem;
-	Menu snackItem;
-};
-
-enum Diet {
-	string allergen; // can be null /empty (option will say 4=none for example)
-/*use binary flags*/
-string religion;//can be null /empty
-string preference;//help with word to describe vegetarian , vegan or fine for meat
-};
-
-
+//enum Diet {
+//	Vegan = 1,
+//	NutAllergy = 2,
+//	DairyFree = 4,
+//	GlutenFree = 8,
+//	EggFree = 16
+//};
+//
+//enum OrderTime {
+//	Morning = 0,
+//	Lunch = 2
+//};
 
 struct Menu {
-	enum LunchItems{
-	Sandwich = 1,
-	Pasta = 2,
-	Soup = 4
+	/*enum LunchItems {
+		Sandwich = 1,
+		Pasta = 2,
+		Soup = 4
 	};
 
 	enum SnackItems {
@@ -91,26 +96,30 @@ struct Menu {
 		Hot = 2,
 		Smoothie = 4,
 		Water = 8
-	};
+	};*/
 
 
-std::vector<std::string> sandwichOptions{"Ham","Cheese & Onion","Bacon & Egg","Veggie mix"};
-std::vector<std::string> pastaOptions{ "Spaghetti Bolagnese","Bacon Cabonara","Mac & Cheese","Chicken bake"};
-std::vector<std::string> soupOptions{ "Pumpkin","Hearty Beef","Broccoli Cheese","Chicken Noodle" };
+	std::vector<std::string> sandwichOptions{ "Ham","Cheese & Onion","Bacon & Egg","Veggie mix" };
+	std::vector<std::string> pastaOptions{ "Spaghetti Bolagnese","Bacon Cabonara","Mac & Cheese","Chicken bake" };
+	std::vector<std::string> soupOptions{ "Pumpkin","Hearty Beef","Broccoli Cheese","Chicken Noodle" };
 
-std::vector<std::string> chipOptions{ "Twisties","Salt & Vinegar","Ready Salted","Kettle Chicken" };
-std::vector<std::string> cookieOptions{ "Choc","Triple Choc Chip","Vegan Cocoa Chip"};
-std::vector<std::string> muffinOptions{ "Blueberry","Spiced Apple","Cheese"};
-std::vector<std::string> fruitOptions{ "Apple","Banana","Orange","Pear" };
+	std::vector<std::string> chipOptions{ "Twisties","Salt & Vinegar","Ready Salted","Kettle Chicken" };
+	std::vector<std::string> cookieOptions{ "Choc","Triple Choc Chip","Vegan Cocoa Chip" };
+	std::vector<std::string> muffinOptions{ "Blueberry","Spiced Apple","Cheese" };
+	std::vector<std::string> fruitOptions{ "Apple","Banana","Orange","Pear" };
 
 
-std::vector<std::string> juiceOptions{ "Orange","Apple"};
-std::vector<std::string> hotOptions{ "Hot Chocolate","Hot Blackcurrent" };
-std::vector<std::string> smoothieOptions{ "Blueberry & Banana","Vegan Milkshake","Choc Peanut" };
-std::vector<std::string> waterOptions{ "Kiwi-Blue 250ml","Pump 750ml","Pump Sparkling Water"};
-
+	std::vector<std::string> juiceOptions{ "Orange","Apple" };
+	std::vector<std::string> hotOptions{ "Hot Chocolate","Hot Blackcurrent" };
+	std::vector<std::string> smoothieOptions{ "Blueberry & Banana","Vegan Milkshake","Choc Peanut" };
+	std::vector<std::string> waterOptions{ "Kiwi-Blue 250ml","Pump 750ml","Pump Sparkling Water" };
+//default constructor
+Menu() {
 
 }
+
+};
+
 
 
 
