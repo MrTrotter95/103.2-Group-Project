@@ -27,8 +27,6 @@ public:
         I_dob = dob;
         S_email = email;
         S_password = password;
-        
-        cout << "Thank you, your account has been created.";
     }
 
 
@@ -40,6 +38,7 @@ public:
 
 class Admin : public User {
 public:
+    //Bool is changed to true when an admin account is created. Used to confirm access to admin login screen.?
     bool B_isAdmin = false;
 
     //constructor with paremeters

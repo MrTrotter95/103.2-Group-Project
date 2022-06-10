@@ -21,8 +21,18 @@ This might be a function that is included inside the USER class
 END OF PSEUDO CODE */
 
 
+
+
 /*Start of Login functionality*/
 void loginMain()
 {
     cout << "login.cpp connected..\n";
+
+    string input_Email;
+    string input_Password;
+    cout << "Please enter your email: ";
+    cin >> input_Email;
+    cout << "\nPlease enter you password: ";
+    cin >> input_Password;
+
 }
