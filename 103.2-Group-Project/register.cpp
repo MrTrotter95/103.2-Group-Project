@@ -78,7 +78,6 @@ void SaveUserDetails(User account) {
 
     // Temporary Variables
     std::string id, line;
-    std::string::size_type sz;
     int newId;
 
     //Start of file writing logic
@@ -126,7 +125,7 @@ void registerMain()
 
         /*--- Gender ---*/
         cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
-        cin >> input_Gender; //***************Use Jordans menu select option for this input. ***************
+        cin >> input_Gender;
 
 
         /*--- Phone Number ---*/

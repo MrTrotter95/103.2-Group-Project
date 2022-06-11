@@ -5,7 +5,7 @@
 void CheckPassword(string, string, string, string);
 
 void VerifyAccount(string inputEmail, string inputPassword) {
-    //--- Creating a instance of fstream & ifstream ---//
+    //--- Creating a instance of ifstream ---//
     std::ifstream  data("login.csv");
 
 
@@ -94,7 +94,7 @@ void loginMain()
 
 
     //--- Call main menu funciton ---//
-    cout << "Attempts exceeded\n";
-    cout << "Press enter to go back to the Main Menu"; //Add if functionality to to wait for user to press enter
+    cout << "Attempts exceeded, Please contact the school to reset your password.\n";
+    cout << "Press enter to go back to the Main Menu"; //Add if functionality to to wait for user to press enter or
     BeginProgram();
 }
