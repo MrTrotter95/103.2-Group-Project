@@ -96,5 +96,7 @@ void loginMain()
     //--- Call main menu funciton ---//
     cout << "Attempts exceeded, Please contact the school to reset your password.\n";
     cout << "Press enter to go back to the Main Menu"; //Add if functionality to to wait for user to press enter or
+    int ch;
+    ch = _getch();
     BeginProgram();
 }

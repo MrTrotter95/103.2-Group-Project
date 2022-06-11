@@ -185,11 +185,9 @@ void GeneralContact(string userId, string userEmail) {
 	string userMessage;
 
 
-
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
 	getline(cin, userMessage);
-
 
 
 	//--- Start of file writing logic ---//
@@ -203,8 +201,10 @@ void GeneralContact(string userId, string userEmail) {
 	fout.close();
 	//--- End of file writing logic ---//
 
+
+	//--- User instructions to end ---//
 	cout << "Thank you for getting in touch.\n\nPress enter to return to main menu";
-	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
+	ArrowSelectionMenu_MainMenu(); // Replace with correct menu might need to pass user ID back through
 }
 
 void SendCompliment(string userId, string userEmail) {
@@ -225,13 +225,15 @@ void SendCompliment(string userId, string userEmail) {
 	fout.open("Compliments.csv", std::ios::out | std::ios::app);
 
 
-	//---  Assigning the userId & message to the csv file. ---//
+	//--- Assigning the userId, email and message to the csv file. ---//
 	fout << userId << ","
 		 << userEmail << ","
 		 << userMessage << "\n";
 	fout.close();
 	//--- End of file writing logic ---//
 
+
+	//--- User instructions to end ---//
 	cout << "Thank you for your feedback!\n\nPress enter to return to main menu";
 	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
 }
@@ -261,6 +263,8 @@ void SendComplaint(string userId, string userEmail) {
 	fout.close();
 	//--- End of file writing logic ---//
 
+
+	//--- User instructions to end ---//
 	cout << "Thank you for your feedback, we will get back to you as soon as possible.\n\nPress enter to return to main menu";
 	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
 }
@@ -383,6 +387,7 @@ void ViewGeneralMessages() {
 	//--- Temporary Variables ---//
 	std::string fileId, fileEmail, fileMessage, fileLine;
 
+
 	//---This loops through each row of the CSV file ---//
 	while (std::getline(data, fileLine))
 	{
@@ -394,6 +399,11 @@ void ViewGeneralMessages() {
 		cout << "Email: " << fileEmail << "\t";
 		cout << "Message: " << fileMessage << endl;
 	}
+
+
+	//--- User instructions to end ---//
+	cout << "Press enter to return to main menu";
+	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
 }
 
 void ViewCompliments() {
@@ -404,7 +414,8 @@ void ViewCompliments() {
 	//--- Temporary Variables ---//
 	std::string fileId, fileEmail, fileMessage, fileLine;
 
-	//---This loops through each row of the CSV file ---//
+
+	//---This loops through each row of the CSV file and displays all messages ---//
 	while (std::getline(data, fileLine))
 	{
 		std::stringstream  lineStream(fileLine);
@@ -416,6 +427,11 @@ void ViewCompliments() {
 		cout << "Message: " << fileMessage << endl;
 
 	}
+
+
+	//--- User instructions to end ---//
+	cout << "Press enter to return to main menu";
+	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
 }
 
 void ViewComplaints() {
@@ -426,7 +442,8 @@ void ViewComplaints() {
 	//--- Temporary Variables ---//
 	std::string fileId, fileEmail, fileMessage, fileLine;
 
-	//---This loops through each row of the CSV file ---//
+
+	//---This loops through each row of the CSV file and displays all messages ---//
 	while (std::getline(data, fileLine))
 	{
 		std::stringstream  lineStream(fileLine);
@@ -437,6 +454,11 @@ void ViewComplaints() {
 		cout << "Email: " << fileEmail << "\t";
 		cout << "Message: " << fileMessage << endl;
 	}
+
+
+	//--- User instructions to end ---//
+	cout << "Press enter to return to main menu";
+	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
 }
 /*-------------------------END OF STAFF FEEDBACK FUNCTIONALITY -------------------------*/
 /*-------------------------START OF ADMIN FEEDBACK MENU SECTION -------------------------*/
@@ -555,7 +577,6 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	std::ifstream  data("GeneralContact.csv");
 
 
-
 	//--- Temporary Variables ---//
 	std::string fileId, fileEmail, fileMessage, fileLine;
 
@@ -574,9 +595,11 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	}
 
 
+	//--- User instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
 	string userInput;
 	cin >> userInput; 
+
 
 	/*
 	//Start of file writing logic
@@ -608,7 +631,6 @@ void RespondCompliments(string userId, string userEmail) {
 	std::ifstream  data("Compliments.csv");
 
 
-
 	//--- Temporary Variables ---//
 	std::string fileId, fileEmail, fileMessage, fileLine;
 
@@ -627,7 +649,7 @@ void RespondCompliments(string userId, string userEmail) {
 	}
 
 
-
+	//--- User instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
 	string userInput;
 	cin >> userInput;
@@ -639,7 +661,6 @@ void RespondComplaints(string userId, string userEmail) {
 	std::ifstream  data("Complaints.csv");
 
 
-
 	//--- Temporary Variables ---//
 	std::string fileId, fileEmail, fileMessage, fileLine;
 
@@ -658,7 +679,7 @@ void RespondComplaints(string userId, string userEmail) {
 	}
 
 
-
+	//--- User instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
 	string userInput;
 	cin >> userInput;
