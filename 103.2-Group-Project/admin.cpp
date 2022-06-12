@@ -1,12 +1,37 @@
 #include "main.h"
 #include "admin.h"
 
+/*Pseudocode*/
+
+//Enter selection of Admin menu from within staff menu.
+//Perform a check on User Access Level int variable stored within their user profile.
+//EXIT: If User isn't an admin, recursive function to send them back to Staff Menu.
+//PASS: If User is an admin, send them to the admin main menu.
+
+//Accounts: Admins will be able to check User Account details in full by entering their User ID.
+//	LINK TO REGISTRATION.CPP - Needs access to csv
+//Below that they will be able to take three actions, Edit Account, Delete Account and Print Payment Report.
+// 
+//	Edit Account will allow you to take the CSV file and adjust all elements.
+//		This will be useful for password changing, however previous password will not be shown, the Admin can only overwrite it with a temporary password.
+//
+//	Delete Account will remove the User from the records.
+//
+//	Print Payment Report will allow us to print their order history.
+//
+//Food Menu: Admins will have the functionality of editing, deleting and adding menu items.
+//
+//Feedback: Admins will have access to feedback, to be able to confirm they are actioned.
+//	LINK TO FEEDBACK.CPP - Needs access to csv
+//Sales Report: Will be able to print a record of sales, either daily or weekly.
+//
+//Discount: Display discounts available, and add, set or delete discounts. Will also be able to add Users to the discount categories.
+//	LINK TO DISCOUNT.CPP
+
 /*Global Variables*/
-//Another Comment
-//Alistair - 08.06.22 test push to remote repository. Comment can be deleted after
-const int menuSize_admin = 7;
+const int menuSize_admin = 6;
 int selectionHighlight_admin = 0;
-string mainMenuPrint_admin[menuSize_admin] = { "Accounts", "Food Menu", "Feedback", "Sales Reports", "Inventory Reports", "Discount", "Return to Main Menu" };
+string mainMenuPrint_admin[menuSize_admin] = { "Accounts", "Food Menu", "Feedback", "Sales Reports", "Discount", "Return to Main Menu" };
 
 /*Start of Admin functionality*/
 void adminMain()
@@ -94,13 +119,10 @@ void ArrowSelectionMenu_AdminMenu() {
 				cout << "\nRun the sales reports function.\n";
 				break;
 			case 4:
-				cout << "\nRun the inventory reports function.\n";
-				break;
-			case 5:
 				cout << "\nRun the discount function\n";
 				break;
-			case 6:
-				cout << "\nExit the program\n";
+			case 5:
+				cout << "\nReturn to main menu\n";
 				break;
 			}
 
@@ -125,14 +147,10 @@ void ArrowSelectionMenu_AdminMenu() {
 				//menuMain();                 //Calls sales report function
 				break;
 			case 4:
-				cout << "Call inventory function";
-				//adminMain();                //Calls inventory report function
-				break;
-			case 5:
 				cout << "Call discount function";
 				//discountMain();             //Calls discount function
 				break;
-			case 6:
+			case 5:
 				loop = false;
 				BeginProgram();	//Calls main menu function
 			default:
