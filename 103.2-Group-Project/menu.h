@@ -1,8 +1,13 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 using std::cout; using std::cin;
+
+void AddFood();
+void DisplayMenu();
 
 /*list variables needed during menu
 global to start but will localise when needed*/
@@ -76,8 +81,100 @@ global to start but will localise when needed*/
 //	Morning = 0,
 //	Lunch = 2
 //};
+//class for menu items
 
-struct Menu {
+/*Class Menu, contains the info for a menu item. It will have an id, a type of food(enum flag)
+an enum flag for diet rewuirement, a name and a price*/
+
+class Menu {
+private:
+	int menuId;
+	int foodType;
+	int diet;
+	string name;
+	float price;
+
+public:
+	Menu() {//default constructor
+		menuId = 0;
+		foodType = 0;
+		diet = 0;
+		name = "Test";
+		price = 0;
+		
+	}
+	void checkDiet(int choice) {
+
+		cout << "Is this food dairyfree? 1.Y 2.N\n";
+		cin >> choice;
+		if (choice == 1) {
+			diet += 2;
+		}
+		cout << "Is this food nutfree? 1.Y 2.N\n";
+		cin >> choice;
+		if (choice == 1) {
+			diet += 1;
+		}
+		cout << "Is this food halal? 1.Y 2.N\n";
+		cin >> choice;
+		if (choice == 1) {
+			diet += 4;
+		}
+		cout << "Is this food glutenfree? 1.Y 2.N\n";
+		cin >> choice;
+		if (choice == 1) {
+			diet += 8;
+		}
+		cout << "Is this food vegetarian friendly? 1.Y 2.N\n";
+		cin >> choice;
+		if (choice == 1) {
+			diet += 16;
+		}
+		cout << "Is this food free of shellfish? 1.Y 2.N\n";
+		cin >> choice;
+		if (choice == 1) {
+			diet += 32;
+		}
+	}
+
+	//function to add menu item
+		void addItem() {
+			int input{0};
+		cout << "Enter menu id:\n";
+		cin >> menuId;
+		cout << "Please enter correct number correlating to food type :\n" <<
+			"Morning Tea Item = 1 \nLunch Item = 2\nAvailable for both times = 3\n";
+		cin >> foodType;
+		checkDiet(input);
+		cout << "Enter Food Name: \n";
+		cin >> name;
+		cout << "Enter Food Price: ";
+		cin >> price;
+	}
+		
+
+
+};
+
+enum Diet {
+	NutFree = 1,
+	DairyFree = 2,
+	IsHalal = 4,
+	GlutenFree = 8,
+	Vegetarian = 16,
+	ShellFishFree = 32
+};
+
+
+enum FoodType {
+	MorningTea = 1,
+	Lunch = 2,
+	Both = 4,
+};
+
+
+
+//struct Menu {
 	/*enum LunchItems {
 		Sandwich = 1,
 		Pasta = 2,
@@ -99,26 +196,22 @@ struct Menu {
 	};*/
 
 
-	std::vector<std::string> sandwichOptions{ "Ham","Cheese & Onion","Bacon & Egg","Veggie mix" };
-	std::vector<std::string> pastaOptions{ "Spaghetti Bolagnese","Bacon Cabonara","Mac & Cheese","Chicken bake" };
-	std::vector<std::string> soupOptions{ "Pumpkin","Hearty Beef","Broccoli Cheese","Chicken Noodle" };
+//	std::vector<std::string> sandwichOptions{ "Ham","Cheese & Onion","Bacon & Egg","Veggie mix" };
+//	std::vector<std::string> pastaOptions{ "Spaghetti Bolagnese","Bacon Cabonara","Mac & Cheese","Chicken bake" };
+//	std::vector<std::string> soupOptions{ "Pumpkin","Hearty Beef","Broccoli Cheese","Chicken Noodle" };
+//
+//	std::vector<std::string> chipOptions{ "Twisties","Salt & Vinegar","Ready Salted","Kettle Chicken" };
+//	std::vector<std::string> cookieOptions{ "Choc","Triple Choc Chip","Vegan Cocoa Chip" };
+//	std::vector<std::string> muffinOptions{ "Blueberry","Spiced Apple","Cheese" };
+//	std::vector<std::string> fruitOptions{ "Apple","Banana","Orange","Pear" };
+//
+//
+//	std::vector<std::string> juiceOptions{ "Orange","Apple" };
+//	std::vector<std::string> hotOptions{ "Hot Chocolate","Hot Blackcurrent" };
+//	std::vector<std::string> smoothieOptions{ "Blueberry & Banana","Vegan Milkshake","Choc Peanut" };
+//	std::vector<std::string> waterOptions{ "Kiwi-Blue 250ml","Pump 750ml","Pump Sparkling Water" };
+////default constructor
 
-	std::vector<std::string> chipOptions{ "Twisties","Salt & Vinegar","Ready Salted","Kettle Chicken" };
-	std::vector<std::string> cookieOptions{ "Choc","Triple Choc Chip","Vegan Cocoa Chip" };
-	std::vector<std::string> muffinOptions{ "Blueberry","Spiced Apple","Cheese" };
-	std::vector<std::string> fruitOptions{ "Apple","Banana","Orange","Pear" };
-
-
-	std::vector<std::string> juiceOptions{ "Orange","Apple" };
-	std::vector<std::string> hotOptions{ "Hot Chocolate","Hot Blackcurrent" };
-	std::vector<std::string> smoothieOptions{ "Blueberry & Banana","Vegan Milkshake","Choc Peanut" };
-	std::vector<std::string> waterOptions{ "Kiwi-Blue 250ml","Pump 750ml","Pump Sparkling Water" };
-//default constructor
-Menu() {
-
-}
-
-};
 
 
 
