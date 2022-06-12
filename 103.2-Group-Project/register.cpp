@@ -209,6 +209,7 @@ void CreateParentAcc() {
 
 
     //--- Name ---//
+    cin.ignore();
     cout << "--- Please enter your full name ---\nName: ";
     getline(cin, input_Name);
 
@@ -270,10 +271,11 @@ void CreateStaffAcc() {
 
 
     //--- Name ---//
+    cin.ignore();
     cout << "--- Please enter your full name ---\nName: ";
     getline(cin, input_Name);
 
-
+  
     //--- Gender ---//
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
     cin >> input_Gender; //Use Jordans menu select option for this input.
@@ -321,13 +323,14 @@ void CreateAdminAcc() {
 
 
     //--- Name ---//
+    cin.ignore();
     cout << "--- Please enter your full name ---\nName: ";
     getline(cin, input_Name);
 
 
 
     //--- Gender ---//
-    cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
+    cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
     cin >> input_Gender; //Use Jordans menu select option for this input.
 
 
