@@ -22,11 +22,11 @@ END OF FEEDBACK PSEUDO CODE FOR ADMIN */
     Allow user to go back to the main menu.
 END OF FEEDBACK PSEUDO CODE FOR PARENT */
 
-void PrintArray_ParentFeedbackMenu(string, string);
-void ArrowSelectionMenu_ParentFeedback(string, string);
-void GeneralContact(string, string);
-void SendCompliment(string, string);
-void SendComplaint(string, string);
+void PrintArray_ParentFeedbackMenu();
+void ArrowSelectionMenu_ParentFeedback(string, string , string);
+void GeneralContact(string, string, string);
+void SendCompliment(string, string, string);
+void SendComplaint(string, string, string);
 void PrintArray_StaffFeedbackMenu();
 void ArrowSelectionMenu_StaffFeedback();
 void ViewGeneralMessages();
@@ -39,15 +39,15 @@ void RespondCompliments(string, string);
 void RespondComplaints(string, string);
 
 /*Start of Feedback functionality*/
-void feedbackMain(string userId, string userEmail, string accessLevel) // This must have a User ID comming into it and or access level?
+void feedbackMain(string userId, string userName, string userEmail, string accessLevel) // This must have a User ID comming into it and or access level?
 {
 
 	//--- Parent ---//
 	if (accessLevel == "1") {
 		system("cls");
-		PrintArray_ParentFeedbackMenu(userId, userEmail);
+		PrintArray_ParentFeedbackMenu();
 		cout << "\nWelcome Parent to the feedback zone.\n";
-		ArrowSelectionMenu_ParentFeedback(userId, userEmail);
+		ArrowSelectionMenu_ParentFeedback(userId, userName, userEmail);
 	}
 	//--- Staff ---//
 	else if (accessLevel == "2") {
@@ -71,7 +71,7 @@ const int menuSize_ParentFeedBack = 4;
 int selectionHighlight_ParentFeedback = 0;
 string mainMenuPrint_ParentFeedback[menuSize_ParentFeedBack] = { "General", "Compliment", "Complaint", "Exit"};
 
-void PrintArray_ParentFeedbackMenu(string userId, string userEmail) {
+void PrintArray_ParentFeedbackMenu() {
 	for (int i = 0; i < menuSize_ParentFeedBack; i++)
 	{
 		if (i == selectionHighlight_ParentFeedback)
@@ -87,7 +87,7 @@ void PrintArray_ParentFeedbackMenu(string userId, string userEmail) {
 	}
 }
 
-void ArrowSelectionMenu_ParentFeedback(string userId, string userEmail) {
+void ArrowSelectionMenu_ParentFeedback(string userId, string userName, string userEmail) {
 	//cout << "Use arrow keys to make selection\n\n";
 	int ch, ch2;
 	bool loop = true;
@@ -131,7 +131,7 @@ void ArrowSelectionMenu_ParentFeedback(string userId, string userEmail) {
 			}
 
 			system("cls");
-			PrintArray_ParentFeedbackMenu(userId, userEmail);
+			PrintArray_ParentFeedbackMenu();
 
 			switch (selectionHighlight_ParentFeedback)
 			{
@@ -153,15 +153,15 @@ void ArrowSelectionMenu_ParentFeedback(string userId, string userEmail) {
 			switch (selectionHighlight_ParentFeedback)
 			{
 			case 0:
-				GeneralContact(userId, userEmail);
+				GeneralContact(userId, userName, userEmail);
 
 				break;
 			case 1:
-				SendCompliment(userId, userEmail);
+				SendCompliment(userId, userName, userEmail);
 
 				break;
 			case 2:
-				SendComplaint(userId, userEmail);
+				SendComplaint(userId, userName, userEmail);
 
 				break;
 			case 3:
@@ -175,14 +175,15 @@ void ArrowSelectionMenu_ParentFeedback(string userId, string userEmail) {
 }
 /*-------------------------END OF PARENT FEEDBACK MENU SECTION -------------------------*/
 /*-------------------------START OF PARENT FEEDBACK FUNCTIONALITY -------------------------*/
-void GeneralContact(string userId, string userEmail) {
+void GeneralContact(string userId, string userName, string userEmail) {
 	//--- Creating a instance of fstream ---//
 	std::fstream fout;
-
+	std::ifstream  data("GeneralContact.csv");
 
 	//--- Temporary Variables ---//
 	string userMessage;
-
+	std::string id, line;
+	int token;
 
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
@@ -191,10 +192,23 @@ void GeneralContact(string userId, string userEmail) {
 
 	//--- Start of file writing logic ---//
 	fout.open("GeneralContact.csv", std::ios::out | std::ios::app);
+	//--- This loops through each row in csv file and only checks the first cell of each row. ---//
+	while (std::getline(data, line))
+	{
+		std::stringstream  lineStream(line);
+		getline(lineStream, id, ',');
+	}
 
 
-	//--- Assigning the userId & message to the csv file. ---//
-	fout << userId << ","
+	//--- Converting string to int. ---//
+	std::istringstream(id) >> token;
+	//--- Takes last row in csv file and adds 1 to create a new unique ID. ---//
+	token += 1;
+
+
+	//--- Assigning the created account details to the csv file. ---//
+	fout << token << ","
+		 << userName << ","
 		 << userEmail << ","
 		 << userMessage << "\n";
 	fout.close();
@@ -203,17 +217,20 @@ void GeneralContact(string userId, string userEmail) {
 
 	//--- User instructions to end ---//
 	cout << "Thank you for getting in touch.\n\nPress enter to return to main menu";
+	int ch;
+	ch = _getch();
 	ArrowSelectionMenu_MainMenu(); // Replace with correct menu might need to pass user ID back through
 }
 
-void SendCompliment(string userId, string userEmail) {
+void SendCompliment(string userId, string userName, string userEmail) {
 	//--- Creating a instance of fstream ---//
 	std::fstream fout;
-
+	std::ifstream  data("Compliments.csv");
 
 	//--- Temporary Variables ---//
 	string userMessage;
-
+	std::string id, line;
+	int token;
 
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
@@ -222,10 +239,23 @@ void SendCompliment(string userId, string userEmail) {
 
 	//--- Start of file writing logic ---//
 	fout.open("Compliments.csv", std::ios::out | std::ios::app);
+	//--- This loops through each row in csv file and only checks the first cell of each row. ---//
+	while (std::getline(data, line))
+	{
+		std::stringstream  lineStream(line);
+		getline(lineStream, id, ',');
+	}
 
 
-	//--- Assigning the userId, email and message to the csv file. ---//
-	fout << userId << ","
+	//--- Converting string to int. ---//
+	std::istringstream(id) >> token;
+	//--- Takes last row in csv file and adds 1 to create a new unique ID. ---//
+	token += 1;
+
+
+	//--- Assigning the created account details to the csv file. ---//
+	fout << token << ","
+		 << userName << ","
 		 << userEmail << ","
 		 << userMessage << "\n";
 	fout.close();
@@ -234,17 +264,20 @@ void SendCompliment(string userId, string userEmail) {
 
 	//--- User instructions to end ---//
 	cout << "Thank you for your feedback!\n\nPress enter to return to main menu";
+	int ch;
+	ch = _getch();
 	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
 }
 
-void SendComplaint(string userId, string userEmail) {
+void SendComplaint(string userId, string userName, string userEmail) {
 	//--- Creating a instance of fstream ---//
 	std::fstream fout;
-
+	std::ifstream  data("Complaints.csv");
 
 	//--- Temporary Variables ---//
 	string userMessage;
-
+	std::string id, line;
+	int token;
 
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
@@ -253,10 +286,23 @@ void SendComplaint(string userId, string userEmail) {
 
 	//--- Start of file writing logic ---//
 	fout.open("Complaints.csv", std::ios::out | std::ios::app);
+	//--- This loops through each row in csv file and only checks the first cell of each row. ---//
+	while (std::getline(data, line))
+	{
+		std::stringstream  lineStream(line);
+		getline(lineStream, id, ',');
+	}
 
 
-	//--- Assigning the userId & message to the csv file. ---//
-	fout << userId << ","
+	//--- Converting string to int. ---//
+	std::istringstream(id) >> token;
+	//--- Takes last row in csv file and adds 1 to create a new unique ID. ---//
+	token += 1;
+
+
+	//--- Assigning the created account details to the csv file. ---//
+	fout << token << ","
+		 << userName << ","
 		 << userEmail << ","
 		 << userMessage << "\n";
 	fout.close();
@@ -265,6 +311,8 @@ void SendComplaint(string userId, string userEmail) {
 
 	//--- User instructions to end ---//
 	cout << "Thank you for your feedback, we will get back to you as soon as possible.\n\nPress enter to return to main menu";
+	int ch;
+	ch = _getch();
 	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
 }
 /*-------------------------END OF PARENT FEEDBACK FUNCTIONALITY -------------------------*/
@@ -384,18 +432,19 @@ void ViewGeneralMessages() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileId, fileEmail, fileMessage, fileLine;
+	std::string fileToken, fileName, fileEmail, fileMessage, fileLine;
 
 
 	//---This loops through each row of the CSV file ---//
 	while (std::getline(data, fileLine))
 	{
 		std::stringstream  lineStream(fileLine);
-		getline(lineStream, fileId, ',');
+		getline(lineStream, fileToken, ',');
+		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
-		cout << "Email: " << fileEmail << "\t";
+		cout << "Name: " << fileName << "\t";
 		cout << "Message: " << fileMessage << endl;
 	}
 
@@ -411,7 +460,7 @@ void ViewCompliments() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileId, fileEmail, fileMessage, fileLine;
+	std::string fileId, fileName, fileEmail, fileMessage, fileLine;
 
 
 	//---This loops through each row of the CSV file and displays all messages ---//
@@ -419,12 +468,12 @@ void ViewCompliments() {
 	{
 		std::stringstream  lineStream(fileLine);
 		getline(lineStream, fileId, ',');
+		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
-		cout << "Email: " << fileEmail << "\t";
+		cout << "Name: " << fileName << "\t";
 		cout << "Message: " << fileMessage << endl;
-
 	}
 
 
@@ -439,7 +488,7 @@ void ViewComplaints() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileId, fileEmail, fileMessage, fileLine;
+	std::string fileId, fileName, fileEmail, fileMessage, fileLine;
 
 
 	//---This loops through each row of the CSV file and displays all messages ---//
@@ -447,10 +496,11 @@ void ViewComplaints() {
 	{
 		std::stringstream  lineStream(fileLine);
 		getline(lineStream, fileId, ',');
+		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
-		cout << "Email: " << fileEmail << "\t";
+		cout << "Name: " << fileName << "\t";
 		cout << "Message: " << fileMessage << endl;
 	}
 

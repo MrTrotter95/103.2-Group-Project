@@ -1,3 +1,3 @@
 #pragma once
 
-void feedbackMain(string, string, string);
+void feedbackMain(string, string, string, string);

@@ -10,7 +10,7 @@ void VerifyAccount(string inputEmail, string inputPassword) {
 
 
     //--- Temporary Variables ---//
-    std::string fileId, fileEmail, filePass, fileAccessLvl, fileLine, userId, userEmail, userPass, userAccessLvl;
+    std::string fileId, fileName, fileEmail, filePass, fileAccessLvl, fileLine, userId, userEmail, userPass, userAccessLvl;
 
 
     //---This loops through each row of the CSV file ---//
@@ -18,6 +18,7 @@ void VerifyAccount(string inputEmail, string inputPassword) {
     {
         std::stringstream  lineStream(fileLine);
         getline(lineStream, fileId, ',');
+        getline(lineStream, fileName, ',');
         getline(lineStream, fileEmail, ',');
         getline(lineStream, filePass, ',');
         getline(lineStream, fileAccessLvl, ',');
@@ -52,6 +53,9 @@ void CheckPassword(string userId, string userPassword, string userAccessLvl, str
         //--- If password is correct ---//
         if (inputPassword == userPassword) {
             cout << "Password was correct\n";
+            cout << "Redirect this to the required menu options";
+            int ch;
+            ch = _getch();
             // Pass userId to loginMain
         }
         //--- If Password is incorrect ---//
@@ -61,7 +65,7 @@ void CheckPassword(string userId, string userPassword, string userAccessLvl, str
 }
 
 
-/*Start of Login functionality*/
+//--- Start of Login functionality ---//
 void loginMain()
 {
     //-- Loop controlls user attempts, Max 3 --//

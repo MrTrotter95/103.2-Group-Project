@@ -62,6 +62,7 @@ void ArrowSelectionMenu_MainMenu() {
 	string admin = "3";          // Delete after testing
 
 	string userId = "1";         // Delete after testing
+	string userName = "alistair";// Delete after testing
 	string userEmail = "email1"; // Delete after testing
 
 	while (loop)
@@ -141,7 +142,7 @@ void ArrowSelectionMenu_MainMenu() {
 				registerMain();             //Calls main function from register.cpp
 				break;
 			case 2:
-				feedbackMain(userId, userEmail, admin);    //Calls main function from feedback.cpp
+				feedbackMain(userId, userName, userEmail, staff);    //Calls main function from feedback.cpp
 				break;
 			case 3:
 				loop = false;

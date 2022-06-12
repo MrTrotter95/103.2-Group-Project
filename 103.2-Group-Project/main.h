@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
 /*Defines*/
 #define KEY_UP 72

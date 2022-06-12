@@ -1,6 +1,7 @@
 #include "main.h"
 #include "register.h"
 
+
 void PrintArray_AccountCreationMenu();
 void ArrowSelectionMenu_AccountCreation();
 void CreateParentAcc();
@@ -14,17 +15,13 @@ public:
     //--- User Members ---//
     int I_UserId = 1;
     string S_Name = " ";
-    char C_Gender = 'O';
-    long int I_PhoneNum = 0;
+    char C_Gender = ' ';
+    int I_PhoneNum = 0;
     string S_Dob = " ";
     string S_Email = " ";
     string S_Password = " ";
     int I_accessLevel = 1;      // 1=Parent 2=Staff 3=Admin
-
-    /* ONES I'm going to remove
     float F_DiscountValue = 0;
-    string S_contactMessage = " ";  //This will store the users feedback.
-    float F_tab = 0;*/
 
 
     //--- Default Constructor ---//
@@ -34,7 +31,7 @@ public:
     
 
     //--- Constructor with Arguments ---//
-    User(string name, char gender, long int phoneNum, string dob, string email, string password, int accessLevel) {
+    User(string name, char gender, int phoneNum, string dob, string email, string password, int accessLevel) {
         S_Name = name;
         C_Gender = gender;
         I_PhoneNum = phoneNum;
@@ -203,41 +200,53 @@ void CreateParentAcc() {
 
     //--- Temporary Variables For Account Registration ---//
     char input_Gender;
-    long int input_PhoneNum;
-    string input_Name, input_dob, day, month, year, input_email, input_password;
+    int input_PhoneNum;
+    string input_Name, input_dob, input_email, input_password;
     int userAccType = 1;       // To Determine What Account They Would Like To Create
 
 
     //--- Name ---//
-    cin.ignore();
-    cout << "--- Please enter your full name ---\nName: ";
+    cout << "--- Please enter your full name ---\nName:";
     getline(cin, input_Name);
+    while (input_Name.size() > 25) { //--- Max Input Size ---//
+        cout << "25 character limit reached. Please try again\n";
+        std::cin.clear();
+        getline(cin, input_Name);
+    }
+    while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
+        cout << "Numbers found in name, please only use characters\n";
+        std::cin.clear();
+        getline(cin, input_Name);
+    }
+
 
     //--- Gender ---//
-    cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
+    cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
+    cout << "Example: F | M | O\nGender:";
     cin >> input_Gender;
+    while (input_Gender != 'f' && input_Gender != 'F' && input_Gender != 'm' && input_Gender != 'M' && input_Gender != 'o' && input_Gender != 'O') {     //--- Approved Characters Only ---//
+        cout << "invalid input\nPlease enter select one from the following: f , F , m , M , o , O\n";
+        cin >> input_Gender;
+    }
 
 
     //--- Phone Number ---//
-    cout << "\n--- Please enter your phone number ---\nNumber:"; //Would be a good idea to set a max input amoun allowed.
+    cout << "\n--- Please enter your phone number ---\nNumber:";
     cin >> input_PhoneNum;
     while (std::cin.fail()) {
         std::cout << "\nPlease enter only numeric values" << std::endl;
-        std::cin.clear();
-        std::cin.ignore(256, '\n');
         std::cin >> input_PhoneNum;
     }
 
 
+
     //--- Date of birth ---//
-    cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:  "; //Need to work on this
-    /*cout << "Day: ";
-    cin >> day;
-    cout << "Month: ";
-    cin >> month;
-    cout << "Year: ";
-    cin >> year;*/
+    cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
     cin >> input_dob;
+    while (input_dob[2] != '/' || input_dob[5] != '/') {
+        cout << "Invalid input\nPlease ensure format is dd/mm/yyyy\n:";
+        cin >> input_dob;
+    }
 
 
     //--- Email ---//
@@ -248,6 +257,11 @@ void CreateParentAcc() {
     //--- Password ---//
     cout << "\n--- Please input your password ---\nPassword:";
     cin >> input_password;
+    while (input_password.size() > 15) { //--- Max Input Size ---//
+        cout << "15 character limit reached. Please try again\n";
+        std::cin.clear();
+        cin >> input_password;
+    }
 
 
     //--- Passing user input to constructor ---//
@@ -266,29 +280,53 @@ void CreateStaffAcc() {
     //--- Temporary Variables For Account Registration ---//
     char input_Gender;
     long int input_PhoneNum;
-    string input_Name, input_dob, day, month, year, input_email, input_password;
+    string input_Name, input_dob, input_email, input_password;
     int userAccType = 2;       // To Determine What Account They Would Like To Create
 
 
     //--- Name ---//
-    cin.ignore();
-    cout << "--- Please enter your full name ---\nName: ";
+    cout << "--- Please enter your full name ---\nName:";
     getline(cin, input_Name);
+    while (input_Name.size() > 25) { //--- Max Input Size ---//
+        cout << "25 character limit reached. Please try again\n";
+        std::cin.clear();
+        getline(cin, input_Name);
+    }
+    while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
+        cout << "Numbers found in name, please only use characters\n";
+        std::cin.clear();
+        getline(cin, input_Name);
+    }
 
   
     //--- Gender ---//
-    cout << "--- Please select your gender ---\nFemale\nMale\nOther\n ";
-    cin >> input_Gender; //Use Jordans menu select option for this input.
+    cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
+    cout << "Example: F | M | O\nGender:";
+    cin >> input_Gender;
+    while (input_Gender != 'f' && input_Gender != 'F' && input_Gender != 'm' && input_Gender != 'M' && input_Gender != 'o' && input_Gender != 'O') {     //--- Approved Characters Only ---//
+        cout << "invalid input\nPlease enter select one from the following: f , F , m , M , o , O\n";
+        cin >> input_Gender;
+    }
 
 
     //--- Phone Number ---//
     cout << "\n--- Please enter your phone number ---\nNumber:";
     cin >> input_PhoneNum;
+    while (std::cin.fail()) {
+        std::cout << "\nPlease enter only numeric values" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(256, '\n');
+        std::cin >> input_PhoneNum;
+    }
 
 
     //--- Date of birth ---//
-    cout << "\n--- Please enter your date of birth ---\nDOB:";
+    cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
     cin >> input_dob;
+    while (input_dob[2] != '/' || input_dob[5] != '/') {
+        cout << "Invalid input\nPlease ensure format is dd/mm/yyyy\n:";
+        cin >> input_dob;
+    }
 
 
     //--- Email ---//
@@ -299,6 +337,11 @@ void CreateStaffAcc() {
     //--- Password ---//
     cout << "\n--- Please input your password ---\nPassword:";
     cin >> input_password;
+    while (input_password.size() > 15) { //--- Max Input Size ---//
+        cout << "15 character limit reached. Please try again\n";
+        std::cin.clear();
+        cin >> input_password;
+    }
 
 
     //--- Passing user input to constructor ---//
@@ -318,30 +361,53 @@ void CreateAdminAcc() {
     //--- Temporary Variables For Account Registration ---//
     char input_Gender;
     long int input_PhoneNum;
-    string input_Name, input_dob, day, month, year, input_email, input_password;
+    string input_Name, input_dob, input_email, input_password;
     int userAccType = 3;       // To Determine What Account They Would Like To Create
 
 
     //--- Name ---//
-    cin.ignore();
-    cout << "--- Please enter your full name ---\nName: ";
+    cout << "--- Please enter your full name ---\nName:";
     getline(cin, input_Name);
-
+    while (input_Name.size() > 25) { //--- Max Input Size ---//
+        cout << "25 character limit reached. Please try again\n";
+        std::cin.clear();
+        getline(cin, input_Name);
+    }
+    while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
+        cout << "Numbers found in name, please only use characters\n";
+        std::cin.clear();
+        getline(cin, input_Name);
+    }
 
 
     //--- Gender ---//
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
-    cin >> input_Gender; //Use Jordans menu select option for this input.
+    cout << "Example: F | M | O\nGender:";
+    cin >> input_Gender;
+    while (input_Gender != 'f' && input_Gender != 'F' && input_Gender != 'm' && input_Gender != 'M' && input_Gender != 'o' && input_Gender != 'O') {     //--- Approved Characters Only ---//
+        cout << "invalid input\nPlease enter select one from the following: f , F , m , M , o , O\n";
+        cin >> input_Gender;
+    }
 
 
     //--- Phone Number ---//
     cout << "\n--- Please enter your phone number ---\nNumber:";
     cin >> input_PhoneNum;
+    while (std::cin.fail()) {
+        std::cout << "\nPlease enter only numeric values" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(256, '\n');
+        std::cin >> input_PhoneNum;
+    }
 
 
     //--- Date of birth ---//
-    cout << "\n--- Please enter your date of birth ---\nDOB:";
+    cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
     cin >> input_dob;
+    while (input_dob[2] != '/' || input_dob[5] != '/') {
+        cout << "Invalid input\nPlease ensure format is dd/mm/yyyy\n:";
+        cin >> input_dob;
+    }
 
 
     //--- Email ---//
@@ -352,6 +418,11 @@ void CreateAdminAcc() {
     //--- Password ---//
     cout << "\n--- Please input your password ---\nPassword:";
     cin >> input_password;
+    while (input_password.size() > 15) { //--- Max Input Size ---//
+        cout << "15 character limit reached. Please try again\n";
+        std::cin.clear();
+        cin >> input_password;
+    }
 
 
     //--- Passing user input to constructor ---//
@@ -395,10 +466,10 @@ void SaveLoginDetails(User account) {
         << account.S_Name << ","
         << account.S_Email << ","
         << account.S_Password << ","
-        << account.I_accessLevel << "\n";
+        << account.I_accessLevel << ","
+        << account.F_DiscountValue << "\n";
     fout.close();
     //--- End of file writing logic ---//
-
 }
 
 void SaveUserDetails(User account) {
