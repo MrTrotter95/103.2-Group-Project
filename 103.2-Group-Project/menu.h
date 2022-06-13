@@ -103,7 +103,7 @@ public:
 		price = 0;
 		
 	}
-	void checkDiet(int choice) {
+	void CheckDiet(int choice) {
 
 		cout << "Is this food dairyfree? 1.Y 2.N\n";
 		cin >> choice;
@@ -135,23 +135,33 @@ public:
 		if (choice == 1) {
 			diet += 32;
 		}
-	}
-
-	//function to add menu item
-		void addItem() {
-			int input{0};
-		cout << "Enter menu id:\n";
-		cin >> menuId;
-		cout << "Please enter correct number correlating to food type :\n" <<
-			"Morning Tea Item = 1 \nLunch Item = 2\nAvailable for both times = 3\n";
-		cin >> foodType;
-		checkDiet(input);
-		cout << "Enter Food Name: \n";
-		cin >> name;
-		cout << "Enter Food Price: ";
-		cin >> price;
-	}
 		
+
+	}
+	//function to add menu item
+	void AddItem() {
+		std::fstream foodFile;
+		foodFile.open("foodmenu.csv", std::ios::out | std::ios::app);
+
+		if (foodFile.is_open())
+		{
+		int input{ 0 };
+		cout << "Enter menu id:\n";
+		foodFile >> menuId;
+		cout << "Please enter correct number correlating to food type :\n" <<
+			"Morning Tea Item = 1 \nLunch Item = 2\nAvailable for both times = 4\n";
+		foodFile >> foodType;
+		CheckDiet(input);
+		cout << "Enter Food Name: \n";
+		foodFile >> name;
+		cout << "Enter Food Price: ";
+		foodFile >> price;	
+			foodFile.close();
+		}
+		else cout << "Unable to open file";
+		
+	}
+		void DeleteItem();
 
 
 };
@@ -172,45 +182,50 @@ enum FoodType {
 	Both = 4,
 };
 
+class Child {
+private:
+	int childId;
+	int dietRequirements;
+	char classroom;
+	int parentId;
+
+public:
+	void PlaceOrder() {
+		int input;
+		cout << "Please enter child ID: ";
+		cin >> input;
+		std::fstream kids;
+		kids.open("order.csv", std::ios::out | std::ios::app);
+
+		if (kids.is_open())
+		{
+			//TODO: assuming i create an instance of order here btw
+			int input{ 0 };
+			cout << "Enter child id:\n";
+			kids >> childId;
+			DisplayMenu(bool[]childdiet);
+			cout << "Please enter number correlating to item you want to purchase\n";
+			cin >> input;
+			kids >> Order::cart.push(input);//TODO: this obviously doesnt work but i think you know what i mean when i say it lol
+			// TODO: code to calculate all vector floats together to create total order bill // 
+			kids.close();
+		}
+		else cout << "Unable to open file";
+
+	}
+};
+//TODO: so i have 'cart' in a vector, thinknig that can store all the info of items in there
+struct Order {
+	int orderId;
+	int childId;
+	std::vector<string> cart;
+	float total;
+	bool payStatus;
+	
+
+};
 
 
-//struct Menu {
-	/*enum LunchItems {
-		Sandwich = 1,
-		Pasta = 2,
-		Soup = 4
-	};
-
-	enum SnackItems {
-		Chips = 1,
-		Cookie = 2,
-		Muffin = 4,
-		Fruit = 8
-	};
-
-	enum DrinkItems {
-		Juice = 1,
-		Hot = 2,
-		Smoothie = 4,
-		Water = 8
-	};*/
-
-
-//	std::vector<std::string> sandwichOptions{ "Ham","Cheese & Onion","Bacon & Egg","Veggie mix" };
-//	std::vector<std::string> pastaOptions{ "Spaghetti Bolagnese","Bacon Cabonara","Mac & Cheese","Chicken bake" };
-//	std::vector<std::string> soupOptions{ "Pumpkin","Hearty Beef","Broccoli Cheese","Chicken Noodle" };
-//
-//	std::vector<std::string> chipOptions{ "Twisties","Salt & Vinegar","Ready Salted","Kettle Chicken" };
-//	std::vector<std::string> cookieOptions{ "Choc","Triple Choc Chip","Vegan Cocoa Chip" };
-//	std::vector<std::string> muffinOptions{ "Blueberry","Spiced Apple","Cheese" };
-//	std::vector<std::string> fruitOptions{ "Apple","Banana","Orange","Pear" };
-//
-//
-//	std::vector<std::string> juiceOptions{ "Orange","Apple" };
-//	std::vector<std::string> hotOptions{ "Hot Chocolate","Hot Blackcurrent" };
-//	std::vector<std::string> smoothieOptions{ "Blueberry & Banana","Vegan Milkshake","Choc Peanut" };
-//	std::vector<std::string> waterOptions{ "Kiwi-Blue 250ml","Pump 750ml","Pump Sparkling Water" };
-////default constructor
 
 
 

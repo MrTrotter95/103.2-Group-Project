@@ -69,23 +69,7 @@ void DisplayMenu() {
     }
 
 };
-void AddFood() {
-    int choice;
-    cout << "What menu item would you like to add?\n" <<
-        "1. Lunch \t 2. Morning tea \t 3. Drinks: \n";
-    cin >> choice;
 
-    std::fstream foodFile;
-    foodFile.open("foodmenu.csv", std::ios::out | std::ios::app);
-        
-        if (foodFile.is_open())
-        {
-            foodFile << "This is a line.\n";
-            foodFile << "This is another line.\n";
-            foodFile.close();
-        }
-        else cout << "Unable to open file";
-}
 
 //void DisplayMenu()
 //{
