@@ -6,6 +6,64 @@
 std::fstream fout;
 std::fstream fin;
 std::fstream finUser;
+<<<<<<< HEAD
+=======
+
+/*
+cout the different discounts
+cout menu of add, set or delete.
+
+cin user selection of add, set or delete
+
+switch case to each function
+
+AddDiscount()
+    cout all discount details
+    cout would you like to add a new discount, or return to menu
+    cin user selection
+    cout discount name prompt
+    cin discount name input
+    cout discount value prompt
+    cin discount value input
+    cout discount description prompt
+    cin discount description input
+
+    cout discount created
+
+    recursive function to loop
+
+SetDiscount()
+    cout all discount details, or return to menu
+    cin selection of discount or exit
+    cout prompt to add a User to discount
+    cin User ID of parent
+    
+    check if User ID belongs to a parent.
+        check if Parent has any other discounts.
+    
+        if they have a current discount, check the current discount against it, if current is same or higher
+            set current discount as the parents discount float
+            cout successfully replaced previous lower discount prompt
+        else if they have no other discounts
+            set current discount as the parents discount float
+            cout successfully added prompt
+        else (if the current discount is value)
+            cout discount was of lesser value so wasn't added
+
+    Recursive function to loop
+
+DeleteDiscount()
+    cout all discount details, or return to menu
+    cin selection of discount or exit
+    cout confirmation prompt that admin wishes to delete this discount
+    cin yes or no
+
+    Remove discount from csv file
+
+    Recursive function to loop
+    
+    */
+>>>>>>> 5516ae59d5c499e960a3b00319e105abd7fac525
 
 /*Start of Discount functionality*/
 void discountMain()
@@ -13,7 +71,11 @@ void discountMain()
     system("cls");
     int selection;
 
+<<<<<<< HEAD
     cout << "What would you like to do?\n1. Add Discount\n2. Set Discount\n3. Delete Discount\n4. Return to Admin Menu\nSelection: ";
+=======
+    cout << "What would you like to do?\n1. Add Discount\n2. Set Discount\n3. Delete Discount\nSelection: ";
+>>>>>>> 5516ae59d5c499e960a3b00319e105abd7fac525
     cin >> selection;
 
     switch (selection)
@@ -27,9 +89,12 @@ void discountMain()
     case 3:
         DeleteDiscount();
         break;
+<<<<<<< HEAD
     case 4:
         adminMain();
         break;
+=======
+>>>>>>> 5516ae59d5c499e960a3b00319e105abd7fac525
     default:
         break;
     }
@@ -131,9 +196,14 @@ void SetDiscount() {
 
 
     std::string line, lineDisc;
+<<<<<<< HEAD
     int count = 1, count2 = 1, idCount = 1, selection;
     std::vector<string> users, discs;
     double idChoice, discChoice;
+=======
+    int idChoice, discChoice, count = 1, count2 = 1, idCount = 1, selection;
+    std::vector<string> users, discs;
+>>>>>>> 5516ae59d5c499e960a3b00319e105abd7fac525
 
     while (std::getline(finUser, line))
     {

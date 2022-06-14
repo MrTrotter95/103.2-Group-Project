@@ -2,6 +2,7 @@
 #include "admin.h"
 #include "discount.h"
 
+<<<<<<< HEAD
 //--- Global Variables ---//
 const int menuSize_admin = 6;
 int selectionHighlight_admin = 0;
@@ -13,6 +14,39 @@ string mainMenuPrint_admin[menuSize_admin] = {
 											"Discount",
 											"Return to Main Menu"
 											};
+=======
+/*Pseudocode*/
+
+//Enter selection of Admin menu from within staff menu.
+//Perform a check on User Access Level int variable stored within their user profile.
+//EXIT: If User isn't an admin, recursive function to send them back to Staff Menu.
+//PASS: If User is an admin, send them to the admin main menu.
+
+//Accounts: Admins will be able to check User Account details in full by entering their User ID.
+//	LINK TO REGISTRATION.CPP - Needs access to csv
+//Below that they will be able to take three actions, Edit Account, Delete Account and Print Payment Report.
+// 
+//	Edit Account will allow you to take the CSV file and adjust all elements.
+//		This will be useful for password changing, however previous password will not be shown, the Admin can only overwrite it with a temporary password.
+//
+//	Delete Account will remove the User from the records.
+//
+//	Print Payment Report will allow us to print their order history.
+//
+//Food Menu: Admins will have the functionality of editing, deleting and adding menu items.
+//
+//Feedback: Admins will have access to feedback, to be able to confirm they are actioned.
+//	LINK TO FEEDBACK.CPP - Needs access to csv
+//Sales Report: Will be able to print a record of sales, either daily or weekly.
+//
+//Discount: Display discounts available, and add, set or delete discounts. Will also be able to add Users to the discount categories.
+//	LINK TO DISCOUNT.CPP
+
+/*Global Variables*/
+const int menuSize_admin = 6;
+int selectionHighlight_admin = 0;
+string mainMenuPrint_admin[menuSize_admin] = { "Accounts", "Food Menu", "Feedback", "Sales Reports", "Discount", "Return to Main Menu" };
+>>>>>>> 5516ae59d5c499e960a3b00319e105abd7fac525
 
 //--- File Pointers ---//
 std::fstream fout_admin;														//Creates file stream for writing to files
@@ -133,7 +167,12 @@ void ArrowSelectionMenu_AdminMenu() {
 				SalesReportAdmin();                 //Calls sales report function
 				break;
 			case 4:
+<<<<<<< HEAD
 				discountMain();             //Calls discount function
+=======
+				cout << "Call discount function";
+				//discountMain();             //Calls discount function
+>>>>>>> 5516ae59d5c499e960a3b00319e105abd7fac525
 				break;
 			case 5:
 				loop = false;
