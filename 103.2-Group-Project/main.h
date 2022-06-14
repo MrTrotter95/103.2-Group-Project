@@ -8,10 +8,7 @@
 #include <vector>
 #include <sstream>
 #include <stdio.h>
-<<<<<<< HEAD
 #include <algorithm>
-=======
->>>>>>> 5516ae59d5c499e960a3b00319e105abd7fac525
 
 /*Defines*/
 #define KEY_UP 72
