@@ -1,7 +1,6 @@
 #include "main.h"
 #include "feedback.h"
 
-
 void PrintArray_ParentFeedbackMenu();
 void ArrowSelectionMenu_ParentFeedback(string, string , string);
 void GeneralContact(string, string, string);
@@ -159,7 +158,6 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	//--- Creating a instance of fstream ---//
 	std::fstream fout;
 	std::ifstream  data("GeneralContact.csv");
-
 
 	//--- Temporary Variables ---//
 	string userMessage, actioned = "No";
@@ -517,6 +515,7 @@ void ViewComplaints() {
 		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
+
 
 		if (fileResolved == "No") {
 			cout << fileName << "\t";

@@ -258,7 +258,6 @@ void CreateParentAcc() {
         cin >> input_email;
     }
 
-
     //--- Password ---//
     cout << "\n--- Please input your password ---\nPassword:";
     cin >> input_password;

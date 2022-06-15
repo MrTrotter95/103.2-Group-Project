@@ -8,6 +8,7 @@
 #include <sstream>
 #include <algorithm>
 #include <vector>
+#include <stdio.h>
 
 /*Defines*/
 #define KEY_UP 72
