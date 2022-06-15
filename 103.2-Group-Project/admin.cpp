@@ -156,9 +156,8 @@ void AccountAdmin() {
 	cout << "What would you like to do?" <<
 		"\n1.Edit an Account" <<
 		"\n2.Delete an Account" <<
-		"\n3.Settle a Tab" <<
-		"\n4.Change a Password" <<
-		"\n5.Return to Admin Menu" <<
+		"\n3.Change a Password" <<
+		"\n4.Return to Admin Menu" <<
 		"\nSelection: ";
 	cin >> selection;
 
@@ -171,12 +170,9 @@ void AccountAdmin() {
 		AccountAdmin_DelAcc();
 		break;
 	case 3:
-		AccountAdmin_SettleTab();
-		break;
-	case 4:
 		AccountAdmin_ChangePass();
 		break;
-	case 5:
+	case 4:
 		adminMain();
 		break;
 	default:
@@ -346,6 +342,7 @@ void AccountAdmin_DelAcc() {
 	std::vector<string> users, logins;
 	double idChoice;
 
+	// Statement to push csv into users vector
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -367,6 +364,7 @@ void AccountAdmin_DelAcc() {
 		}
 	}
 
+	// Statement to push csv into logins vector
 	while (std::getline(finUser_admin, line2))
 	{
 		std::stringstream lineStream(line2);
@@ -397,11 +395,13 @@ void AccountAdmin_DelAcc() {
 		}
 	}
 
+	// Statement to show prompt for deleting User
 	cout << "\nWhich ID to delete?\n[ID]: ";
 	cin >> idChoice;
 	cout << "\nYou are deleting User [" << idChoice << "], are you sure?\n[y/n]: ";
 	cin >> newData;
 
+	// Statement to check if input is y or n
 	if (newData == "y")
 	{
 		cout << "Account [" << idChoice << "] deleted.\n";
@@ -452,17 +452,21 @@ void AccountAdmin_DelAcc() {
 		AccountAdmin_DelAcc();
 	}
 
+	// Close the files off
 	fin_admin.close();
 	fout_admin.close();
 	finUser_admin.close();
 	foutUser_admin.close();
 
+	// Remove old userDetails csv and rename new csv
 	std::remove("userDetails.csv");
 	std::rename("userDetailsNew.csv", "userDetails.csv");
 
+	// Remove old login csv and rename new csv
 	std::remove("login.csv");
 	std::rename("loginNew.csv", "login.csv");
 
+	// Loop menu prompt
 	cout << "\nWould you like to edit another account?\n1. Edit another account\n2. Return to Menu\nSelection: ";
 	cin >> selection;
 
@@ -480,28 +484,20 @@ void AccountAdmin_DelAcc() {
 	}
 }
 
-//--- Submenu for Settling Parent Tabs ---//
-void AccountAdmin_SettleTab() {
-	//print users
-	//target user to edit
-	//confirm settle tab
-	//output to new csv
-	//delete old csv and rename new csv
-	//loop menu
-}
-
 //--- Submenu for Changing User Password ---//
 void AccountAdmin_ChangePass() {
 
+	// Open up file streams
 	finUser_admin.open("login.csv", std::ios::in);
 	fout_admin.open("loginNew.csv", std::ios::out | std::ios::app);
 
-
+	// Variables
 	std::string line, lineDisc, newData;
 	int count = 1, count2 = 1, idCount = 1, selection;
 	std::vector<string> users;
 	double idChoice;
 
+	// While loop to push userDetails csv into vector
 	while (std::getline(finUser_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -523,14 +519,17 @@ void AccountAdmin_ChangePass() {
 		}
 	}
 
+	// Prompt for id to change pass
 	cout << "\nWhich ID to change password?\n[ID]: ";
 	cin >> idChoice;
 	cout << "\nWhat would you like to change the password to?\n[New Password]: ";
 	cin >> newData;
 
+	// Statement to change password at selected ID
 	users.at((4 * (idChoice - 1)) + 2) = newData;
 	cout << users[(4 * (idChoice - 1)) + 2];
 
+	// Statement to output vector with changed password into userDetailsNew.csv
 	for (int i = 0; i < users.size(); i++)
 	{
 		if (count % 4 == 0)
@@ -545,12 +544,15 @@ void AccountAdmin_ChangePass() {
 		}
 	}
 
+	// Close up the filestreams
 	finUser_admin.close();
 	fout_admin.close();
 
+	// Statements to remove old login.dsv and rename new to old name
 	std::remove("login.csv");
 	std::rename("loginNew.csv", "login.csv");
 
+	// Prompt for loop menu
 	cout << "\nWould you like to edit another password?\n1. Edit another password\n2. Return to Menu\nSelection: ";
 	cin >> selection;
 
@@ -1170,6 +1172,7 @@ void PrintSales() {
 	cout << "\nID\tChild\tMTea Food\tMTea Drink\tLunch Food\tLunch Drink\tTotal Price\n";
 	cout << "*******************************************************************************************\n";
 
+	// Statement to populate food vector with food.csv
 	while (std::getline(finUser_admin, line2))
 	{
 		std::stringstream lineStream(line2);
@@ -1193,6 +1196,7 @@ void PrintSales() {
 		}
 	}
 
+	// Statement to populate orders vector with orders.csv
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);

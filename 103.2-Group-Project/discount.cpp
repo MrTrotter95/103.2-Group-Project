@@ -45,6 +45,7 @@ void AddDiscount() {
 
     fin.open("discounts.csv", std::ios::in);
 
+    // Statement to populate discContent vector with discounts.csv
     while (getline(fin, line))
     {
         row.clear();
@@ -61,6 +62,7 @@ void AddDiscount() {
 
     bool isDiscName = true;
 
+    // Statement to print the discounts
     for (int i = 0; i < discContent.size(); i++)
     {
         for (int j = 0; j < discContent[i].size(); j++)
@@ -135,6 +137,7 @@ void SetDiscount() {
     std::vector<string> users, discs;
     double idChoice, discChoice;
 
+    // Statement to populate users vector with userDetails
     while (std::getline(finUser, line))
     {
         std::stringstream lineStream(line);
@@ -157,7 +160,7 @@ void SetDiscount() {
     }
 
     cout << "\n" << "************************\nDiscounts available:\n";
-
+    // Statement to print discs vector
     while (std::getline(fin, lineDisc))
     {
         std::stringstream discSs(lineDisc);
@@ -185,6 +188,7 @@ void SetDiscount() {
     cout << "\nWhich discount number to give User [" << idChoice << "]: ";
     cin >> discChoice;
 
+    // Statement to change selected user's discount value to selected discount value
     users.at((5 * (idChoice - 1)) + 4) = discs[(discChoice * 2) - 1];
     cout << users[(5 * (idChoice - 1)) + 4];
 
@@ -202,11 +206,12 @@ void SetDiscount() {
         }
     }
 
-
+    // Statement to close up filestreams
     fin.close();
     finUser.close();
     fout.close();
 
+    // Statement to remove old csv and rename new csv
     std::remove("userDetails.csv");
     std::rename("userDetailsNew.csv", "userDetails.csv");
 
