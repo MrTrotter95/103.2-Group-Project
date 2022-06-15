@@ -1,29 +1,29 @@
-ï»¿#include "main.h"
+#include "main.h"
 #include "feedback.h"
 
 
-/* START OF FEEDBACK PSEUDO CODE FOR ADMIN
-	ï¿½Create function: Feedback()
-	ï¿½Display Options to user Complaint/Compliment/General
-	ï¿½Display all feedback from parents/user.
-	ï¿½Potentially include  bool = hasContacted;  change this value to true when a parent submits a complaint
-	ï¿½Allow user to select one and change value to actioned.
-	ï¿½Potentially include bool = hasContactedResolved; change this value to true when a admin resolves a complaint.
+/* START OF FEEDBACK PSEUDO CODE FOR ADMIN 
+    •Create function: Feedback()
+    •Display Options to user Complaint/Compliment/General
+    •Display all feedback from parents/user.
+    •Potentially include  bool = hasContacted;  change this value to true when a parent submits a complaint
+    •Allow user to select one and change value to actioned.
+    •Potentially include bool = hasContactedResolved; change this value to true when a admin resolves a complaint.
 In simple terms, I want to have a function that will remove a compaint or change it to resolved so it doesn't show up in the list anymore
 We will still have a record of a compaint, but it will be marked as resolved.
-	ï¿½User can exit at any time back to their logged in menu.
+    •User can exit at any time back to their logged in menu. 
 END OF FEEDBACK PSEUDO CODE FOR ADMIN */
 
 /* START OF FEEDBACK PSEUDO CODE FOR PARENT
-	Create functiin: ContactUs();
-	display options of the types of contact a user can make General Contact / Complaint / Compliment
-	Create three functions: GeneralContact(), Complaint(), Compliment().
-	These three functions just display a message.
-	Allow user to go back to the main menu.
+    Create functiin: ContactUs();
+    display options of the types of contact a user can make General Contact / Complaint / Compliment
+    Create three functions: GeneralContact(), Complaint(), Compliment().
+    These three functions just display a message.
+    Allow user to go back to the main menu.
 END OF FEEDBACK PSEUDO CODE FOR PARENT */
 
 void PrintArray_ParentFeedbackMenu();
-void ArrowSelectionMenu_ParentFeedback(string, string, string);
+void ArrowSelectionMenu_ParentFeedback(string, string , string);
 void GeneralContact(string, string, string);
 void SendCompliment(string, string, string);
 void SendComplaint(string, string, string);
@@ -69,7 +69,7 @@ void feedbackMain(string userId, string userName, string userEmail, string acces
 /*-------------------------START OF PARENT FEEDBACK MENU SECTION -------------------------*/
 const int menuSize_ParentFeedBack = 4;
 int selectionHighlight_ParentFeedback = 0;
-string mainMenuPrint_ParentFeedback[menuSize_ParentFeedBack] = { "General", "Compliment", "Complaint", "Exit" };
+string mainMenuPrint_ParentFeedback[menuSize_ParentFeedBack] = { "General", "Compliment", "Complaint", "Exit"};
 
 void PrintArray_ParentFeedbackMenu() {
 	for (int i = 0; i < menuSize_ParentFeedBack; i++)
@@ -208,9 +208,9 @@ void GeneralContact(string userId, string userName, string userEmail) {
 
 	//--- Assigning the created account details to the csv file. ---//
 	fout << token << ","
-		<< userName << ","
-		<< userEmail << ","
-		<< userMessage << "\n";
+		 << userName << ","
+		 << userEmail << ","
+		 << userMessage << "\n";
 	fout.close();
 	//--- End of file writing logic ---//
 
@@ -255,9 +255,9 @@ void SendCompliment(string userId, string userName, string userEmail) {
 
 	//--- Assigning the created account details to the csv file. ---//
 	fout << token << ","
-		<< userName << ","
-		<< userEmail << ","
-		<< userMessage << "\n";
+		 << userName << ","
+		 << userEmail << ","
+		 << userMessage << "\n";
 	fout.close();
 	//--- End of file writing logic ---//
 
@@ -302,9 +302,9 @@ void SendComplaint(string userId, string userName, string userEmail) {
 
 	//--- Assigning the created account details to the csv file. ---//
 	fout << token << ","
-		<< userName << ","
-		<< userEmail << ","
-		<< userMessage << "\n";
+		 << userName << ","
+		 << userEmail << ","
+		 << userMessage << "\n";
 	fout.close();
 	//--- End of file writing logic ---//
 
@@ -647,7 +647,7 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	//--- User instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
 	string userInput;
-	cin >> userInput;
+	cin >> userInput; 
 
 
 	/*

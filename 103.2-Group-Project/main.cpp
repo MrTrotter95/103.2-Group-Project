@@ -142,7 +142,7 @@ void ArrowSelectionMenu_MainMenu() {
 				registerMain();             //Calls main function from register.cpp
 				break;
 			case 2:
-				feedbackMain(userId, userName, userEmail, staff);             //Calls main function from feedback.cpp
+				feedbackMain(userId, userName, userEmail, staff);    //Calls main function from feedback.cpp
 				break;
 			case 3:
 				loop = false;

@@ -5,14 +5,14 @@
 //--- Global Variables ---//
 const int menuSize_admin = 6;
 int selectionHighlight_admin = 0;
-string mainMenuPrint_admin[menuSize_admin] = {	
+string mainMenuPrint_admin[menuSize_admin] = {
 											"Accounts",
 											"Food Menu",
 											"Feedback",
 											"Sales Reports",
 											"Discount",
 											"Return to Main Menu"
-											};
+};
 
 //--- File Pointers ---//
 std::fstream fout_admin;														//Creates file stream for writing to files
@@ -26,7 +26,7 @@ void adminMain()
 	system("cls");																//Clears screen
 	PrintArray_AdminMenu();														//Run Print Array for admin menu
 	cout << "\nWelcome Admin User.\n";											//Welcome the Admin, so User knows they're within main menu for Admin
-    ArrowSelectionMenu_AdminMenu();												//Enables arrow key interaction
+	ArrowSelectionMenu_AdminMenu();												//Enables arrow key interaction
 }
 
 /*------------------------- START OF ADMIN MAIN MENU SECTION -------------------------*/
@@ -269,7 +269,7 @@ void AccountAdmin_EditAcc() {
 				AccountAdmin_EditAcc();
 			}
 		}
-		else 
+		else
 		{
 			cout << "Invalid selection, must enter 1, 2 or 3.\n";
 			AccountAdmin_EditAcc();
@@ -383,7 +383,7 @@ void AccountAdmin_DelAcc() {
 			{
 				if (count2 % loginCellBounds == 3)
 				{
-					cout << "***********"<< " ";
+					cout << "***********" << " ";
 					logins.push_back(cell);
 					count2++;
 				}
@@ -747,7 +747,7 @@ void FoodMenuAdmin_AddItem() {
 								}
 							}
 
-							fout_admin << ((count / cellBounds) + 1) << ','  << newIsFood << ',' << newFoodName << ',' << newFoodPrice << ',' << newIsVege << ',' << newIsVegan << ',' << newIsGF << "\n";
+							fout_admin << ((count / cellBounds) + 1) << ',' << newIsFood << ',' << newFoodName << ',' << newFoodPrice << ',' << newIsVege << ',' << newIsVegan << ',' << newIsGF << "\n";
 						}
 						else
 						{
@@ -899,7 +899,8 @@ void FoodMenuAdmin_EditItem() {
 				cout << "Invalid selection, must enter a price without $. Try again.\n";
 				FoodMenuAdmin_EditItem();
 			}
-		} else if (targetElement == 4)
+		}
+		else if (targetElement == 4)
 		{
 			if (newData == "1" || newData == "0")
 			{
@@ -911,7 +912,8 @@ void FoodMenuAdmin_EditItem() {
 				cout << "Invalid selection, must enter a 1 or 0. Try again.\n";
 				FoodMenuAdmin_EditItem();
 			}
-		} else if (targetElement == 5)
+		}
+		else if (targetElement == 5)
 		{
 			if (newData == "1" || newData == "0")
 			{
@@ -923,7 +925,8 @@ void FoodMenuAdmin_EditItem() {
 				cout << "Invalid selection, must enter a 1 or 0. Try again.\n";
 				FoodMenuAdmin_EditItem();
 			}
-		} else if (targetElement == 6)
+		}
+		else if (targetElement == 6)
 		{
 			if (newData == "1" || newData == "0")
 			{
@@ -1128,16 +1131,6 @@ void FeedbackAdmin() {
 	}
 }
 
-//--- Submenu to Mark Feedback as Complete ---//
-void FeedbackAdmin_Mark() {
-
-}
-
-//--- Submenu to Display Resolved Feedback ---//
-void FeedbackAdmin_Resolved() {
-
-}
-
 /*------------------------- END OF ADMIN FEEDBACK SECTION -------------------------*/
 /*------------------------- START OF ADMIN SALES SECTION -------------------------*/
 
@@ -1146,27 +1139,129 @@ void SalesReportAdmin() {
 	system("cls");
 	int selection;
 
-	cout << "Menu not yet implemented..\n1. Add Discount\n2. Set Discount\n3. Delete Discount\n4. Return to Admin Menu\nSelection: ";
+	cout << "Menu not yet implemented..\n1. Print Sales\n2. Return to Admin Menu\nSelection: ";
 	cin >> selection;
 
 	switch (selection)
 	{
 	case 1:
-		AddDiscount();
+		PrintSales();
 		break;
 	case 2:
-		SetDiscount();
-		break;
-	case 3:
-		DeleteDiscount();
-		break;
-	case 4:
 		adminMain();
 		break;
 	default:
 		break;
 	}
 }
+
+void PrintSales() {
+	// Function Streams
+	fin_admin.open("orders.csv", std::ios::in);
+	finUser_admin.open("food.csv", std::ios::in);
+
+	// Function Variables
+	std::string line, line2, newData;
+	int count = 1, count2 = 1, cellBounds = 7, selection;
+	std::vector<string> orders, food;
+	double idChoice, targetElement, fullPrice = 0;
+
+	// While Loop to populate vector users and cout cells
+	cout << "\nID\tChild\tMTea Food\tMTea Drink\tLunch Food\tLunch Drink\tTotal Price\n";
+	cout << "*******************************************************************************************\n";
+
+	while (std::getline(finUser_admin, line2))
+	{
+		std::stringstream lineStream(line2);
+		string cell;
+		while (std::getline(lineStream, cell, ','))
+		{
+			if (count2 % cellBounds == 3)
+			{
+				food.push_back(cell);
+				count2++;
+			}
+			else if (count2 % cellBounds == 0)
+			{
+				//cout << "\n";
+				count2++;
+			}
+			else
+			{
+				count2++;
+			}
+		}
+	}
+
+	while (std::getline(fin_admin, line))
+	{
+		std::stringstream lineStream(line);
+		string cell;
+		while (std::getline(lineStream, cell, ','))
+		{
+			if (count % cellBounds == 0)
+			{
+				cout << "$" << cell << "\n";
+				orders.push_back(cell);
+				count++;
+				fullPrice += std::stod(cell);
+			}
+			else
+			{
+				if (count % cellBounds == 3)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else if (count % cellBounds == 4)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else if (count % cellBounds == 5)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else if (count % cellBounds == 6)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else 
+				{
+					cout << cell << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+			}
+		}
+	}
+
+	cout << "\nThe full sales are: $" << fullPrice << endl;
+
+	fin_admin.close();
+	finUser_admin.close();
+
+	// Prompt for next action to take
+	cout << "\n1. Return to Menu\nSelection: ";
+	cin >> selection;
+
+	switch (selection)
+	{
+	case 1:
+		SalesReportAdmin();
+		break;
+	default:
+		adminMain();
+		break;
+	}
+}
+
 
 /*------------------------- END OF ADMIN SALES SECTION -------------------------*/
 /*------------------------- START OF ADMIN DISCOUNT SECTION -------------------------*/

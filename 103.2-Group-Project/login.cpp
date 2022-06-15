@@ -50,18 +50,18 @@ void VerifyAccount(string inputEmail, string inputPassword) {
 //--- To Compare User Input Password Matches CSV ---//
 void CheckPassword(string userId, string userPassword, string userAccessLvl, string inputPassword) {
 
-    //--- If password is correct ---//
-    if (inputPassword == userPassword) {
-        cout << "Password was correct\n";
-        cout << "Redirect this to the required menu options";
-        int ch;
-        ch = _getch();
-        // Pass userId to loginMain
-    }
-    //--- If Password is incorrect ---//
-    else if (inputPassword != userPassword) {
-        cout << "\nPassword does not match please try again\n";
-    }
+        //--- If password is correct ---//
+        if (inputPassword == userPassword) {
+            cout << "Password was correct\n";
+            cout << "Redirect this to the required menu options";
+            int ch;
+            ch = _getch();
+            // Pass userId to loginMain
+        }
+        //--- If Password is incorrect ---//
+        else if (inputPassword != userPassword) {
+            cout << "\nPassword does not match please try again\n";
+        }
 }
 
 

@@ -26,9 +26,9 @@ public:
 
     //--- Default Constructor ---//
     User() {
-
+    
     }
-
+    
 
     //--- Constructor with Arguments ---//
     User(string name, char gender, int phoneNum, string dob, string email, string password, int accessLevel) {
@@ -41,7 +41,7 @@ public:
         I_accessLevel = accessLevel;
     }
 
-
+    
     //--- Might not need this ---//
     void accountCreated() {
         cout << "\nYour account has been succesfully created!\n";
@@ -53,7 +53,7 @@ public:
 
 //--- Start of Register functionality ---//
 void registerMain()
-{
+{    
     system("cls");
     PrintArray_AccountCreationMenu();
     cout << "\nWhat type of account would you like to create?\n";
@@ -298,7 +298,7 @@ void CreateStaffAcc() {
         getline(cin, input_Name);
     }
 
-
+  
     //--- Gender ---//
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
     cout << "Example: F | M | O\nGender:";
@@ -506,6 +506,6 @@ void SaveUserDetails(User account) {
         << account.S_Dob << "\n";
     fout.close();
     //--- End of file writing logic ---//
-
+   
     account.accountCreated();
 }

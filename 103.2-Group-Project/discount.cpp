@@ -42,7 +42,7 @@ void AddDiscount() {
     std::string name, line, word;
     std::vector<std::string> row;
     std::vector<std::vector<std::string>> discContent;
-    
+
     fin.open("discounts.csv", std::ios::in);
 
     while (getline(fin, line))

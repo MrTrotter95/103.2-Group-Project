@@ -15,4 +15,5 @@ void FoodMenuAdmin_EditItem();
 void FoodMenuAdmin_DelItem();
 void FeedbackAdmin();
 void SalesReportAdmin();
+void PrintSales();
 bool isNumber(const string& str);
