@@ -180,15 +180,21 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	std::fstream fout;
 	std::ifstream  data("GeneralContact.csv");
 
+
 	//--- Temporary Variables ---//
-	string userMessage;
+	string userMessage, actioned = "No";
 	std::string id, line;
 	int token;
+
 
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
 	getline(cin, userMessage);
-
+	while (userMessage.size() > 75) { //--- Max Input Size ---//
+		cout << "75 character limit reached. Please try again\n";
+		std::cin.clear();
+		getline(cin, userMessage);
+	}
 
 	//--- Start of file writing logic ---//
 	fout.open("GeneralContact.csv", std::ios::out | std::ios::app);
@@ -206,8 +212,9 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	token += 1;
 
 
-	//--- Assigning the created account details to the csv file. ---//
+	//--- Outputing the user message details to the csv file. ---//
 	fout << token << ","
+		 << actioned << ","
 		 << userName << ","
 		 << userEmail << ","
 		 << userMessage << "\n";
@@ -227,14 +234,21 @@ void SendCompliment(string userId, string userName, string userEmail) {
 	std::fstream fout;
 	std::ifstream  data("Compliments.csv");
 
+
 	//--- Temporary Variables ---//
-	string userMessage;
+	string userMessage, actioned = "No";
 	std::string id, line;
 	int token;
+
 
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
 	getline(cin, userMessage);
+	while (userMessage.size() > 75) { //--- Max Input Size ---//
+		cout << "75 character limit reached. Please try again\n";
+		std::cin.clear();
+		getline(cin, userMessage);
+	}
 
 
 	//--- Start of file writing logic ---//
@@ -253,8 +267,9 @@ void SendCompliment(string userId, string userName, string userEmail) {
 	token += 1;
 
 
-	//--- Assigning the created account details to the csv file. ---//
+	//--- Outputing the user message details to the csv file. ---//
 	fout << token << ","
+		 << actioned << ","
 		 << userName << ","
 		 << userEmail << ","
 		 << userMessage << "\n";
@@ -275,13 +290,18 @@ void SendComplaint(string userId, string userName, string userEmail) {
 	std::ifstream  data("Complaints.csv");
 
 	//--- Temporary Variables ---//
-	string userMessage;
+	string userMessage, actioned = "No";
 	std::string id, line;
 	int token;
 
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
 	getline(cin, userMessage);
+	while (userMessage.size() > 75) { //--- Max Input Size ---//
+		cout << "75 character limit reached. Please try again\n";
+		std::cin.clear();
+		getline(cin, userMessage);
+	}
 
 
 	//--- Start of file writing logic ---//
@@ -300,8 +320,9 @@ void SendComplaint(string userId, string userName, string userEmail) {
 	token += 1;
 
 
-	//--- Assigning the created account details to the csv file. ---//
+	//--- Outputing the user message details to the csv file. ---//
 	fout << token << ","
+		 << actioned << ","
 		 << userName << ","
 		 << userEmail << ","
 		 << userMessage << "\n";
@@ -432,8 +453,9 @@ void ViewGeneralMessages() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileToken, fileName, fileEmail, fileMessage, fileLine;
+	std::string fileToken, fileName, fileEmail, fileMessage, isRead, fileLine;
 
+	cout << "---Name---\t\t-------------------------------------Message-------------------------------------\n";
 
 	//---This loops through each row of the CSV file ---//
 	while (std::getline(data, fileLine))
@@ -443,9 +465,12 @@ void ViewGeneralMessages() {
 		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
+		getline(lineStream, isRead, ',');
 
-		cout << "Name: " << fileName << "\t";
-		cout << "Message: " << fileMessage << endl;
+		if (isRead == "1") {
+			cout << fileName << "\t\t";
+			cout << fileMessage << endl;
+		}
 	}
 
 
@@ -460,7 +485,7 @@ void ViewCompliments() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileId, fileName, fileEmail, fileMessage, fileLine;
+	std::string fileId, fileName, fileEmail, fileMessage, isRead, fileLine;
 
 
 	//---This loops through each row of the CSV file and displays all messages ---//
@@ -471,9 +496,12 @@ void ViewCompliments() {
 		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
+		getline(lineStream, isRead, ',');
 
-		cout << "Name: " << fileName << "\t";
-		cout << "Message: " << fileMessage << endl;
+		if (isRead == "1") {
+			cout << "Name: " << fileName << "\t";
+			cout << "Message: " << fileMessage << endl;
+		}
 	}
 
 
@@ -488,7 +516,7 @@ void ViewComplaints() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileId, fileName, fileEmail, fileMessage, fileLine;
+	std::string fileId, fileName, fileEmail, fileMessage, isRead, fileLine;
 
 
 	//---This loops through each row of the CSV file and displays all messages ---//
@@ -500,8 +528,10 @@ void ViewComplaints() {
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
-		cout << "Name: " << fileName << "\t";
-		cout << "Message: " << fileMessage << endl;
+		if (isRead == "1") {
+			cout << "Name: " << fileName << "\t";
+			cout << "Message: " << fileMessage << endl;
+		}
 	}
 
 
@@ -622,116 +652,114 @@ void ArrowSelectionMenu_AdminFeedback(string userId, string userEmail) {
 /*-------------------------START OF ADMIN FEEDBACK FUNCTIONALITY -------------------------*/
 void RespondGeneralMessages(string userId, string userEmail) {
 	//--- Creating a instance of ifstream & fstream ---//
-	std::fstream fout;
-	std::ifstream  data("GeneralContact.csv");
+	std::fstream fout_general;
+	std::fstream fin_general;
+
+	fin_general.open("GeneralContact.csv", std::ios::in);
+	fout_general.open("GeneralContactNew.csv", std::ios::out | std::ios::app);
 
 
-	//--- Temporary Variables ---//
-	std::string fileId, fileEmail, fileMessage, fileLine;
 
+	std::string line, newData = "Yes";
+	int count_gen = 1, cellBounds = 5;
+	std::vector<string> general;
+	double tokenChoice, targetElement = 1;
 
-	//---This loops through each row of the CSV file ---//
-	while (std::getline(data, fileLine))
-	{
-		std::stringstream  lineStream(fileLine);
-		getline(lineStream, fileId, ',');
-		getline(lineStream, fileEmail, ',');
-		getline(lineStream, fileMessage, ',');
+	cout << "Token:\tDone:\tName:\t\tEmail:\t\t\t\tMessage:\n";
 
-		cout << "ID: " << fileId << "\t";
-		cout << "Email: " << fileEmail << "\t";
-		cout << "Message: " << fileMessage << endl;
+	while (std::getline(fin_general, line)) {
+		std::stringstream lineStream(line);
+		string cell;
+		while (std::getline(lineStream, cell, ',')) {
+
+			if (count_gen % cellBounds == 0) 
+			{
+				cout << cell << "\n";
+				general.push_back(cell);
+				count_gen++;
+			}
+			else 
+			{
+				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3)
+				{
+					cout << cell << "\t";
+					general.push_back(cell);
+					count_gen++;
+				}
+				else if (count_gen % cellBounds == 4) {
+					cout << cell << "\t\t";
+					general.push_back(cell);
+					count_gen++;
+				}
+				else 
+				{
+					cout << cell << " ";
+					general.push_back(cell);
+					count_gen++;
+				}
+			}
+		}
 	}
 
 
-	//--- User instructions ---//
+	//Choose Token to edit
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
-	string userInput;
-	cin >> userInput; 
+	cin >> tokenChoice;
 
+	general.at((cellBounds * (tokenChoice - 1)) + targetElement) = newData;
+	
 
-	/*
-	//Start of file writing logic
-	fout.open("GeneralContact.csv", std::ios::out | std::ios::app);
-	while (std::getline(data, fileLine)) {
-		std::stringstream  lineStream(fileLine);
-		getline(lineStream, fileId, ',');
-		getline(lineStream, fileEmail, ',');
-		getline(lineStream, fileMessage, ',');
-
-		if (userInput == fileId) {
-			break;
+	// placing data into new CSV
+	for (int i = 0; i < general.size(); i++) {
+		if (count_gen % cellBounds == 0) {
+			fout_general << general[i] << "\n";
+			count_gen++;
 		}
-		else if (userInput != fileId) {
-			RespondGeneralMessages(userId, userEmail);
+		else {
+			fout_general << general[i] << ",";
+			count_gen++;
 		}
 	}
 
-	fout << " " << ","
-		<< " " << ","
-		<< " " << "\n";
-	fout.close();
-	*/
+
+	fin_general.close();
+	fout_general.close();
+
+
+
+	std::remove("GeneralContact.csv");
+	std::rename("GeneralContactNew.csv", "GeneralContact.csv");
 }
 
 void RespondCompliments(string userId, string userEmail) {
-	//--- Creating a instance of ifstream & fstream ---//
-	std::fstream fout;
-	std::ifstream  data("Compliments.csv");
+	std::fstream fout_compliments;
+	std::fstream fin_compliments;
+	fin_compliments.open("Compliments.csv", std::ios::in);
+	fout_compliments.open("ComplimentsNew.csv", std::ios::out | std::ios::app);
 
 
-	//--- Temporary Variables ---//
-	std::string fileId, fileEmail, fileMessage, fileLine;
 
 
-	//---This loops through each row of the CSV file ---//
-	while (std::getline(data, fileLine))
-	{
-		std::stringstream  lineStream(fileLine);
-		getline(lineStream, fileId, ',');
-		getline(lineStream, fileEmail, ',');
-		getline(lineStream, fileMessage, ',');
-
-		cout << "ID: " << fileId << "\t";
-		cout << "Email: " << fileEmail << "\t";
-		cout << "Message: " << fileMessage << endl;
-	}
-
-
-	//--- User instructions ---//
-	cout << "Please input the ID number of the message you wish to mark as complete: ";
-	string userInput;
-	cin >> userInput;
+	fin_compliments.close();
+	fout_compliments.close();
+	
+	
 }
 
 void RespondComplaints(string userId, string userEmail) {
-	//--- Creating a instance of ifstream & fstream ---//
-	std::fstream fout;
-	std::ifstream  data("Complaints.csv");
+	std::fstream fout_complaints;
+	std::fstream fin_complaints;
 
 
-	//--- Temporary Variables ---//
-	std::string fileId, fileEmail, fileMessage, fileLine;
+	fin_complaints.open("Complaints.csv", std::ios::in);
+	fout_complaints.open("ComplaintsNew.csv", std::ios::out | std::ios::app);
 
 
-	//---This loops through each row of the CSV file ---//
-	while (std::getline(data, fileLine))
-	{
-		std::stringstream  lineStream(fileLine);
-		getline(lineStream, fileId, ',');
-		getline(lineStream, fileEmail, ',');
-		getline(lineStream, fileMessage, ',');
-
-		cout << "ID: " << fileId << "\t";
-		cout << "Email: " << fileEmail << "\t";
-		cout << "Message: " << fileMessage << endl;
-	}
 
 
-	//--- User instructions ---//
-	cout << "Please input the ID number of the message you wish to mark as complete: ";
-	string userInput;
-	cin >> userInput;
+
+	fin_complaints.close();
+	fout_complaints.close();
 }
 
 /*-------------------------END OF ADMIN FEEDBACK FUNCTIONALITY -------------------------*/

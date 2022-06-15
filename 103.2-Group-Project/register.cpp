@@ -206,10 +206,10 @@ void CreateParentAcc() {
 
 
     //--- Name ---//
-    cout << "--- Please enter your full name ---\nName:";
+    cout << "--- Please enter your first name ---\nName:";
     getline(cin, input_Name);
-    while (input_Name.size() > 25) { //--- Max Input Size ---//
-        cout << "25 character limit reached. Please try again\n";
+    while (input_Name.size() > 15) { //--- Max Input Size ---//
+        cout << "15 character limit reached. Please try again\n";
         std::cin.clear();
         getline(cin, input_Name);
     }
@@ -252,6 +252,11 @@ void CreateParentAcc() {
     //--- Email ---//
     cout << "\n--- Please enter your email address ---\nEmail:";
     cin >> input_email;
+    while (input_email.size() > 25) { //--- Max Input Size ---//
+        cout << "25 character limit reached. Please try again\n";
+        std::cin.clear();
+        cin >> input_email;
+    }
 
 
     //--- Password ---//
@@ -287,8 +292,8 @@ void CreateStaffAcc() {
     //--- Name ---//
     cout << "--- Please enter your full name ---\nName:";
     getline(cin, input_Name);
-    while (input_Name.size() > 25) { //--- Max Input Size ---//
-        cout << "25 character limit reached. Please try again\n";
+    while (input_Name.size() > 15) { //--- Max Input Size ---//
+        cout << "15 character limit reached. Please try again\n";
         std::cin.clear();
         getline(cin, input_Name);
     }
@@ -332,7 +337,11 @@ void CreateStaffAcc() {
     //--- Email ---//
     cout << "\n--- Please enter your email address ---\nEmail:";
     cin >> input_email;
-
+    while (input_email.size() > 25) { //--- Max Input Size ---//
+        cout << "25 character limit reached. Please try again\n";
+        std::cin.clear();
+        cin >> input_email;
+    }
 
     //--- Password ---//
     cout << "\n--- Please input your password ---\nPassword:";
@@ -368,8 +377,8 @@ void CreateAdminAcc() {
     //--- Name ---//
     cout << "--- Please enter your full name ---\nName:";
     getline(cin, input_Name);
-    while (input_Name.size() > 25) { //--- Max Input Size ---//
-        cout << "25 character limit reached. Please try again\n";
+    while (input_Name.size() > 15) { //--- Max Input Size ---//
+        cout << "15 character limit reached. Please try again\n";
         std::cin.clear();
         getline(cin, input_Name);
     }
@@ -413,6 +422,11 @@ void CreateAdminAcc() {
     //--- Email ---//
     cout << "\n--- Please enter your email address ---\nEmail:";
     cin >> input_email;
+    while (input_email.size() > 25) { //--- Max Input Size ---//
+        cout << "25 character limit reached. Please try again\n";
+        std::cin.clear();
+        cin >> input_email;
+    }
 
 
     //--- Password ---//
