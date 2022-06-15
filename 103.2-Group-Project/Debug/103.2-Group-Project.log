@@ -1,4 +1,18 @@
-﻿  main.cpp
-  menu.cpp
-  Generating Code...
-  103.2-Group-Project.vcxproj -> C:\Users\bwrob\OneDrive\Desktop\brooklyn-home\CS103-group-assignment\Debug\103.2-Group-Project.exe
+﻿  menu.cpp
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(417,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(242): warning C4715: 'AddChild': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(334): warning C4715: 'GetPrice': not all control paths return a value
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
+menu.obj : warning LNK4006: "int orderCount" (?orderCount@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "int orderId" (?orderId@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "int childId" (?childId@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "int morningTeaId" (?morningTeaId@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "int morningTeaDrinkId" (?morningTeaDrinkId@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "int lunchId" (?lunchId@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "int lunchDrinkId" (?lunchDrinkId@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "float total" (?total@@3MA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "float price" (?price@@3MA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "int foodId" (?foodId@@3HA) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "struct Menu item" (?item@@3UMenu@@A) already defined in main.obj; second definition ignored
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
+  103.2-Group-Project.vcxproj -> C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe
