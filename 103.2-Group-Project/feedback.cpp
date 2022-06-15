@@ -2,26 +2,6 @@
 #include "feedback.h"
 
 
-/* START OF FEEDBACK PSEUDO CODE FOR ADMIN 
-    •Create function: Feedback()
-    •Display Options to user Complaint/Compliment/General
-    •Display all feedback from parents/user.
-    •Potentially include  bool = hasContacted;  change this value to true when a parent submits a complaint
-    •Allow user to select one and change value to actioned.
-    •Potentially include bool = hasContactedResolved; change this value to true when a admin resolves a complaint.
-In simple terms, I want to have a function that will remove a compaint or change it to resolved so it doesn't show up in the list anymore
-We will still have a record of a compaint, but it will be marked as resolved.
-    •User can exit at any time back to their logged in menu. 
-END OF FEEDBACK PSEUDO CODE FOR ADMIN */
-
-/* START OF FEEDBACK PSEUDO CODE FOR PARENT
-    Create functiin: ContactUs();
-    display options of the types of contact a user can make General Contact / Complaint / Compliment
-    Create three functions: GeneralContact(), Complaint(), Compliment().
-    These three functions just display a message.
-    Allow user to go back to the main menu.
-END OF FEEDBACK PSEUDO CODE FOR PARENT */
-
 void PrintArray_ParentFeedbackMenu();
 void ArrowSelectionMenu_ParentFeedback(string, string , string);
 void GeneralContact(string, string, string);
@@ -453,21 +433,23 @@ void ViewGeneralMessages() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileToken, fileName, fileEmail, fileMessage, isRead, fileLine;
+	std::string fileToken, fileResolved, fileName, fileEmail, fileMessage, fileLine;
 
-	cout << "---Name---\t\t-------------------------------------Message-------------------------------------\n";
+
+	cout << "Name\t\tMessage\n";
+
 
 	//---This loops through each row of the CSV file ---//
 	while (std::getline(data, fileLine))
 	{
 		std::stringstream  lineStream(fileLine);
 		getline(lineStream, fileToken, ',');
+		getline(lineStream, fileResolved, ',');
 		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
-		getline(lineStream, isRead, ',');
 
-		if (isRead == "1") {
+		if (fileResolved == "No") {
 			cout << fileName << "\t\t";
 			cout << fileMessage << endl;
 		}
@@ -485,7 +467,10 @@ void ViewCompliments() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileId, fileName, fileEmail, fileMessage, isRead, fileLine;
+	std::string fileId, fileResolved, fileName, fileEmail, fileMessage, fileLine;
+
+
+	cout << "Name\t\tMessage\n";
 
 
 	//---This loops through each row of the CSV file and displays all messages ---//
@@ -493,14 +478,15 @@ void ViewCompliments() {
 	{
 		std::stringstream  lineStream(fileLine);
 		getline(lineStream, fileId, ',');
+		getline(lineStream, fileResolved, ',');
 		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
-		getline(lineStream, isRead, ',');
 
-		if (isRead == "1") {
-			cout << "Name: " << fileName << "\t";
-			cout << "Message: " << fileMessage << endl;
+
+		if (fileResolved == "No") {
+			cout << fileName << "\t";
+			cout << fileMessage << endl;
 		}
 	}
 
@@ -516,7 +502,10 @@ void ViewComplaints() {
 
 
 	//--- Temporary Variables ---//
-	std::string fileId, fileName, fileEmail, fileMessage, isRead, fileLine;
+	std::string fileId, fileResolved, fileName, fileEmail, fileMessage, fileLine;
+
+
+	cout << "Name\t\tMessage\n";
 
 
 	//---This loops through each row of the CSV file and displays all messages ---//
@@ -524,13 +513,14 @@ void ViewComplaints() {
 	{
 		std::stringstream  lineStream(fileLine);
 		getline(lineStream, fileId, ',');
+		getline(lineStream, fileResolved, ',');
 		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
-		if (isRead == "1") {
-			cout << "Name: " << fileName << "\t";
-			cout << "Message: " << fileMessage << endl;
+		if (fileResolved == "No") {
+			cout << fileName << "\t";
+			cout << fileMessage << endl;
 		}
 	}
 
@@ -655,38 +645,45 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	std::fstream fout_general;
 	std::fstream fin_general;
 
+
+	//--- Initializing the required csv files ---//
 	fin_general.open("GeneralContact.csv", std::ios::in);
 	fout_general.open("GeneralContactNew.csv", std::ios::out | std::ios::app);
 
 
-
+	//--- Temporary Variables ---//
 	std::string line, newData = "Yes";
 	int count_gen = 1, cellBounds = 5;
 	std::vector<string> general;
 	double tokenChoice, targetElement = 1;
 
+
+	//--- Table Row ---//
 	cout << "Token:\tDone:\tName:\t\tEmail:\t\t\t\tMessage:\n";
 
+
+	//--- Loops through csv file ---//
 	while (std::getline(fin_general, line)) {
 		std::stringstream lineStream(line);
 		string cell;
 		while (std::getline(lineStream, cell, ',')) {
-
-			if (count_gen % cellBounds == 0) 
+			//--- Formating & adding data to vector ---//
+			if (count_gen % cellBounds == 0) // End of row
 			{
 				cout << cell << "\n";
 				general.push_back(cell);
 				count_gen++;
 			}
 			else 
-			{
-				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3)
+			{	
+				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3) // First 3 columns
 				{
 					cout << cell << "\t";
 					general.push_back(cell);
 					count_gen++;
 				}
-				else if (count_gen % cellBounds == 4) {
+				else if (count_gen % cellBounds == 4) // 4th column
+				{ 
 					cout << cell << "\t\t";
 					general.push_back(cell);
 					count_gen++;
@@ -702,14 +699,16 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	}
 
 
-	//Choose Token to edit
+	//--- User Instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
 	cin >> tokenChoice;
 
+
+	//--- Targets correct cell in vector and changes value to "yes" after user input ---//
 	general.at((cellBounds * (tokenChoice - 1)) + targetElement) = newData;
 	
 
-	// placing data into new CSV
+	//--- Adding vector information to new csv ---//
 	for (int i = 0; i < general.size(); i++) {
 		if (count_gen % cellBounds == 0) {
 			fout_general << general[i] << "\n";
@@ -722,44 +721,196 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	}
 
 
+	//--- Closing csv files ---//
 	fin_general.close();
 	fout_general.close();
 
 
-
+	//--- Renaming "GeneralContactNew" to "GeneralContact"
 	std::remove("GeneralContact.csv");
 	std::rename("GeneralContactNew.csv", "GeneralContact.csv");
 }
 
 void RespondCompliments(string userId, string userEmail) {
+	//--- Creating a instance of ifstream & fstream ---//
 	std::fstream fout_compliments;
 	std::fstream fin_compliments;
+
+
+	//--- Initializing the required csv files ---//
 	fin_compliments.open("Compliments.csv", std::ios::in);
 	fout_compliments.open("ComplimentsNew.csv", std::ios::out | std::ios::app);
 
 
+	//--- Temporary Variables ---//
+	std::string line, newData = "Yes";
+	int count_gen = 1, cellBounds = 5;
+	std::vector<string> compliments;
+	double tokenChoice, targetElement = 1;
 
 
+	//--- Table Row ---//
+	cout << "Token:\tDone:\tName:\t\tEmail:\t\t\t\tMessage:\n";
+
+
+	//--- Loops through csv file ---//
+	while (std::getline(fin_compliments, line)) {
+		std::stringstream lineStream(line);
+		string cell;
+		while (std::getline(lineStream, cell, ',')) {
+			//--- Formating & adding data to vector ---//
+			if (count_gen % cellBounds == 0) // End of row
+			{
+				cout << cell << "\n";
+				compliments.push_back(cell);
+				count_gen++;
+			}
+			else
+			{
+				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3) // First 3 columns
+				{
+					cout << cell << "\t";
+					compliments.push_back(cell);
+					count_gen++;
+				}
+				else if (count_gen % cellBounds == 4) // 4th column
+				{
+					cout << cell << "\t\t";
+					compliments.push_back(cell);
+					count_gen++;
+				}
+				else
+				{
+					cout << cell << " ";
+					compliments.push_back(cell);
+					count_gen++;
+				}
+			}
+		}
+	}
+
+
+	//--- User Instructions ---//
+	cout << "Please input the ID number of the message you wish to mark as complete: ";
+	cin >> tokenChoice;
+
+
+	//--- Targets correct cell in vector and changes value to "yes" after user input ---//
+	compliments.at((cellBounds * (tokenChoice - 1)) + targetElement) = newData;
+
+
+	//--- Adding vector information to new csv ---//
+	for (int i = 0; i < compliments.size(); i++) {
+		if (count_gen % cellBounds == 0) {
+			fout_compliments << compliments[i] << "\n";
+			count_gen++;
+		}
+		else {
+			fout_compliments << compliments[i] << ",";
+			count_gen++;
+		}
+	}
+
+
+	//--- Closing csv files ---//
 	fin_compliments.close();
 	fout_compliments.close();
 	
-	
+
+	//--- Renaming "ComplimentsNew" to "Compliments" ---//
+	std::remove("Compliments.csv");
+	std::rename("ComplimentsNew.csv", "Compliments.csv");
 }
 
 void RespondComplaints(string userId, string userEmail) {
+	//--- Creating a instance of ifstream & fstream ---//
 	std::fstream fout_complaints;
 	std::fstream fin_complaints;
 
 
+	//--- Initializing the required csv files ---//
 	fin_complaints.open("Complaints.csv", std::ios::in);
 	fout_complaints.open("ComplaintsNew.csv", std::ios::out | std::ios::app);
 
 
+	//--- Temporary Variables ---//
+	std::string line, newData = "Yes";
+	int count_gen = 1, cellBounds = 5;
+	std::vector<string> complaints;
+	double tokenChoice, targetElement = 1;
+
+
+	//--- Table Row ---//
+	cout << "Token:\tDone:\tName:\t\tEmail:\t\t\t\tMessage:\n";
+
+
+	//--- Loops through csv file ---//
+	while (std::getline(fin_complaints, line)) {
+		std::stringstream lineStream(line);
+		string cell;
+		while (std::getline(lineStream, cell, ',')) {
+			//--- Formating & adding data to vector ---//
+			if (count_gen % cellBounds == 0) // End of row
+			{
+				cout << cell << "\n";
+				complaints.push_back(cell);
+				count_gen++;
+			}
+			else
+			{
+				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3) // First 3 columns
+				{
+					cout << cell << "\t";
+					complaints.push_back(cell);
+					count_gen++;
+				}
+				else if (count_gen % cellBounds == 4) // 4th column
+				{
+					cout << cell << "\t\t";
+					complaints.push_back(cell);
+					count_gen++;
+				}
+				else
+				{
+					cout << cell << " ";
+					complaints.push_back(cell);
+					count_gen++;
+				}
+			}
+		}
+	}
+
+
+	//--- User Instructions ---//
+	cout << "Please input the ID number of the message you wish to mark as complete: ";
+	cin >> tokenChoice;
+
+
+	//--- Targets correct cell in vector and changes value to "yes" after user input ---//
+	complaints.at((cellBounds * (tokenChoice - 1)) + targetElement) = newData;
+
+
+	//--- Adding vector information to new csv ---//
+	for (int i = 0; i < complaints.size(); i++) {
+		if (count_gen % cellBounds == 0) {
+			fout_complaints << complaints[i] << "\n";
+			count_gen++;
+		}
+		else {
+			fout_complaints << complaints[i] << ",";
+			count_gen++;
+		}
+	}
 
 
 
+	//--- Closing csv files ---//
 	fin_complaints.close();
 	fout_complaints.close();
-}
 
+
+	//--- Renaming "ComplimentsNew" to "Complaints" ---//
+	std::remove("Complaints.csv");
+	std::rename("ComplaintsNew.csv", "Complaints.csv");
+}
 /*-------------------------END OF ADMIN FEEDBACK FUNCTIONALITY -------------------------*/

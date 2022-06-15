@@ -1,2 +1,8 @@
-﻿  main.cpp
+﻿  feedback.cpp
+C:\Users\alist\GitHub\103.2-Group-Project\103.2-Group-Project\feedback.cpp(728,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
+C:\Users\alist\GitHub\103.2-Group-Project\103.2-Group-Project\feedback.cpp(732,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\alist\GitHub\103.2-Group-Project\103.2-Group-Project\feedback.cpp(819,50): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
+C:\Users\alist\GitHub\103.2-Group-Project\103.2-Group-Project\feedback.cpp(823,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\alist\GitHub\103.2-Group-Project\103.2-Group-Project\feedback.cpp(910,49): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
+C:\Users\alist\GitHub\103.2-Group-Project\103.2-Group-Project\feedback.cpp(914,20): warning C4018: '<': signed/unsigned mismatch
   103.2-Group-Project.vcxproj -> C:\Users\alist\GitHub\103.2-Group-Project\Debug\103.2-Group-Project.exe
