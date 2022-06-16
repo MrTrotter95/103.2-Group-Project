@@ -2,29 +2,10 @@
 #pragma once
 using std::cout;
 using std::cin;
-
-//int orderCount;
-//int orderId;
-//int childId;
-//int morningTeaId;
-//int morningTeaDrinkId;
-//int lunchId;
-//int lunchDrinkId;
-//float total{ 0 };
-
-std::string childName;
+using std::getline;
 
 
 
-struct Menu {
-	int foodId;
-	bool foodOrDrink;
-	std::string itemName;
-	float price;
-	bool veg;
-	bool vegan;
-	bool gf;
-}item;
 
 
 
