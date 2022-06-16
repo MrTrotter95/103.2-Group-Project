@@ -1,12 +1,1 @@
-﻿  discount.cpp
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(150,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(152,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(280,35): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(280,65): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(281,40): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(283,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(354,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(356,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(382,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\discount.cpp(384,27): warning C4018: '<': signed/unsigned mismatch
-  103.2-Group-Project.vcxproj -> C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\Debug\103.2-Group-Project.exe
+﻿  103.2-Group-Project.vcxproj -> C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\Debug\103.2-Group-Project.exe
