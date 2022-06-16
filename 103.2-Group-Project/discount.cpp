@@ -1,37 +1,121 @@
 #include "main.h"
 #include "discount.h"
 #include "admin.h"
+#include "login.h"
 
 //file pointer
 std::fstream fout;
 std::fstream fin;
 std::fstream finUser;
 
+const int menuSize_discMenu = 4;
+int selectionHighlight_discMenu = 0;
+string mainMenuPrint_discMenu[menuSize_discMenu] = { "Add Discount", "Set Discount", "Delete Discount", "Return" };
+
+void discountDisplayArray() {
+    cout << "********************************\n*   Welcome to the Account Menu  *\n********************************\n";
+    for (int i = 0; i < menuSize_discMenu; i++)
+    {
+        if (i == selectionHighlight_discMenu)
+        {
+            WriteInColor(3, mainMenuPrint_discMenu[selectionHighlight_discMenu]);
+            cout << endl;
+        }
+        else
+        {
+            WriteInColor(15, mainMenuPrint_discMenu[i]);
+            cout << endl;
+        }
+    }
+}
+
+
+
 /*Start of Discount functionality*/
 void discountMain()
 {
-    system("cls");
-    int selection;
+    int ch, ch2;
+    bool loop = true;
 
-    cout << "What would you like to do?\n1. Add Discount\n2. Set Discount\n3. Delete Discount\n4. Return to Admin Menu\nSelection: ";
-    cin >> selection;
-
-    switch (selection)
+    while (loop)
     {
-    case 1:
-        AddDiscount();
-        break;
-    case 2:
-        SetDiscount();
-        break;
-    case 3:
-        DeleteDiscount();
-        break;
-    case 4:
-        adminMain();
-        break;
-    default:
-        break;
+        ch = _getch();
+
+        switch (ch)
+        {
+        case 224: //This line is the first num received from _getch, and specifies that it is a special character (arrow keys)
+            ch2 = _getch(); //This line takes the value of the special character, which we have defined the values and named them as KEY_ followed by their direction.
+
+            switch (ch2)
+            {
+            case KEY_UP:
+                //This key is assigned to increase the highlighted number by 1;
+                if (selectionHighlight_discMenu > 0)
+                {
+                    selectionHighlight_discMenu--;
+                }
+                else
+                {
+                    selectionHighlight_discMenu = (menuSize_discMenu - 1);
+                }
+                break;
+            case KEY_DOWN:
+                //This key is assigned to decrease the highlighted number by 1
+                if (selectionHighlight_discMenu < (menuSize_discMenu - 1))
+                {
+                    selectionHighlight_discMenu++;
+                }
+                else
+                {
+                    selectionHighlight_discMenu = 0;
+                }
+                break;
+            default:
+                cout << "\nThis key is unassigned.\n";
+                break;
+            }
+
+            system("cls");
+            discountDisplayArray();
+
+            switch (selectionHighlight_discMenu)
+            {
+            case 0:
+                cout << "\nLogin to access your account and see your orders\n";
+                break;
+            case 1:
+                cout << "\nRegister up now to place orders for your children!\n";
+                break;
+            case 2:
+                cout << "\nGet the contact details of the Admin.\n";
+                break;
+            case 3:
+                cout << "\nExit the program safely.\n";
+                break;
+            }
+
+            break;
+        case 13:
+            switch (selectionHighlight_discMenu)
+            {
+            case 0:
+                AddDiscount();
+                break;
+            case 1:
+                SetDiscount();
+                break;
+            case 2:
+                DeleteDiscount();
+                break;
+            case 3:
+                system("cls");
+                AdminMenuDisplay();
+                AdminArrowKeys();
+                break;
+            default:
+                break;
+            }
+        }
     }
 }
 
@@ -113,9 +197,13 @@ void AddDiscount() {
         AddDiscount();
         break;
     case 2:
+        system("cls");
+        discountDisplayArray();
         discountMain();
         break;
     default:
+        system("cls");
+        discountDisplayArray();
         discountMain();
         break;
     }
@@ -224,9 +312,13 @@ void SetDiscount() {
         SetDiscount();
         break;
     case 2:
+        system("cls");
+        discountDisplayArray();
         discountMain();
         break;
     default:
+        system("cls");
+        discountDisplayArray();
         discountMain();
         break;
     }
@@ -336,9 +428,13 @@ void DeleteDiscount() {
         DeleteDiscount();
         break;
     case 2:
+        system("cls");
+        discountDisplayArray();
         discountMain();
         break;
     default:
+        system("cls");
+        discountDisplayArray();
         discountMain();
         break;
     }

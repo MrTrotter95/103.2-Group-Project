@@ -66,6 +66,7 @@ int selectionHighlight_AccountCreation = 0;
 string MenuPrint_AccountCreation[menuSize_AccountCreation] = { "Parent", "Staff", "Admin", "Exit" };
 
 void PrintArray_AccountCreationMenu() {
+    cout << "********************************\n*   Register Your New Account  *\n********************************\n";
     for (int i = 0; i < menuSize_AccountCreation; i++)
     {
         if (i == selectionHighlight_AccountCreation)
@@ -221,6 +222,7 @@ void CreateParentAcc() {
 
 
     //--- Gender ---//
+    cin.ignore();
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
     cout << "Example: F | M | O\nGender:";
     cin >> input_Gender;
@@ -231,6 +233,7 @@ void CreateParentAcc() {
 
 
     //--- Phone Number ---//
+    cin.ignore();
     cout << "\n--- Please enter your phone number ---\nNumber:";
     cin >> input_PhoneNum;
     while (std::cin.fail()) {
@@ -241,6 +244,7 @@ void CreateParentAcc() {
 
 
     //--- Date of birth ---//
+    cin.ignore();
     cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
     cin >> input_dob;
     while (input_dob[2] != '/' || input_dob[5] != '/') {
@@ -250,6 +254,7 @@ void CreateParentAcc() {
 
 
     //--- Email ---//
+    cin.ignore();
     cout << "\n--- Please enter your email address ---\nEmail:";
     cin >> input_email;
     while (input_email.size() > 25) { //--- Max Input Size ---//
@@ -259,6 +264,7 @@ void CreateParentAcc() {
     }
 
     //--- Password ---//
+    cin.ignore();
     cout << "\n--- Please input your password ---\nPassword:";
     cin >> input_password;
     while (input_password.size() > 15) { //--- Max Input Size ---//
@@ -289,6 +295,7 @@ void CreateStaffAcc() {
 
 
     //--- Name ---//
+    cin.ignore();
     cout << "--- Please enter your full name ---\nName:";
     getline(cin, input_Name);
     while (input_Name.size() > 15) { //--- Max Input Size ---//
@@ -304,6 +311,7 @@ void CreateStaffAcc() {
 
   
     //--- Gender ---//
+    cin.ignore();
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
     cout << "Example: F | M | O\nGender:";
     cin >> input_Gender;
@@ -314,6 +322,7 @@ void CreateStaffAcc() {
 
 
     //--- Phone Number ---//
+    cin.ignore();
     cout << "\n--- Please enter your phone number ---\nNumber:";
     cin >> input_PhoneNum;
     while (std::cin.fail()) {
@@ -325,6 +334,7 @@ void CreateStaffAcc() {
 
 
     //--- Date of birth ---//
+    cin.ignore();
     cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
     cin >> input_dob;
     while (input_dob[2] != '/' || input_dob[5] != '/') {
@@ -334,6 +344,7 @@ void CreateStaffAcc() {
 
 
     //--- Email ---//
+    cin.ignore();
     cout << "\n--- Please enter your email address ---\nEmail:";
     cin >> input_email;
     while (input_email.size() > 25) { //--- Max Input Size ---//
@@ -343,6 +354,7 @@ void CreateStaffAcc() {
     }
 
     //--- Password ---//
+    cin.ignore();
     cout << "\n--- Please input your password ---\nPassword:";
     cin >> input_password;
     while (input_password.size() > 15) { //--- Max Input Size ---//
@@ -374,6 +386,7 @@ void CreateAdminAcc() {
 
 
     //--- Name ---//
+    cin.ignore();
     cout << "--- Please enter your full name ---\nName:";
     getline(cin, input_Name);
     while (input_Name.size() > 15) { //--- Max Input Size ---//
@@ -389,6 +402,7 @@ void CreateAdminAcc() {
 
 
     //--- Gender ---//
+    cin.ignore();
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
     cout << "Example: F | M | O\nGender:";
     cin >> input_Gender;
@@ -399,6 +413,7 @@ void CreateAdminAcc() {
 
 
     //--- Phone Number ---//
+    cin.ignore();
     cout << "\n--- Please enter your phone number ---\nNumber:";
     cin >> input_PhoneNum;
     while (std::cin.fail()) {
@@ -410,6 +425,7 @@ void CreateAdminAcc() {
 
 
     //--- Date of birth ---//
+    cin.ignore();
     cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
     cin >> input_dob;
     while (input_dob[2] != '/' || input_dob[5] != '/') {
@@ -419,6 +435,7 @@ void CreateAdminAcc() {
 
 
     //--- Email ---//
+    cin.ignore();
     cout << "\n--- Please enter your email address ---\nEmail:";
     cin >> input_email;
     while (input_email.size() > 25) { //--- Max Input Size ---//
@@ -429,6 +446,7 @@ void CreateAdminAcc() {
 
 
     //--- Password ---//
+    cin.ignore();
     cout << "\n--- Please input your password ---\nPassword:";
     cin >> input_password;
     while (input_password.size() > 15) { //--- Max Input Size ---//

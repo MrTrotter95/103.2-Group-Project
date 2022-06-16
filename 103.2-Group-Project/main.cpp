@@ -1,4 +1,4 @@
-// CS103 Assignment 2-Group-Project
+﻿// CS103 Assignment 2-Group-Project
 // Jordan Wall, Alistair Trotter, Brooklyn Robertson
 
 #include "main.h"
@@ -10,9 +10,9 @@
 #include "discount.h"
 
 /*Global Variables*/
-const int menuSize_main = 7;
+const int menuSize_main = 4;
 int selectionHighlight_main = 0;
-string mainMenuPrint_main[menuSize_main] = { "Login", "Register", "Feedback", "Food Menu", "Admin", "Discount", "Exit" };
+string mainMenuPrint_main[menuSize_main] = { "Login", "Register", "Contact", "Exit" };
 
 
 int main()
@@ -31,11 +31,12 @@ void WriteInColor(unsigned short color, string outputString)
 {
 	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hcon, color);
-	cout << outputString;
+	cout << "  " << outputString;
 	SetConsoleTextAttribute(hcon, 15);
 }
 
 void PrintArray_MainMenu() {
+	cout << "********************************\n* School Lunch Ordering System *\n********************************\n";
 	for (int i = 0; i < menuSize_main; i++)
 	{
 		if (i == selectionHighlight_main)
@@ -56,14 +57,6 @@ void ArrowSelectionMenu_MainMenu() {
 	//cout << "Use arrow keys to make selection\n\n";
 	int ch, ch2;
 	bool loop = true;
-
-	string parent = "1";         // Delete after testing 
-	string staff = "2";          // Delete after testing
-	string admin = "3";          // Delete after testing
-
-	string userId = "1";         // Delete after testing
-	string userName = "Alistair";// Delete after testing
-	string userEmail = "Alistair@email.com"; // Delete after testing
 
 	while (loop)
 	{
@@ -109,25 +102,16 @@ void ArrowSelectionMenu_MainMenu() {
 			switch (selectionHighlight_main)
 			{
 			case 0:
-				cout << "\nRun the login.cpp main function\n";
+				cout << "\nLogin to access your account and see your orders\n";
 				break;
 			case 1:
-				cout << "\nRun the register.cpp main function\n";
+				cout << "\nRegister up now to place orders for your children!\n";
 				break;
 			case 2:
-				cout << "\nRun the feedback.cpp main function\n";
+				cout << "\nGet the contact details of the Admin.\n";
 				break;
 			case 3:
-				cout << "\nRun the menu.cpp main function, then end the loop.\n";
-				break;
-			case 4:
-				cout << "\nRun the admin.cpp main function, view Admin menu, then re-run main menu when returning to main menu.\n";
-				break;
-			case 5:
-				cout << "\nRun the discount.cpp main function\n";
-				break;
-			case 6:
-				cout << "\nExit the program\n";
+				cout << "\nExit the program safely.\n";
 				break;
 			}
 
@@ -142,20 +126,12 @@ void ArrowSelectionMenu_MainMenu() {
 				registerMain();             //Calls main function from register.cpp
 				break;
 			case 2:
-				feedbackMain(userId, userName, userEmail, staff);    //Calls main function from feedback.cpp
+				system("cls");
+				cout << "********************************\n*  Contact the administrator   *\n********************************\n  Admin: Miss Harbringer\n  Email: katieharbringer@school.co.nz\n\n";
+				system("pause");
+				BeginProgram();
 				break;
 			case 3:
-				loop = false;
-				menuMain();                 //Calls main function from menu.cpp
-				break;
-			case 4:
-				loop = false;
-				adminMain();                //Calls main function from admin.cpp
-				break;
-			case 5:
-				discountMain();             //Calls main function from discount.cpp
-				break;
-			case 6:
 				exit(0);					//Exits the program
 			default:
 				break;

@@ -1,6 +1,7 @@
 #include "main.h"
 #include "admin.h"
 #include "discount.h"
+#include "login.h"
 
 //--- Global Variables ---//
 const int menuSize_admin = 6;
@@ -130,7 +131,7 @@ void ArrowSelectionMenu_AdminMenu() {
 				FeedbackAdmin();            //Calls feedback function
 				break;
 			case 3:
-				SalesReportAdmin();                 //Calls sales report function
+				PrintSales();                 //Calls sales report function
 				break;
 			case 4:
 				discountMain();             //Calls discount function
@@ -148,37 +149,113 @@ void ArrowSelectionMenu_AdminMenu() {
 /*------------------------- END OF ADMIN MAIN MENU SECTION -------------------------*/
 /*------------------------- START OF ADMIN ACCOUNT SECTION -------------------------*/
 
+const int menuSize_accountMenu = 4;
+int selectionHighlight_accountMenu = 0;
+string mainMenuPrint_accountMenu[menuSize_accountMenu] = { "Edit Account", "Delete Account", "Change Password", "Return" };
+
+void AccountAdminMenuDisplay() {
+	cout << "********************************\n*   Welcome to the Account Menu  *\n********************************\n";
+	for (int i = 0; i < menuSize_accountMenu; i++)
+	{
+		if (i == selectionHighlight_accountMenu)
+		{
+			WriteInColor(3, mainMenuPrint_accountMenu[selectionHighlight_accountMenu]);
+			cout << endl;
+		}
+		else
+		{
+			WriteInColor(15, mainMenuPrint_accountMenu[i]);
+			cout << endl;
+		}
+	}
+}
+
 //--- Main Menu for Administration of Accounts ---//
 void AccountAdmin() {
-	system("cls");
-	int selection;
+	int ch, ch2;
+	bool loop = true;
 
-	cout << "What would you like to do?" <<
-		"\n1.Edit an Account" <<
-		"\n2.Delete an Account" <<
-		"\n3.Change a Password" <<
-		"\n4.Return to Admin Menu" <<
-		"\nSelection: ";
-	cin >> selection;
-
-	switch (selection)
+	while (loop)
 	{
-	case 1:
-		AccountAdmin_EditAcc();
-		break;
-	case 2:
-		AccountAdmin_DelAcc();
-		break;
-	case 3:
-		AccountAdmin_ChangePass();
-		break;
-	case 4:
-		adminMain();
-		break;
-	default:
-		break;
+		ch = _getch();
+
+		switch (ch)
+		{
+		case 224: //This line is the first num received from _getch, and specifies that it is a special character (arrow keys)
+			ch2 = _getch(); //This line takes the value of the special character, which we have defined the values and named them as KEY_ followed by their direction.
+
+			switch (ch2)
+			{
+			case KEY_UP:
+				//This key is assigned to increase the highlighted number by 1;
+				if (selectionHighlight_accountMenu > 0)
+				{
+					selectionHighlight_accountMenu--;
+				}
+				else
+				{
+					selectionHighlight_accountMenu = (menuSize_accountMenu - 1);
+				}
+				break;
+			case KEY_DOWN:
+				//This key is assigned to decrease the highlighted number by 1
+				if (selectionHighlight_accountMenu < (menuSize_accountMenu - 1))
+				{
+					selectionHighlight_accountMenu++;
+				}
+				else
+				{
+					selectionHighlight_accountMenu = 0;
+				}
+				break;
+			default:
+				cout << "\nThis key is unassigned.\n";
+				break;
+			}
+
+			system("cls");
+			AccountAdminMenuDisplay();
+
+			switch (selectionHighlight_accountMenu)
+			{
+			case 0:
+				cout << "\nLogin to access your account and see your orders\n";
+				break;
+			case 1:
+				cout << "\nRegister up now to place orders for your children!\n";
+				break;
+			case 2:
+				cout << "\nGet the contact details of the Admin.\n";
+				break;
+			case 3:
+				cout << "\nExit the program safely.\n";
+				break;
+			}
+
+			break;
+		case 13:
+			switch (selectionHighlight_accountMenu)
+			{
+			case 0:
+				AccountAdmin_EditAcc();
+				break;
+			case 1:
+				AccountAdmin_DelAcc();
+				break;
+			case 2:
+				AccountAdmin_ChangePass();
+				break;
+			case 3:
+				system("cls");
+				AdminMenuDisplay();
+				AdminArrowKeys();
+				break;
+			default:
+				break;
+			}
+		}
 	}
-} //DONE
+}
 
 //--- Submenu for Editing of Account Details (userDetails.csv) ---//
 void AccountAdmin_EditAcc() {
@@ -573,34 +650,172 @@ void AccountAdmin_ChangePass() {
 /*------------------------- END OF ADMIN ACCOUNT SECTION -------------------------*/
 /*------------------------- START OF ADMIN FOOD MENU SECTION -------------------------*/
 
+const int menuSize_foodMenu = 5;
+int selectionHighlight_foodMenu = 0;
+string mainMenuPrint_foodMenu[menuSize_foodMenu] = { "View Menu", "Add Item", "Edit Item", "Delete Item", "Return" };
+
+void FoodMenuAdminMenuDisplay() {
+	cout << "********************************\n*   Welcome to the Food Admin Menu  *\n********************************\n";
+	for (int i = 0; i < menuSize_foodMenu; i++)
+	{
+		if (i == selectionHighlight_foodMenu)
+		{
+			WriteInColor(3, mainMenuPrint_foodMenu[selectionHighlight_foodMenu]);
+			cout << endl;
+		}
+		else
+		{
+			WriteInColor(15, mainMenuPrint_foodMenu[i]);
+			cout << endl;
+		}
+	}
+}
+
 //--- Main Menu for Administration of Food Menu ---//
 void FoodMenuAdmin() {
-	system("cls");
-	int selection;
+	int ch, ch2;
+	bool loop = true;
 
-	cout << "What would you like to do?\n1. View Menu\n2. Add New Item\n3. Edit Existing Item\n4. Delete Existing Item\n5. Return to Admin Menu\nSelection: ";
-	cin >> selection;
-
-	switch (selection)
+	while (loop)
 	{
-	case 1:
-		FoodMenuAdmin_ViewMenu();
-		break;
-	case 2:
-		FoodMenuAdmin_AddItem();
-		break;
-	case 3:
-		FoodMenuAdmin_EditItem();
-		break;
-	case 4:
-		FoodMenuAdmin_DelItem();
-		break;
-	case 5:
-		adminMain();
-		break;
-	default:
-		break;
+		ch = _getch();
+
+		switch (ch)
+		{
+		case 224: //This line is the first num received from _getch, and specifies that it is a special character (arrow keys)
+			ch2 = _getch(); //This line takes the value of the special character, which we have defined the values and named them as KEY_ followed by their direction.
+
+			switch (ch2)
+			{
+			case KEY_UP:
+				//This key is assigned to increase the highlighted number by 1;
+				if (selectionHighlight_foodMenu > 0)
+				{
+					selectionHighlight_foodMenu--;
+				}
+				else
+				{
+					selectionHighlight_foodMenu = (menuSize_foodMenu - 1);
+				}
+				break;
+			case KEY_DOWN:
+				//This key is assigned to decrease the highlighted number by 1
+				if (selectionHighlight_foodMenu < (menuSize_foodMenu - 1))
+				{
+					selectionHighlight_foodMenu++;
+				}
+				else
+				{
+					selectionHighlight_foodMenu = 0;
+				}
+				break;
+			default:
+				cout << "\nThis key is unassigned.\n";
+				break;
+			}
+
+			system("cls");
+			FoodMenuAdminMenuDisplay();
+
+			switch (selectionHighlight_foodMenu)
+			{
+			case 0:
+				cout << "\nLogin to access your account and see your orders\n";
+				break;
+			case 1:
+				cout << "\nRegister up now to place orders for your children!\n";
+				break;
+			case 2:
+				cout << "\nGet the contact details of the Admin.\n";
+				break;
+			case 3:
+				cout << "\nExit the program safely.\n";
+				break;
+			case 4:
+				cout << "\nReturn to previous menu.\n";
+				break;
+			}
+
+			break;
+		case 13:
+			switch (selectionHighlight_foodMenu)
+			{
+			case 0:
+				FoodMenuAdmin_ViewMenu();
+				break;
+			case 1:
+				FoodMenuAdmin_AddItem();
+				break;
+			case 2:
+				FoodMenuAdmin_EditItem();
+				break;
+			case 3:
+				FoodMenuAdmin_DelItem();
+				break;
+			case 4:
+				system("cls");
+				AdminMenuDisplay();
+				AdminArrowKeys();
+				break;
+			default:
+				break;
+			}
+		}
 	}
+}
+
+void FoodMenuStaff_ViewMenu() {
+	// Function Streams
+	fin_admin.open("food.csv", std::ios::in);
+
+	// Function Variables
+	std::string line, newData;
+	int count = 1, cellBounds = 7, selection;
+	std::vector<string> food;
+	double idChoice, targetElement;
+
+	// While Loop to populate vector users and cout cells
+	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
+	cout << "\t0: Drink\t\t\t\t$\t1: Is not Vege, Vegan or GF\n";
+	cout << "***********************************************************************************\n";
+	while (std::getline(fin_admin, line))
+	{
+		std::stringstream lineStream(line);
+		string cell;
+		while (std::getline(lineStream, cell, ','))
+		{
+			if (count % cellBounds == 0)
+			{
+				cout << cell << "\n";
+				food.push_back(cell);
+				count++;
+			}
+			else
+			{
+				if (count % cellBounds == 2 || count % cellBounds == 3)
+				{
+					cout << cell << "\t\t";
+					food.push_back(cell);
+					count++;
+				}
+				else {
+					cout << cell << "\t";
+					food.push_back(cell);
+					count++;
+				}
+			}
+		}
+	}
+
+	fin_admin.close();
+
+	// Prompt for next action to take
+	cout << "\n";
+	system("pause");
+
+	system("cls");
+	StaffMenuDisplay();
+	StaffArrowKeys();
 }
 
 //--- Submenu to Display Currently Active Menu ---//
@@ -653,15 +868,12 @@ void FoodMenuAdmin_ViewMenu() {
 	cout << "\n1. Return to Menu\nSelection: ";
 	cin >> selection;
 
-	switch (selection)
-	{
-	case 1:
-		FoodMenuAdmin();
-		break;
-	default:
-		adminMain();
-		break;
-	}
+	cout << "\n";
+	system("pause");
+
+	system("cls");
+	AdminMenuDisplay();
+	AdminArrowKeys();
 }
 
 //--- Submenu to Add Food Item to Currently Active Menu ---//
@@ -1106,55 +1318,110 @@ void FoodMenuAdmin_DelItem() {
 /*------------------------- END OF ADMIN FOOD MENU SECTION -------------------------*/
 /*------------------------- START OF ADMIN FEEDBACK SECTION -------------------------*/
 
-//--- Main Menu for Administration of Feedback ---//
-void FeedbackAdmin() {
-	system("cls");
-	int selection;
-
-	cout << "Menu not yet implemented..\n1. Add Discount\n2. Set Discount\n3. Delete Discount\n4. Return to Admin Menu\nSelection: ";
-	cin >> selection;
-
-	switch (selection)
-	{
-	case 1:
-		AddDiscount();
-		break;
-	case 2:
-		SetDiscount();
-		break;
-	case 3:
-		DeleteDiscount();
-		break;
-	case 4:
-		adminMain();
-		break;
-	default:
-		break;
-	}
-}
+// moved to feedback.cpp
 
 /*------------------------- END OF ADMIN FEEDBACK SECTION -------------------------*/
 /*------------------------- START OF ADMIN SALES SECTION -------------------------*/
 
 //--- Main Menu for Sales Reports ---//
-void SalesReportAdmin() {
-	system("cls");
-	int selection;
+void PrintOrders() {
+	// Function Streams
+	fin_admin.open("orders.csv", std::ios::in);
+	finUser_admin.open("food.csv", std::ios::in);
 
-	cout << "Menu not yet implemented..\n1. Print Sales\n2. Return to Admin Menu\nSelection: ";
-	cin >> selection;
+	// Function Variables
+	std::string line, line2, newData;
+	int count = 1, count2 = 1, cellBounds = 7, selection;
+	std::vector<string> orders, food;
+	double idChoice, targetElement;
 
-	switch (selection)
+	// While Loop to populate vector users and cout cells
+	cout << "\nID\tChild\tMTea Food\tMTea Drink\tLunch Food\tLunch Drink\tTotal Price\n";
+	cout << "*******************************************************************************************\n";
+
+	// Statement to populate food vector with food.csv
+	while (std::getline(finUser_admin, line2))
 	{
-	case 1:
-		PrintSales();
-		break;
-	case 2:
-		adminMain();
-		break;
-	default:
-		break;
+		std::stringstream lineStream(line2);
+		string cell;
+		while (std::getline(lineStream, cell, ','))
+		{
+			if (count2 % cellBounds == 3)
+			{
+				food.push_back(cell);
+				count2++;
+			}
+			else if (count2 % cellBounds == 0)
+			{
+				//cout << "\n";
+				count2++;
+			}
+			else
+			{
+				count2++;
+			}
+		}
 	}
+
+	// Statement to populate orders vector with orders.csv
+	while (std::getline(fin_admin, line))
+	{
+		std::stringstream lineStream(line);
+		string cell;
+		while (std::getline(lineStream, cell, ','))
+		{
+			if (count % cellBounds == 0)
+			{
+				cout << "$" << cell << "\n";
+				orders.push_back(cell);
+				count++;
+			}
+			else
+			{
+				if (count % cellBounds == 3)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else if (count % cellBounds == 4)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else if (count % cellBounds == 5)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else if (count % cellBounds == 6)
+				{
+					cout << food[std::stoi(cell) - 1] << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+				else
+				{
+					cout << cell << "\t";
+					orders.push_back(cell);
+					count++;
+				}
+			}
+		}
+	}
+
+	fin_admin.close();
+	finUser_admin.close();
+
+	// Prompt for next action to take
+	cout << "\n";
+	system("pause");
+
+	system("cls");
+	StaffMenuDisplay();
+	StaffArrowKeys();
 }
 
 void PrintSales() {
@@ -1252,18 +1519,12 @@ void PrintSales() {
 	finUser_admin.close();
 
 	// Prompt for next action to take
-	cout << "\n1. Return to Menu\nSelection: ";
-	cin >> selection;
+	cout << "\n";
+	system("pause");
 
-	switch (selection)
-	{
-	case 1:
-		SalesReportAdmin();
-		break;
-	default:
-		adminMain();
-		break;
-	}
+	system("cls");
+	AdminMenuDisplay();
+	AdminArrowKeys();
 }
 
 
@@ -1271,9 +1532,112 @@ void PrintSales() {
 /*------------------------- START OF ADMIN DISCOUNT SECTION -------------------------*/
 
 //--- Main Menu for Administration of Discount ---//
-void DiscountAdmin() {
-	system("cls");
-	discountMain();
+const int menuSize_feedMenu = 4;
+int selectionHighlight_feedMenu = 0;
+string mainMenuPrint_feedMenu[menuSize_feedMenu] = { "Add Discount", "Set Discount", "Delete Discount", "Return" };
+
+void FeedbackAdminMenuDisplay() {
+	cout << "********************************\n*   Welcome to the Discount Admin Menu  *\n********************************\n";
+	for (int i = 0; i < menuSize_feedMenu; i++)
+	{
+		if (i == selectionHighlight_feedMenu)
+		{
+			WriteInColor(3, mainMenuPrint_feedMenu[selectionHighlight_feedMenu]);
+			cout << endl;
+		}
+		else
+		{
+			WriteInColor(15, mainMenuPrint_feedMenu[i]);
+			cout << endl;
+		}
+	}
+}
+
+//--- Main Menu for Administration of Feedback ---//
+void FeedbackAdmin() {
+	int ch, ch2;
+	bool loop = true;
+
+	while (loop)
+	{
+		ch = _getch();
+
+		switch (ch)
+		{
+		case 224: //This line is the first num received from _getch, and specifies that it is a special character (arrow keys)
+			ch2 = _getch(); //This line takes the value of the special character, which we have defined the values and named them as KEY_ followed by their direction.
+
+			switch (ch2)
+			{
+			case KEY_UP:
+				//This key is assigned to increase the highlighted number by 1;
+				if (selectionHighlight_feedMenu > 0)
+				{
+					selectionHighlight_feedMenu--;
+				}
+				else
+				{
+					selectionHighlight_feedMenu = (menuSize_feedMenu - 1);
+				}
+				break;
+			case KEY_DOWN:
+				//This key is assigned to decrease the highlighted number by 1
+				if (selectionHighlight_feedMenu < (menuSize_feedMenu - 1))
+				{
+					selectionHighlight_feedMenu++;
+				}
+				else
+				{
+					selectionHighlight_feedMenu = 0;
+				}
+				break;
+			default:
+				cout << "\nThis key is unassigned.\n";
+				break;
+			}
+
+			system("cls");
+			FeedbackAdminMenuDisplay();
+
+			switch (selectionHighlight_feedMenu)
+			{
+			case 0:
+				cout << "\nLogin to access your account and see your orders\n";
+				break;
+			case 1:
+				cout << "\nRegister up now to place orders for your children!\n";
+				break;
+			case 2:
+				cout << "\nGet the contact details of the Admin.\n";
+				break;
+			case 3:
+				cout << "\nReturn to previous menu.\n";
+				break;
+			}
+
+			break;
+		case 13:
+			switch (selectionHighlight_feedMenu)
+			{
+			case 0:
+				FoodMenuAdmin_ViewMenu();
+				break;
+			case 1:
+				FoodMenuAdmin_AddItem();
+				break;
+			case 2:
+				FoodMenuAdmin_EditItem();
+				break;
+			case 3:
+				system("cls");
+				AdminMenuDisplay();
+				AdminArrowKeys();
+				break;
+			default:
+				break;
+			}
+		}
+	}
 }
 
 /*-------------------------END OF ADMIN DISCOUNT SECTION -------------------------*/

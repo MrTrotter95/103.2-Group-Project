@@ -1,21 +1,6 @@
 #include "main.h"
 #include "feedback.h"
-
-void PrintArray_ParentFeedbackMenu();
-void ArrowSelectionMenu_ParentFeedback(string, string , string);
-void GeneralContact(string, string, string);
-void SendCompliment(string, string, string);
-void SendComplaint(string, string, string);
-void PrintArray_StaffFeedbackMenu();
-void ArrowSelectionMenu_StaffFeedback();
-void ViewGeneralMessages();
-void ViewCompliments();
-void ViewComplaints();
-void PrintArray_AdminFeedbackMenu(string, string);
-void ArrowSelectionMenu_AdminFeedback(string, string);
-void RespondGeneralMessages(string, string);
-void RespondCompliments(string, string);
-void RespondComplaints(string, string);
+#include "login.h"
 
 /*Start of Feedback functionality*/
 void feedbackMain(string userId, string userName, string userEmail, string accessLevel) // This must have a User ID comming into it and or access level?
@@ -48,9 +33,10 @@ void feedbackMain(string userId, string userName, string userEmail, string acces
 /*-------------------------START OF PARENT FEEDBACK MENU SECTION -------------------------*/
 const int menuSize_ParentFeedBack = 4;
 int selectionHighlight_ParentFeedback = 0;
-string mainMenuPrint_ParentFeedback[menuSize_ParentFeedBack] = { "General", "Compliment", "Complaint", "Exit"};
+string mainMenuPrint_ParentFeedback[menuSize_ParentFeedBack] = { "General", "Compliment", "Complaint", "Return"};
 
 void PrintArray_ParentFeedbackMenu() {
+	cout << "********************************\n*   Welcome to the Parent Feedback Menu  *\n********************************\n";
 	for (int i = 0; i < menuSize_ParentFeedBack; i++)
 	{
 		if (i == selectionHighlight_ParentFeedback)
@@ -318,10 +304,11 @@ void SendComplaint(string userId, string userName, string userEmail) {
 /*-------------------------START OF STAFF FEEDBACK MENU SECTION -------------------------*/
 const int menuSize_StaffFeedBack = 4;
 int selectionHighlight_StaffFeedback = 0;
-string mainMenuPrint_StaffFeedback[menuSize_StaffFeedBack] = { "General", "Compliments", "Complaints", "Exit" };
+string mainMenuPrint_StaffFeedback[menuSize_StaffFeedBack] = { "General", "Compliments", "Complaints", "Return" };
 
 
 void PrintArray_StaffFeedbackMenu() {
+	cout << "********************************\n*   Welcome to the Staff Feedback Menu  *\n********************************\n";
 	for (int i = 0; i < menuSize_StaffFeedBack; i++)
 	{
 		if (i == selectionHighlight_StaffFeedback)
@@ -532,10 +519,11 @@ void ViewComplaints() {
 /*-------------------------START OF ADMIN FEEDBACK MENU SECTION -------------------------*/
 const int menuSize_AdminFeedBack = 4;
 int selectionHighlight_AdminFeedback = 0;
-string mainMenuPrint_AdminFeedback[menuSize_AdminFeedBack] = { "General", "Compliments", "Complaints", "Exit" };
+string mainMenuPrint_AdminFeedback[menuSize_AdminFeedBack] = { "General", "Compliments", "Complaints", "Return" };
 
 
 void PrintArray_AdminFeedbackMenu(string userId, string userEmail) {
+	cout << "********************************\n*   Welcome to the Admin Feedback Menu  *\n********************************\n";
 	for (int i = 0; i < menuSize_AdminFeedBack; i++)
 	{
 		if (i == selectionHighlight_AdminFeedback)
@@ -630,7 +618,10 @@ void ArrowSelectionMenu_AdminFeedback(string userId, string userEmail) {
 				break;
 			case 3:
 				loop = false;
-				BeginProgram();	//Calls main menu function
+				system("cls");
+				AdminMenuDisplay();
+				AdminArrowKeys();
+				break;
 			default:
 				break;
 			}
