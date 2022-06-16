@@ -51,6 +51,7 @@ public:
     }
 };
 
+
 //--- Start of Register functionality ---//
 void registerMain()
 {    
@@ -59,6 +60,7 @@ void registerMain()
     cout << "\nWhat type of account would you like to create?\n";
     ArrowSelectionMenu_AccountCreation();
 }
+
 
 /*-------------------------START OF CREATE ACCOUNT MENU SECTION -------------------------*/
 const int menuSize_AccountCreation = 4;
@@ -193,8 +195,6 @@ void ArrowSelectionMenu_AccountCreation() {
     }
 }
 /*-------------------------END OF CREATE ACCOUNT MENU SECTION -------------------------*/
-
-
 void CreateParentAcc() {
     cout << "--- Creating Parent account ---\n\n";
 
@@ -208,16 +208,16 @@ void CreateParentAcc() {
 
     //--- Name ---//
     cout << "--- Please enter your first name ---\nName:";
-    getline(cin, input_Name);
+    cin >> input_Name;
     while (input_Name.size() > 15) { //--- Max Input Size ---//
         cout << "15 character limit reached. Please try again\n";
         std::cin.clear();
-        getline(cin, input_Name);
+        cin >> input_Name;
     }
     while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
         cout << "Numbers found in name, please only use characters\n";
         std::cin.clear();
-        getline(cin, input_Name);
+        cin >> input_Name;
     }
 
 
@@ -296,17 +296,17 @@ void CreateStaffAcc() {
 
     //--- Name ---//
     cin.ignore();
-    cout << "--- Please enter your full name ---\nName:";
-    getline(cin, input_Name);
+    cout << "--- Please enter your first name ---\nName:";
+    cin >> input_Name;
     while (input_Name.size() > 15) { //--- Max Input Size ---//
         cout << "15 character limit reached. Please try again\n";
         std::cin.clear();
-        getline(cin, input_Name);
+        cin >> input_Name;
     }
     while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
         cout << "Numbers found in name, please only use characters\n";
         std::cin.clear();
-        getline(cin, input_Name);
+        cin >> input_Name;
     }
 
   
@@ -387,17 +387,17 @@ void CreateAdminAcc() {
 
     //--- Name ---//
     cin.ignore();
-    cout << "--- Please enter your full name ---\nName:";
-    getline(cin, input_Name);
+    cout << "--- Please enter your first name ---\nName:";
+    cin >> input_Name;
     while (input_Name.size() > 15) { //--- Max Input Size ---//
         cout << "15 character limit reached. Please try again\n";
         std::cin.clear();
-        getline(cin, input_Name);
+        cin >> input_Name;
     }
     while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
         cout << "Numbers found in name, please only use characters\n";
         std::cin.clear();
-        getline(cin, input_Name);
+        cin >> input_Name;
     }
 
 
