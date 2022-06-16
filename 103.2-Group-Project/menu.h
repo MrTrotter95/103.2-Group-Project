@@ -3,17 +3,16 @@
 using std::cout;
 using std::cin;
 
-int orderCount;
-int orderId;
-int childId;
-int morningTeaId;
-int morningTeaDrinkId;
-int lunchId;
-int lunchDrinkId;
-float total{ 0 };
-float price{ 0 };
+//int orderCount;
+//int orderId;
+//int childId;
+//int morningTeaId;
+//int morningTeaDrinkId;
+//int lunchId;
+//int lunchDrinkId;
+//float total{ 0 };
 
-
+std::string childName;
 
 
 
@@ -28,12 +27,13 @@ struct Menu {
 }item;
 
 
-int foodId;
+
 void PlaceOrder(int childid);
 int AddChild(int childid);
 void CheckChild(int childid);
 void ViewOrders(int child);
 void ViewMenu();
-void menuMain();
-float GetPrice(int id);
-void ScanMenu(int input);
+int menuMain();
+double GetPrice(int id);
+std::string GetItemName(int id);
+//void CheckFlags(int id);
