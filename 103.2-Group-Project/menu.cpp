@@ -113,9 +113,9 @@ void ViewOrders(int child) {
 	std::vector<std::string> history;
 	std::string strId{ std::to_string(child) };
 	std::fstream historyOrder;
-	std::string line, cell, orderId,childId, food1,food2,drink1,drink2;
+	std::string line, cell, orderId,childId, food1,food2,drink1,drink2,cost;
 	std::vector<std::string> allOrders;
-	double cost;
+	//double cost;
 
 
 	//open the order csv//
@@ -129,36 +129,77 @@ void ViewOrders(int child) {
 
 		//formatting for order view//
 		std::cout << "Order Number \t Child ID \t morning tea \t lunch \t total \n";
+		while (std::getline(historyOrder, line))
+		{
+			std::stringstream  lineStream(line);
+
+			//grabbing all the variables ill need to display
+			std::getline(lineStream, orderId, ',');
+			std::getline(lineStream, childId, ',');
+			std::getline(lineStream, food1, ',');
+			std::getline(lineStream, drink1, ',');
+			std::getline(lineStream, food2, ',');
+			std::getline(lineStream, drink2, ',');
+			std::getline(lineStream,cost , ',');
+
+			//specifying which child's orders to display
+			if (strId == childId) {
+				std::cout << orderId <<  "\t\t" << childId << "\t";
+			}
+			std::cout << GetItemName(stoi(food1)) << "\t\t\t";
+			std::cout << GetItemName(stoi(food2)) << "\t";
+			std::cout << GetItemName(stoi(drink1)) << "\n\t\t\t";
+			std::cout << GetItemName(stoi(drink2)) << "\n\t\t\t";
+
+			std::cout << "$" << stod(cost) << "\n";
+			
+		}
 
 		//while loop to grab cells//
 		while (std::getline(historyOrder, line)) {
 			std::stringstream lineStream(line);
+			//std::cout << line;
+			while (std::getline(lineStream, cell, ',')) {
+				//std::cout << "\t" << cell << "\t";
 
-			for (int i = 0; i < 6; i++) {
-				std::getline(lineStream, cell, ',');//line parsed as cells//
-				if (cell == strId) {
-					childId = cell[i];
-					std::cout << cell[i - 1] << "\t";
-					
-					for (int i = 0; i < allOrders.size(); i++) {
-						if (allOrders[i + 1] == strId) {
-							history.push_back(allOrders[i]);//adds the order ID to the history vector//
-						}
-					}
+				allOrders.push_back(cell);
+				allOrders.push_back(",");
 
 
+				//for (int i = 0; i < allOrders.size(); i++) {
+				//	cout << allOrders[i];
+				//}
 
-				}
+
+				//allOrders.push_back(cell);
+				//if (cell == strId) {
+
+				//	//history.push_back(cell);
+				//	for (int i = 0; i < allOrders.size(); i++) {
+				//		if (cell == strId) {
+				//			history.push_back(allOrders[i]);
+				//		}
+				//	}
+
+				//	for (int i = 0; i < history.size(); i++) {
+
+				//		std::cout << "\t" << history[i] << "\t";
+				//		std::cout << "allorders: " << allOrders[i];
+				//	}
+				/*	std::cout << "\n";
+				}*/
+				
+			
 			}
+			allOrders.push_back("\n");
+			//std::cout << "\n";
 			
 			
-			
-			
-			//for loop to print vector//
-			for (int i = 0; i < 6; i++) {
-				std::cout << "\t" << history[i] << "\t";
-			}
-			std::cout << "\n";
+			////for loop to print vector//
+			//for (int i = 0; i < 6; i++) {
+			//	std::cout << "\t" << history[i] << "\t";
+			//}
+			//std::cout << "\n";
 
 		}
 		historyOrder.close();
@@ -325,7 +366,6 @@ std::string GetItemName(int id) {
 	std::string line, cell, price;
 	int count{ 0 };
 	if (menu.is_open()) {
-		std::cout << "\n menu.csv is open\n";
 
 		while (std::getline(menu, line)) {
 
@@ -375,31 +415,60 @@ double GetPrice(int id) {
 	}
 }
 
-//void CheckFlags(int id) {
-//	std::string menuId = std::to_string(id);
-//	std::ifstream menu,child;
-//	menu.open("food.csv");
-//	child.open("children.csv");
-//	std::string line, cell, price;
-//	int count{ 0 };
-//	if (menu.is_open() && child.is_open()) {
-//		std::cout << "\n menu.csv and children.csv are open\n";//debug
-//
-//
-//	while (std::getline(menu, line)) {
-//
-//		std::stringstream lineStream(line);
-//		std::getline(lineStream, cell, ',');
-//		if (menuId == cell)  {
-//			for (int i = 0; i < 2; i++) {
-//				std::getline(lineStream, cell, ',');
-//			}
-//			child.close();
-//			menu.close();
-//		}
-//	}
-//
-//}
+void CheckFlags(int id) {
+	std::string selection = std::to_string(id);
+	std::ifstream menu,child;
+	menu.open("food.csv");
+	child.open("children.csv");
+	std::string line, cell, childName, foodType, flag;
+	int count{ 0 };
+	if (menu.is_open() && child.is_open()) {
+		std::cout << "\n menu.csv and children.csv are open\n";//debug
+
+
+	while (std::getline(menu, line)) {
+
+		std::stringstream lineStream(line);
+		for (int i = 0; i < 2; i++) {
+			std::getline(lineStream, foodType, ',');//getting the 'food or drink flag'
+		}
+
+		//switch to warn user
+		switch (stoi(foodType)) {
+		case 0:
+			if (foodType != selection) {
+				std::cout << "Must be drink...\n Enter valid drink item";
+				
+			}
+			else {
+				break;
+			}
+		case 1:
+			if (foodType != selection) {
+				std::cout << "Must be food...\n Enter valid food item";
+				
+			}
+			else {
+				break;
+			}
+		default:
+			std::cout << "Food weird...";
+			break;
+		}
+
+		for (int i = 0; i < 3; i++) {
+			std::getline(lineStream, flag, ',');//getting the dietary flags
+		}
+
+		if (flag != selection) {
+			std::cout << "WARNING:\n\n Make sure you are aware of your childs dietary requirements...";
+		}
+			child.close();
+			menu.close();
+		}
+	}
+
+}
 /*-------------------------START OF PLACE ORDER FUNCTIONALITY-------------------------*/
 /*function toplace the order of a child, and store in order.csv  file:*/
 void PlaceOrder(int child) {
@@ -430,29 +499,39 @@ void PlaceOrder(int child) {
 
 		std::getline(lineStream, cell, ',');
 		notorder = false;
-		orderId = stoi(cell) + 1;//new oreder id is +1 of last order id//
+		orderId = stoi(cell) + 1;//new order id is +1 of last order id//
 		currentOrder.push_back(std::to_string(orderId));
 		currentOrder.push_back(id);
+
+		//user menu selector//
 		std::cout << "Enter ID of morningTea item: ";
 		std::cin >> morningTeaId;
+		CheckFlags(morningTeaId);//checks input correct//
+		total += GetPrice(morningTeaId);//tally price//
+		currentOrder.push_back(GetItemName(morningTeaId));//push to 'cart'//
 
-		total += GetPrice(morningTeaId);
-
-		currentOrder.push_back(GetItemName(morningTeaId));
+		//#2//
 		std::cout << "Enter ID of morningTea DRINK: ";
 		std::cin >> morningTeaDrinkId;
+		CheckFlags(morningTeaDrinkId);
 		total += GetPrice(morningTeaDrinkId);
 		currentOrder.push_back(GetItemName(morningTeaDrinkId));
+
+		//#3//
 		std::cout << "Enter ID of lunch item: ";
 		std::cin >> lunchId;
+		CheckFlags(lunchId);
 		total += GetPrice(lunchId);
 		currentOrder.push_back(GetItemName(lunchId));
+
+		//#4//
 		std::cout << "Enter ID of lunch DRINK : ";
 		std::cin >> lunchDrinkId;
+		CheckFlags(lunchDrinkId);
 		total += GetPrice(lunchDrinkId);
 		currentOrder.push_back(GetItemName(lunchDrinkId));
 
-		//pushing final price to order//
+		//pushing final price to order cart//
 		currentOrder.push_back(std::to_string(total));
 
 		//for loop to print current order as bill//

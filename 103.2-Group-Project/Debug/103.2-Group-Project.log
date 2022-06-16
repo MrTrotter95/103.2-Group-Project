@@ -1,7 +1,12 @@
 ﻿  menu.cpp
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(143,24): warning C4018: '<': signed/unsigned mismatch
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(118,9): warning C4101: 'cost': unreferenced local variable
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(421,14): error C2371: 'childId': redefinition; different basic types
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(413): message : see declaration of 'childId'
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(459,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(466,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(500,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(507,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(306): warning C4715: 'AddChild': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(387): warning C4715: 'GetItemName': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(416): warning C4715: 'GetPrice': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(554): warning C4715: 'menuMain': not all control paths return a value
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
+menu.obj : warning LNK4006: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > childName" (?childName@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A) already defined in main.obj; second definition ignored
+menu.obj : warning LNK4006: "struct Menu item" (?item@@3UMenu@@A) already defined in main.obj; second definition ignored
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
+  103.2-Group-Project.vcxproj -> C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe
