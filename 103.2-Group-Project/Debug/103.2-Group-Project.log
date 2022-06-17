@@ -1,6 +1,1 @@
-﻿  menu.cpp
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(426): warning C4715: 'GetItemName': not all control paths return a value
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(455): warning C4715: 'GetPrice': not all control paths return a value
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(685): warning C4715: 'menuMain': not all control paths return a value
-LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
-  103.2-Group-Project.vcxproj -> C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe
+﻿  103.2-Group-Project.vcxproj -> C:\Users\alist\GitHub\103.2-Group-Project\Debug\103.2-Group-Project.exe
