@@ -550,10 +550,8 @@ void PlaceOrder(int child) {
 
 	//variables used in funciton//
 	long orderId;
-	int morningTeaId;
-	int morningTeaDrinkId;
-	int lunchId;
-	int lunchDrinkId;
+	int morningTeaId,morningTeaDrinkId,lunchId,lunchDrinkId,choice;
+	int intChild = child;
 
 	bool notorder = true;
 	double total = 0;
@@ -578,68 +576,93 @@ void PlaceOrder(int child) {
 		{
 			currentOrder.push_back(cell);
 		}
+	
+		for (auto g = currentOrder.rbegin(); g != currentOrder.rend(); g++) {
+			lastId = *g;//assigning variable to store last known order id in file
+		}
 	}
-	for (auto i = currentOrder.rbegin(); i != currentOrder.rend(); i++) {
-		std::cout << *i << " ";
-		lastId = *i;//assigning variable to store last known order id in file
-	}
+	
+	long counter = stol(lastId);//last id to long int
 
-	long int counter = stol(lastId);
-
-	counter++;
+	counter++; //increment by 1 for new id
 
 	 orderId = counter; // new child id ready for use//
 
-	currentOrder.clear();
+	 currentOrder.clear(); 
 
 	currentOrder.push_back(std::to_string(orderId));//pushing new order id into vector as first value//
-	currentOrder.push_back(std::to_string(child));//pushing child's own id//
+	currentOrder.push_back(id);//pushing child's own id//
 	
 
 		//user menu selector//
-		std::cout << "Enter ID of morningTea item: 1";
+		std::cout << "\nEnter ID of morningTea item: \n";
 		std::cin >> morningTeaId;
 		//CheckFlags(morningTeaId);//checks input correct//
+		std::cout << "Entered: " << GetItemName(morningTeaId);
 		total += GetPrice(morningTeaId);//tally price//
-		currentOrder.push_back(GetItemName(morningTeaId));//push to 'cart'//
+		currentOrder.push_back(std::to_string(morningTeaId));//push to 'cart'//
 
 		//#2//
-		std::cout << "Enter ID of morningTea item: 2";
+		std::cout << "\nEnter ID of morningTea item: \n";
 		std::cin >> morningTeaDrinkId;
 		//CheckFlags(morningTeaDrinkId);
+		std::cout << "Entered: " << GetItemName(morningTeaDrinkId);
 		total += GetPrice(morningTeaDrinkId);
-		currentOrder.push_back(GetItemName(morningTeaDrinkId));
+		currentOrder.push_back(std::to_string(morningTeaDrinkId));
 
 		//#3//
-		std::cout << "Enter ID of lunch item: ";
+		std::cout << "\nEnter ID of lunch item 1: \n";
 		std::cin >> lunchId;
 		//CheckFlags(lunchId);
+		std::cout << "Entered: " << GetItemName(lunchId);
 		total += GetPrice(lunchId);
-		currentOrder.push_back(GetItemName(lunchId));
+		currentOrder.push_back(std::to_string(lunchId));
 
 		//#4//
-		std::cout << "Enter ID of lunch DRINK : ";
+		std::cout << "\nEnter ID of lunch item 2: \n";
 		std::cin >> lunchDrinkId;
 		//CheckFlags(lunchDrinkId);
+		std::cout << "Entered: " << GetItemName(lunchDrinkId);
 		total += GetPrice(lunchDrinkId);
-		currentOrder.push_back(GetItemName(lunchDrinkId));
+		currentOrder.push_back(std::to_string(lunchDrinkId));
 
 		//pushing final price to order cart//
 		currentOrder.push_back(std::to_string(total));
 
 		//for loop to print current order as bill//
-		std::cout << "Bill :\n Order Number \t Child ID \t morning tea: \t Lunch: \n";
-		for (unsigned int i = 0; i < currentOrder.size(); i++) {
-			std::cout << currentOrder[i] << "\t";
+		std::cout << "\n\nBill :\n Order Number \t Child ID \t morning tea: \t Lunch: \n\t";
+
+		for (unsigned int j = 0; j < (currentOrder.size()-1); j++) {
+			std::cout  << currentOrder[j] << "\t";
 		}
 
-		std::cout << "\n\n\n\n Total Order: $" << total;
+		std::cout << "\n\n Total Order: $" << total;
 
 		//pushing bill to order.csv//
-		for (unsigned int i = 0; i < currentOrder.size(); i++) {
-			fout << currentOrder[i] << ',';
+		for (unsigned int k = 0; k < currentOrder.size(); k++) {
+			fout << currentOrder[k] << ',';
 		}
 		fout << "\n";
+
+		std::cout << "Would you like to: \t 1. Place another order \t 2. View all orders for child \t 3. Change child \t 4. Exit";
+		std::cin >> choice;
+		switch (choice) {
+		case 1:
+			PlaceOrder(intChild);
+			break;
+		case 2:
+			ViewOrders(intChild);
+			break;
+		case 3:
+			cout << "Enter Child ID";
+			cin >> choice;
+			CheckChild(choice);
+			break;
+		default:
+			std::cout << "something went wrong here";
+			break;
+
+		}
 		fin.close();
 		fout.close();
 }
@@ -660,6 +683,7 @@ int menuMain()
 	int choice;
 	int childId;
 	//food order functinoality starts with checking a childs existence in the system
+
 	std::cout << "Enter child ID\n";
 	std::cin >> childId;
 	CheckChild(childId);

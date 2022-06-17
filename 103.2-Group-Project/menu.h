@@ -17,4 +17,4 @@ void ViewMenu();
 int menuMain();
 double GetPrice(int id);
 std::string GetItemName(int id);
-//void CheckFlags(int id);
+void CheckFlags(int id);
