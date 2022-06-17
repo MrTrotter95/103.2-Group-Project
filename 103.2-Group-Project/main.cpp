@@ -58,6 +58,14 @@ void ArrowSelectionMenu_MainMenu() {
 	int ch, ch2;
 	bool loop = true;
 
+	string parent = "1";         // Delete after testing 
+	string staff = "2";          // Delete after testing
+	string admin = "3";          // Delete after testing
+
+	string userId = "1";         // Delete after testing
+	string userName = "alistair";// Delete after testing
+	string userEmail = "email1"; // Delete after testing
+
 	while (loop)
 	{
 		ch = _getch();

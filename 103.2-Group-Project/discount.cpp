@@ -276,6 +276,7 @@ void SetDiscount() {
     cout << "\nWhich discount number to give User [" << idChoice << "]: ";
     cin >> discChoice;
 
+
     // Statement to change selected user's discount value to selected discount value
     users.at((5 * (idChoice - 1)) + 4) = discs[(discChoice * 2) - 1];
     cout << users[(5 * (idChoice - 1)) + 4];
