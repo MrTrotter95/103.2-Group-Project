@@ -663,7 +663,7 @@ int menuMain()
 	std::cout << "Enter child ID\n";
 	std::cin >> childId;
 	CheckChild(childId);
-
+	
 	//menu main options
 	std::cout << "Choose: \n 1: View Previous Orders 2.PlaceOrder 3.Exit:";
 	std::cin >> choice;
