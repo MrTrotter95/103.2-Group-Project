@@ -20,3 +20,4 @@ void FeedbackAdmin();
 void PrintOrders();
 void PrintSales();
 bool isNumber(const string& str);
+bool isDecimalNumber(const string& s);

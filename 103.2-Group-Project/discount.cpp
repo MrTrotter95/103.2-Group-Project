@@ -13,7 +13,7 @@ int selectionHighlight_discMenu = 0;
 string mainMenuPrint_discMenu[menuSize_discMenu] = { "Add Discount", "Set Discount", "Delete Discount", "Return" };
 
 void discountDisplayArray() {
-    cout << "********************************\n*   Welcome to the Account Menu  *\n********************************\n";
+    cout << "**********************************\n*   Welcome to the Discount Menu  *\n* Enter 'q' at any input to exit *\n**********************************\n";
     for (int i = 0; i < menuSize_discMenu; i++)
     {
         if (i == selectionHighlight_discMenu)
@@ -122,8 +122,8 @@ void discountMain()
 /*Making a new discount*/
 void AddDiscount() {
 
-    double value;
-    std::string name, line, word;
+    double value = 0;
+    std::string name, line, word, temp;
     std::vector<std::string> row;
     std::vector<std::vector<std::string>> discContent;
 
@@ -178,9 +178,53 @@ void AddDiscount() {
     cout << "******************************\nMake a new discount\n";
 
     cout << "Discount name [string]: ";
-    getline(cin, name);
+    getline(cin, temp);
+
+    if (temp.size() > 0 && temp.size() < 15)
+    {
+        name = temp;
+    }
+    else if (temp == "q")
+    {
+        system("pause");
+        fout.close();
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
+    else {
+        cout << "Name is too long\n";
+        system("pause");
+        fout.close();
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
+
     cout << "Discount value [double]: ";
-    cin >> value;
+    cin >> temp;
+
+    if (isDecimalNumber(temp))
+    {
+        value = stod(temp);
+    }
+    else if (temp == "q")
+    {
+        system("pause");
+        fout.close();
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        fout.close();
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
 
     fout << name << ',' << value << ',' << "\n";
 
@@ -220,10 +264,10 @@ void SetDiscount() {
     fout.open("userDetailsNew.csv", std::ios::out | std::ios::app);
 
 
-    std::string line, lineDisc;
+    std::string line, lineDisc, temp;
     int count = 1, count2 = 1, idCount = 1, selection;
     std::vector<string> users, discs;
-    double idChoice, discChoice;
+    double idChoice = 0, discChoice = 0;
 
     // Statement to populate users vector with userDetails
     while (std::getline(finUser, line))
@@ -272,9 +316,65 @@ void SetDiscount() {
     }
 
     cout << "\nWhich ID to edit discount?\n[ID]: ";
-    cin >> idChoice;
+    cin >> temp;
+    if (isNumber(temp))
+    {
+        idChoice = stoi(temp);
+    }
+    else if (temp == "q")
+    {
+        system("pause");
+        fin.close();
+        finUser.close();
+        fout.close();
+        std::remove("userDetailsNew.csv");
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        fin.close();
+        finUser.close();
+        fout.close();
+        std::remove("userDetailsNew.csv");
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
+
+
     cout << "\nWhich discount number to give User [" << idChoice << "]: ";
-    cin >> discChoice;
+    cin >> temp;
+    if (isNumber(temp))
+    {
+        discChoice = stoi(temp);
+    }
+    else if (temp == "q")
+    {
+        system("pause");
+        fin.close();
+        finUser.close();
+        fout.close();
+        std::remove("userDetailsNew.csv");
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        fin.close();
+        finUser.close();
+        fout.close();
+        std::remove("userDetailsNew.csv");
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
 
     // Statement to change selected user's discount value to selected discount value
     users.at((5 * (idChoice - 1)) + 4) = discs[(discChoice * 2) - 1];
@@ -309,6 +409,7 @@ void SetDiscount() {
     switch (selection)
     {
     case 1:
+        discountDisplayArray();
         SetDiscount();
         break;
     case 2:
@@ -327,7 +428,7 @@ void SetDiscount() {
 
 /*Deleting a Discount*/
 void DeleteDiscount() {
-    std::string deleteName, deleteNameRow, line, word, name, value;
+    std::string deleteName, deleteNameRow, line, word, name, value, temp;
     std::vector<std::string> row;
     std::vector<std::vector<std::string>> discContent;
     bool isDiscName = true;
@@ -376,7 +477,33 @@ void DeleteDiscount() {
 
     cin.ignore();
     cout << "Enter the name of the discount to be deleted\n";
-    getline(cin, deleteName);
+    getline(cin, temp);
+    
+    if (temp == "q")
+    {
+        system("pause");
+        fin.close();
+        fout.close();
+        std::remove("discountsNew.csv");
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
+    else if (temp != " ")
+    {
+        deleteName = temp;
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        fin.close();
+        fout.close();
+        std::remove("discountsNew.csv");
+        system("cls");
+        discountDisplayArray();
+        discountMain();
+    }
 
     isDiscName = true;
     for (int i = 0; i < discContent.size(); i++)
@@ -425,6 +552,7 @@ void DeleteDiscount() {
     switch (selection)
     {
     case 1:
+        discountDisplayArray();
         DeleteDiscount();
         break;
     case 2:

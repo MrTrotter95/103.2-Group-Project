@@ -4,12 +4,14 @@
 #include "discount.h"
 #include "feedback.h"
 
+std::ifstream data;
+
 //--- To Check Account Exists on CSV ---//
 void CheckPassword(string, string, string, string);
 
 void VerifyAccount(string inputEmail, string inputPassword) {
     //--- Creating a instance of ifstream ---//
-    std::ifstream  data("login.csv");
+    data.open("login.csv");
 
 
     //--- Temporary Variables ---//
@@ -45,6 +47,7 @@ void VerifyAccount(string inputEmail, string inputPassword) {
     else if (userEmail == inputEmail) {
         //--- Passing the csv userID, csv userPass, and the inputted password to check ---//
         CheckPassword(userId, userPass, userAccessLvl, inputPassword);
+        data.close();
     }
 
 }
@@ -148,7 +151,8 @@ void ParentArrowKeys() {
                 //TODO: order history
                 break;
             case 3:
-                //TODO: feedback function
+                PrintArray_ParentFeedbackMenu();
+                //ArrowSelectionMenu_ParentFeedback(userId, userPass, userAccessLvl);
                 break;
             case 4:
                 BeginProgram();
@@ -160,9 +164,9 @@ void ParentArrowKeys() {
     }
 }
 
-const int menuSize_staff = 3;
+const int menuSize_staff = 4;
 int selectionHighlight_staff = 0;
-string mainMenuPrint_staff[menuSize_staff] = { "View Menu", "Display Orders", "Return" };
+string mainMenuPrint_staff[menuSize_staff] = { "View Menu", "Display Orders", "Feedback", "Return" };
 
 void StaffMenuDisplay() {
     cout << "********************************\n*   Welcome to the Staff Menu  *\n********************************\n";
@@ -236,6 +240,9 @@ void StaffArrowKeys() {
                 break;
             case 2:
                 cout << "\nGet the contact details of the Admin.\n";
+                break; 
+            case 3:
+                cout << "\nGet the contact details of the Admin.\n";
                 break;
             }
 
@@ -250,6 +257,10 @@ void StaffArrowKeys() {
                 PrintOrders();
                 break;
             case 2:
+                PrintArray_StaffFeedbackMenu();
+                ArrowSelectionMenu_StaffFeedback();
+                break;
+            case 3:
                 BeginProgram();
                 break;
             default:
@@ -395,6 +406,7 @@ void CheckPassword(string userId, string userPassword, string userAccessLvl, str
 
             if (userAccessLvl == "1")
             {
+                data.close();
                 system("cls");
                 ParentMenuDisplay();
                 cout << "\nWelcome to the Parent Main Menu.\nChoose an option to proceed.\n";
@@ -403,6 +415,7 @@ void CheckPassword(string userId, string userPassword, string userAccessLvl, str
             }
             else if (userAccessLvl == "2")
             {
+                data.close();
                 system("cls");
                 StaffMenuDisplay();
                 cout << "\nWelcome to the Staff Main Menu.\nChoose an option to proceed.\n";
@@ -410,6 +423,7 @@ void CheckPassword(string userId, string userPassword, string userAccessLvl, str
             }
             else if (userAccessLvl == "3")
             {
+                data.close();
                 system("cls");
                 AdminMenuDisplay();
                 cout << "\nWelcome ADMIN USER.\n";
@@ -479,7 +493,6 @@ void loginMain()
         {
             //--- Pass Info To Functions ---//
             VerifyAccount(input_Email, input_Password);
-            break;
 
             //--- This will execute if Verification & Password are incorrect ---//
             userTries++;
@@ -491,6 +504,7 @@ void loginMain()
     //--- Call main menu funciton ---//
     if (userTries > 2)
     {
+        data.close();
         cout << "Attempts exceeded, Please contact the school to reset your password.\n";
         system("pause");
         BeginProgram();
@@ -500,6 +514,7 @@ void loginMain()
         cout << "Login cancelled.\n";
     }
 
+    data.close();
     cout << "Press enter to go back to the Main Menu"; //Add if functionality to to wait for user to press enter or
     int ch;
     ch = _getch();

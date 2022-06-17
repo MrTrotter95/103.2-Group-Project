@@ -1,6 +1,7 @@
 #include "main.h"
 #include "feedback.h"
 #include "login.h"
+#include "admin.h"
 
 /*Start of Feedback functionality*/
 void feedbackMain(string userId, string userName, string userEmail, string accessLevel) // This must have a User ID comming into it and or access level?
@@ -308,6 +309,7 @@ string mainMenuPrint_StaffFeedback[menuSize_StaffFeedBack] = { "General", "Compl
 
 
 void PrintArray_StaffFeedbackMenu() {
+	system("cls");
 	cout << "********************************\n*   Welcome to the Staff Feedback Menu  *\n********************************\n";
 	for (int i = 0; i < menuSize_StaffFeedBack; i++)
 	{
@@ -403,7 +405,9 @@ void ArrowSelectionMenu_StaffFeedback() {
 				break;
 			case 3:
 				loop = false;
-				BeginProgram();	//Calls main menu function
+				system("cls");
+				StaffMenuDisplay();
+				StaffArrowKeys();
 			default:
 				break;
 			}
@@ -414,7 +418,8 @@ void ArrowSelectionMenu_StaffFeedback() {
 /*-------------------------START OF STAFF FEEDBACK FUNCTIONALITY -------------------------*/
 void ViewGeneralMessages() {
 	//--- Creating a instance of ifstream ---//
-	std::ifstream  data("GeneralContact.csv");
+	std::ifstream  data;
+	data.open("GeneralContact.csv");
 
 
 	//--- Temporary Variables ---//
@@ -442,13 +447,18 @@ void ViewGeneralMessages() {
 
 
 	//--- User instructions to end ---//
-	cout << "Press enter to return to main menu";
-	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
+	data.close();
+	cout << "\n";
+	system("pause");
+	system("cls");
+	PrintArray_StaffFeedbackMenu();
+	ArrowSelectionMenu_StaffFeedback();
 }
 
 void ViewCompliments() {
 	//--- Creating a instance of ifstream ---//
-	std::ifstream  data("Compliments.csv");
+	std::ifstream data;
+	data.open("Compliments.csv");
 
 
 	//--- Temporary Variables ---//
@@ -477,13 +487,19 @@ void ViewCompliments() {
 
 
 	//--- User instructions to end ---//
-	cout << "Press enter to return to main menu";
-	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
+	data.close();
+	cout << "Press enter to return to main menu\n";
+	system("pause");
+	system("cls");
+	PrintArray_StaffFeedbackMenu();
+	ArrowSelectionMenu_StaffFeedback();
 }
 
 void ViewComplaints() {
 	//--- Creating a instance of ifstream ---//
-	std::ifstream  data("Complaints.csv");
+	std::ifstream data;
+	
+	data.open("Complaints.csv");
 
 
 	//--- Temporary Variables ---//
@@ -512,8 +528,12 @@ void ViewComplaints() {
 
 
 	//--- User instructions to end ---//
-	cout << "Press enter to return to main menu";
-	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
+	data.close();
+	cout << "\n";
+	system("pause");
+	system("cls");
+	PrintArray_StaffFeedbackMenu();
+	ArrowSelectionMenu_StaffFeedback();
 }
 /*-------------------------END OF STAFF FEEDBACK FUNCTIONALITY -------------------------*/
 /*-------------------------START OF ADMIN FEEDBACK MENU SECTION -------------------------*/
@@ -642,10 +662,10 @@ void RespondGeneralMessages(string userId, string userEmail) {
 
 
 	//--- Temporary Variables ---//
-	std::string line, newData = "Yes";
+	std::string line, newData = "Yes", temp;
 	int count_gen = 1, cellBounds = 5;
 	std::vector<string> general;
-	double tokenChoice, targetElement = 1;
+	double tokenChoice = 0, targetElement = 1;
 
 
 	//--- Table Row ---//
@@ -691,7 +711,32 @@ void RespondGeneralMessages(string userId, string userEmail) {
 
 	//--- User Instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
-	cin >> tokenChoice;
+	cin >> temp;
+	if (isNumber(temp) && stoi(temp) > 0 && stoi(temp) < (count_gen / cellBounds) + 1)
+	{
+		tokenChoice = stod(temp);
+	}
+	else if (temp == "q")
+	{
+		system("pause");
+		fin_general.close();
+		fout_general.close();
+		std::remove("GeneralContactNew.csv");
+		system("cls");
+		AdminMenuDisplay();
+		AdminArrowKeys();
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_general.close();
+		fout_general.close();
+		std::remove("GeneralContactNew.csv");
+		system("cls");
+		AdminMenuDisplay();
+		AdminArrowKeys();
+	}
 
 
 	//--- Targets correct cell in vector and changes value to "yes" after user input ---//
@@ -719,6 +764,12 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	//--- Renaming "GeneralContactNew" to "GeneralContact"
 	std::remove("GeneralContact.csv");
 	std::rename("GeneralContactNew.csv", "GeneralContact.csv");
+
+	cout << "\nSuccess!\n";
+	system("pause");
+	system("cls");
+	AdminMenuDisplay();
+	AdminArrowKeys();
 }
 
 void RespondCompliments(string userId, string userEmail) {
@@ -733,10 +784,10 @@ void RespondCompliments(string userId, string userEmail) {
 
 
 	//--- Temporary Variables ---//
-	std::string line, newData = "Yes";
+	std::string line, newData = "Yes", temp;
 	int count_gen = 1, cellBounds = 5;
 	std::vector<string> compliments;
-	double tokenChoice, targetElement = 1;
+	double tokenChoice = 0, targetElement = 1;
 
 
 	//--- Table Row ---//
@@ -782,7 +833,32 @@ void RespondCompliments(string userId, string userEmail) {
 
 	//--- User Instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
-	cin >> tokenChoice;
+	cin >> temp;
+	if (isNumber(temp) && stoi(temp) > 0 && stoi(temp) < (count_gen / cellBounds) + 1)
+	{
+		tokenChoice = stod(temp);
+	}
+	else if (temp == "q")
+	{
+		system("pause");
+		fin_compliments.close();
+		fout_compliments.close();
+		std::remove("ComplimentsNew.csv");
+		system("cls");
+		AdminMenuDisplay();
+		AdminArrowKeys();
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_compliments.close();
+		fout_compliments.close();
+		std::remove("ComplimentsNew.csv");
+		system("cls");
+		AdminMenuDisplay();
+		AdminArrowKeys();
+	}
 
 
 	//--- Targets correct cell in vector and changes value to "yes" after user input ---//
@@ -810,6 +886,12 @@ void RespondCompliments(string userId, string userEmail) {
 	//--- Renaming "ComplimentsNew" to "Compliments" ---//
 	std::remove("Compliments.csv");
 	std::rename("ComplimentsNew.csv", "Compliments.csv");
+
+	cout << "\nSuccess!\n";
+	system("pause");
+	system("cls");
+	AdminMenuDisplay();
+	AdminArrowKeys();
 }
 
 void RespondComplaints(string userId, string userEmail) {
@@ -824,10 +906,10 @@ void RespondComplaints(string userId, string userEmail) {
 
 
 	//--- Temporary Variables ---//
-	std::string line, newData = "Yes";
+	std::string line, newData = "Yes", temp;
 	int count_gen = 1, cellBounds = 5;
 	std::vector<string> complaints;
-	double tokenChoice, targetElement = 1;
+	double tokenChoice = 0, targetElement = 1;
 
 
 	//--- Table Row ---//
@@ -873,7 +955,32 @@ void RespondComplaints(string userId, string userEmail) {
 
 	//--- User Instructions ---//
 	cout << "Please input the ID number of the message you wish to mark as complete: ";
-	cin >> tokenChoice;
+	cin >> temp;
+	if (isNumber(temp) && stoi(temp) > 0 && stoi(temp) < (count_gen / cellBounds) + 1)
+	{
+		tokenChoice = stod(temp);
+	}
+	else if (temp == "q")
+	{
+		system("pause");
+		fin_complaints.close();
+		fout_complaints.close();
+		std::remove("ComplaintsNew.csv");
+		system("cls");
+		AdminMenuDisplay();
+		AdminArrowKeys();
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_complaints.close();
+		fout_complaints.close();
+		std::remove("ComplaintsNew.csv");
+		system("cls");
+		AdminMenuDisplay();
+		AdminArrowKeys();
+	}
 
 
 	//--- Targets correct cell in vector and changes value to "yes" after user input ---//
@@ -902,5 +1009,11 @@ void RespondComplaints(string userId, string userEmail) {
 	//--- Renaming "ComplimentsNew" to "Complaints" ---//
 	std::remove("Complaints.csv");
 	std::rename("ComplaintsNew.csv", "Complaints.csv");
+
+	cout << "\nSuccess!\n";
+	system("pause");
+	system("cls");
+	AdminMenuDisplay();
+	AdminArrowKeys();
 }
 /*-------------------------END OF ADMIN FEEDBACK FUNCTIONALITY -------------------------*/

@@ -154,7 +154,7 @@ int selectionHighlight_accountMenu = 0;
 string mainMenuPrint_accountMenu[menuSize_accountMenu] = { "Edit Account", "Delete Account", "Change Password", "Return" };
 
 void AccountAdminMenuDisplay() {
-	cout << "********************************\n*   Welcome to the Account Menu  *\n********************************\n";
+	cout << "**********************************\n*   Welcome to the Account Menu  *\n* Enter 'q' at any input to exit *\n**********************************\n";
 	for (int i = 0; i < menuSize_accountMenu; i++)
 	{
 		if (i == selectionHighlight_accountMenu)
@@ -265,11 +265,13 @@ void AccountAdmin_EditAcc() {
 	fout_admin.open("userDetailsNew.csv", std::ios::out | std::ios::app);
 
 	// Function Variables
-	std::string line, newData;
+	std::string line, newData, temp;
 	int count = 1, cellBounds = 5, selection;
 	std::vector<string> users;
-	double idChoice, targetElement;
+	double idChoice = 0, targetElement = 0;
 
+	cout << "\nID\tGender\tPh Num\tD.O.B.\tDiscount Value\n";
+	cout << "***************************************************\n";
 	// While Loop to populate vector users and cout cells
 	while (std::getline(finUser_admin, line))
 	{
@@ -285,7 +287,7 @@ void AccountAdmin_EditAcc() {
 			}
 			else
 			{
-				cout << cell << " ";
+				cout << cell << "\t";
 				users.push_back(cell);
 				count++;
 			}
@@ -294,9 +296,63 @@ void AccountAdmin_EditAcc() {
 
 	// Prompt to choose ID to edit
 	cout << "\nWhich ID to edit?\n[ID]: ";
-	cin >> idChoice;
-	cout << "\nWhich element to edit for User?\n1. Gender, 2. Phone Number or 3. Date of Birth [" << idChoice << "]: ";
-	cin >> targetElement;
+	cin >> temp;
+
+	if (temp == "q")
+	{
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("userDetailsNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
+	}
+	else if (isNumber(temp))
+	{
+		idChoice = stod(temp);
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("userDetailsNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin_EditAcc();
+	}
+
+	cout << "\nWhich element to edit for User?\n[1] Gender, [2] Phone Number or [3] Date of Birth [" << idChoice << "]: ";
+	cin >> temp;
+
+	if (temp == "q")
+	{
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("userDetailsNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
+	}
+	else if (isNumber(temp))
+	{
+		targetElement = stod(temp);
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("userDetailsNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin_EditAcc();
+	}
+
 	cout << "\nWhat would you like to change that element to?\n[New Data]: ";
 	cin >> newData;
 
@@ -313,7 +369,13 @@ void AccountAdmin_EditAcc() {
 			else
 			{
 				cout << "Invalid selection, must enter an m, f or o. Try again.\n";
-				AccountAdmin_EditAcc();
+				system("pause");
+				finUser_admin.close();
+				fout_admin.close();
+				std::remove("userDetailsNew.csv");
+				system("cls");
+				AccountAdminMenuDisplay();
+				AccountAdmin();
 			}
 		}
 		else if (targetElement == 2)
@@ -326,7 +388,13 @@ void AccountAdmin_EditAcc() {
 			else
 			{
 				cout << "Invalid selection, must enter a phone number. Try again.\n";
-				AccountAdmin_EditAcc();
+				system("pause");
+				finUser_admin.close();
+				fout_admin.close();
+				std::remove("userDetailsNew.csv");
+				system("cls");
+				AccountAdminMenuDisplay();
+				AccountAdmin();
 			}
 		}
 		else if (targetElement == 3)
@@ -338,30 +406,60 @@ void AccountAdmin_EditAcc() {
 			}
 			else
 			{
-				cout << "Invalid selection, must enter a date in the format of: DDMMYY. Try again.\n";
-				AccountAdmin_EditAcc();
+				cout << "Invalid selection, must enter a date in the format of: DDMMYYYY. Try again.\n";
+				system("pause");
+				finUser_admin.close();
+				fout_admin.close();
+				std::remove("userDetailsNew.csv");
+				system("cls");
+				AccountAdminMenuDisplay();
+				AccountAdmin();
 			}
 		}
 		else
 		{
 			cout << "Invalid selection, must enter 1, 2 or 3.\n";
-			AccountAdmin_EditAcc();
+			system("pause");
+			finUser_admin.close();
+			fout_admin.close();
+			std::remove("userDetailsNew.csv");
+			system("cls");
+			AccountAdminMenuDisplay();
+			AccountAdmin();
 		}
 	}
 	else if (targetElement == 4)
 	{
 		cout << "You can only edit the discount value within the Discount Menu\n";
-		AccountAdmin_EditAcc();
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("userDetailsNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
 	}
 	else if (targetElement == 0)
 	{
 		cout << "You cannot edit the ID for a User\n";
-		AccountAdmin_EditAcc();
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("userDetailsNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
 	}
 	else
 	{
 		cout << "Invalid selection, try again.\n";
-		AccountAdmin_EditAcc();
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("userDetailsNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
 	}
 
 	// Filestreaming into new file, userDetailsNew.csv
@@ -382,9 +480,10 @@ void AccountAdmin_EditAcc() {
 	finUser_admin.close();
 	fout_admin.close();
 
-	//Deletes old CSV and renames new CSV to old CSV
 	std::remove("userDetails.csv");
-	std::rename("userDetailsNew.csv", "userDetails.csv");
+	if (std::rename("userDetailsNew.csv", "userDetails.csv")) {
+		std::perror("Error renaming");
+	}
 
 	// Prompt for next action to take
 	cout << "\nWould you like to edit another account?\n1. Edit another account\n2. Return to Menu\nSelection: ";
@@ -393,13 +492,19 @@ void AccountAdmin_EditAcc() {
 	switch (selection)
 	{
 	case 1:
+		system("cls");
+		AccountAdminMenuDisplay();
 		AccountAdmin_EditAcc();
 		break;
 	case 2:
+		system("cls");
+		AccountAdminMenuDisplay();
 		AccountAdmin();
 		break;
 	default:
-		adminMain();
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
 		break;
 	}
 }
@@ -414,11 +519,13 @@ void AccountAdmin_DelAcc() {
 	foutUser_admin.open("loginNew.csv", std::ios::out | std::ios::app);
 
 	//Function Variables
-	std::string line, line2, newData;
-	int count = 1, count2 = 1, cellBounds = 5, loginCellBounds = 4, selection;
+	std::string line, line2, newData, temp;
+	int count = 1, count2 = 1, cellBounds = 5, loginCellBounds = 5, selection;
 	std::vector<string> users, logins;
-	double idChoice;
+	double idChoice = 0;
 
+	cout << "\nID\tName\tEmail\tPassword\tAccess Lvl\n";
+	cout << "***************************************************\n";
 	// Statement to push csv into users vector
 	while (std::getline(fin_admin, line))
 	{
@@ -428,13 +535,13 @@ void AccountAdmin_DelAcc() {
 		{
 			if (count % cellBounds == 0)
 			{
-				//cout << cell << "\n";
+				cout << cell << "\n";
 				users.push_back(cell);
 				count++;
 			}
 			else
 			{
-				//cout << cell << " ";
+				cout << cell << "\t";
 				users.push_back(cell);
 				count++;
 			}
@@ -456,77 +563,127 @@ void AccountAdmin_DelAcc() {
 			}
 			else
 			{
-				if (count2 % loginCellBounds == 3)
-				{
-					cout << "***********" << " ";
-					logins.push_back(cell);
-					count2++;
-				}
-				else
-				{
-					cout << cell << " ";
-					logins.push_back(cell);
-					count2++;
-				}
+				cout << cell << "\t";
+				logins.push_back(cell);
+				count2++;
 			}
 		}
 	}
 
 	// Statement to show prompt for deleting User
 	cout << "\nWhich ID to delete?\n[ID]: ";
-	cin >> idChoice;
+	cin >> temp;
+
+	if (isNumber(temp))
+	{
+		if (stoi(temp) >= 0 || stoi(temp) <= (count2 / loginCellBounds))
+		{
+			idChoice = stoi(temp);
+		}
+		else
+		{
+			cout << "Try again.\n";
+			system("pause");
+			fin_admin.close();
+			fout_admin.close();
+			finUser_admin.close();
+			foutUser_admin.close();
+			std::remove("userDetailsNew.csv");
+			std::remove("loginNew.csv");
+			system("cls");
+			AccountAdminMenuDisplay();
+			AccountAdmin();
+		}
+	}
+	else
+	{
+		cout << "Try again.\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		finUser_admin.close();
+		foutUser_admin.close();
+		std::remove("userDetailsNew.csv");
+		std::remove("loginNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
+	}
+
 	cout << "\nYou are deleting User [" << idChoice << "], are you sure?\n[y/n]: ";
 	cin >> newData;
 
 	// Statement to check if input is y or n
-	if (newData == "y")
+	if (idChoice != 0)
 	{
-		cout << "Account [" << idChoice << "] deleted.\n";
-
-		// Deletes User from userDetails.csv
-		for (int i = 0; i < users.size(); i++)
+		if (newData == "y")
 		{
-			if (i < cellBounds * (idChoice - 1) || i >(cellBounds * (idChoice - 1)) + (cellBounds - 1))
+			cout << "Account [" << idChoice << "] deleted.\n";
+
+			// Deletes User from userDetails.csv
+			for (int i = 0; i < users.size(); i++)
 			{
-				if (count % cellBounds == 0)
+				if (i < cellBounds * (idChoice - 1) || i >(cellBounds * (idChoice - 1)) + (round(cellBounds) - 1))
 				{
-					fout_admin << users[i] << "\n";
-					count++;
+					if (count % cellBounds == 0)
+					{
+						fout_admin << users[i] << "\n";
+						count++;
+					}
+					else
+					{
+						fout_admin << users[i] << ',';
+						count++;
+					}
 				}
-				else
+			}
+
+			// Deletes User from login csv 
+			for (int i = 0; i < logins.size(); i++)
+			{
+				if (i < loginCellBounds * (idChoice - 1) || i >(loginCellBounds * (idChoice - 1)) + (round(loginCellBounds) - 1))
 				{
-					fout_admin << users[i] << ',';
-					count++;
+					if (count2 % loginCellBounds == 0)
+					{
+						foutUser_admin << logins[i] << "\n";
+						count2++;
+					}
+					else
+					{
+						foutUser_admin << logins[i] << ',';
+						count2++;
+					}
 				}
 			}
 		}
-
-		// Deletes User from login csv 
-		for (int i = 0; i < logins.size(); i++)
+		else if (newData == "n")
 		{
-			if (i < loginCellBounds * (idChoice - 1) || i >(loginCellBounds * (idChoice - 1)) + (loginCellBounds - 1))
-			{
-				if (count2 % loginCellBounds == 0)
-				{
-					foutUser_admin << logins[i] << "\n";
-					count2++;
-				}
-				else
-				{
-					foutUser_admin << logins[i] << ',';
-					count2++;
-				}
-			}
+			cout << "You chose not to delete this account.\n";
+			system("pause");
+			fin_admin.close();
+			fout_admin.close();
+			finUser_admin.close();
+			foutUser_admin.close();
+			std::remove("userDetailsNew.csv");
+			std::remove("loginNew.csv");
+			system("cls");
+			AccountAdminMenuDisplay();
+			AccountAdmin();
 		}
-	}
-	else if (newData == "n")
-	{
-		cout << "You chose not to delete this account.\n";
-		AccountAdmin_DelAcc();
-	}
-	else
-	{
-		AccountAdmin_DelAcc();
+		else
+		{
+			cout << "Incorrect input\n";
+			system("pause");
+			fin_admin.close();
+			fout_admin.close();
+			finUser_admin.close();
+			foutUser_admin.close();
+			std::remove("userDetailsNew.csv");
+			std::remove("loginNew.csv");
+			system("cls");
+			AccountAdminMenuDisplay();
+			AccountAdmin();
+		}
 	}
 
 	// Close the files off
@@ -537,11 +694,15 @@ void AccountAdmin_DelAcc() {
 
 	// Remove old userDetails csv and rename new csv
 	std::remove("userDetails.csv");
-	std::rename("userDetailsNew.csv", "userDetails.csv");
+	if (std::rename("userDetailsNew.csv", "userDetails.csv")) {
+		std::perror("Error renaming");
+	}
 
 	// Remove old login csv and rename new csv
 	std::remove("login.csv");
-	std::rename("loginNew.csv", "login.csv");
+	if (std::rename("loginNew.csv", "login.csv")) {
+		std::perror("Error renaming");
+	}
 
 	// Loop menu prompt
 	cout << "\nWould you like to edit another account?\n1. Edit another account\n2. Return to Menu\nSelection: ";
@@ -550,13 +711,19 @@ void AccountAdmin_DelAcc() {
 	switch (selection)
 	{
 	case 1:
+		system("cls");
+		AccountAdminMenuDisplay();
 		AccountAdmin_DelAcc();
 		break;
 	case 2:
+		system("cls");
+		AccountAdminMenuDisplay();
 		AccountAdmin();
 		break;
 	default:
-		adminMain();
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
 		break;
 	}
 }
@@ -569,10 +736,10 @@ void AccountAdmin_ChangePass() {
 	fout_admin.open("loginNew.csv", std::ios::out | std::ios::app);
 
 	// Variables
-	std::string line, lineDisc, newData;
-	int count = 1, count2 = 1, idCount = 1, selection;
+	std::string line, lineDisc, newData, temp;
+	int count = 1, idCount = 1, loginCellBounds = 5, selection;
 	std::vector<string> users;
-	double idChoice;
+	double idChoice = 0;
 
 	// While loop to push userDetails csv into vector
 	while (std::getline(finUser_admin, line))
@@ -581,7 +748,7 @@ void AccountAdmin_ChangePass() {
 		string cell;
 		while (std::getline(lineStream, cell, ','))
 		{
-			if (count % 4 == 0)
+			if (count % loginCellBounds == 0)
 			{
 				cout << cell << "\n";
 				users.push_back(cell);
@@ -589,27 +756,79 @@ void AccountAdmin_ChangePass() {
 			}
 			else
 			{
-				cout << cell << " ";
-				users.push_back(cell);
-				count++;
+				if (count % loginCellBounds == 4)
+				{
+					cout << "******" << "\t";
+					users.push_back(cell);
+					count++;
+				}
+				else
+				{
+					cout << cell << "\t";
+					users.push_back(cell);
+					count++;
+				}
 			}
 		}
 	}
 
 	// Prompt for id to change pass
 	cout << "\nWhich ID to change password?\n[ID]: ";
-	cin >> idChoice;
+	cin >> temp;
+
+	if (temp == "q")
+	{
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("loginNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
+	}
+	else if (isNumber(temp))
+	{
+		idChoice = stod(temp);
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("loginNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin_ChangePass();
+	}
+
+
 	cout << "\nWhat would you like to change the password to?\n[New Password]: ";
-	cin >> newData;
+	cin >> temp;
+
+	if (temp == "q")
+	{
+		system("pause");
+		finUser_admin.close();
+		fout_admin.close();
+		std::remove("loginNew.csv");
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
+	}
+	else
+	{
+		newData = temp;
+	}
 
 	// Statement to change password at selected ID
-	users.at((4 * (idChoice - 1)) + 2) = newData;
-	cout << users[(4 * (idChoice - 1)) + 2];
+	users.at((loginCellBounds * (idChoice - 1)) + 3) = newData;
+	cout << users[(loginCellBounds * (idChoice - 1)) + 3];
 
 	// Statement to output vector with changed password into userDetailsNew.csv
 	for (int i = 0; i < users.size(); i++)
 	{
-		if (count % 4 == 0)
+		if (count % loginCellBounds == 0)
 		{
 			fout_admin << users[i] << "\n";
 			count++;
@@ -627,7 +846,9 @@ void AccountAdmin_ChangePass() {
 
 	// Statements to remove old login.dsv and rename new to old name
 	std::remove("login.csv");
-	std::rename("loginNew.csv", "login.csv");
+	if (std::rename("loginNew.csv", "login.csv")) {
+		std::perror("Error renaming");
+	}
 
 	// Prompt for loop menu
 	cout << "\nWould you like to edit another password?\n1. Edit another password\n2. Return to Menu\nSelection: ";
@@ -636,13 +857,19 @@ void AccountAdmin_ChangePass() {
 	switch (selection)
 	{
 	case 1:
+		system("cls");
+		AccountAdminMenuDisplay();
 		AccountAdmin_ChangePass();
 		break;
 	case 2:
+		system("cls");
+		AccountAdminMenuDisplay();
 		AccountAdmin();
 		break;
 	default:
-		adminMain();
+		system("cls");
+		AccountAdminMenuDisplay();
+		AccountAdmin();
 		break;
 	}
 }
@@ -655,7 +882,7 @@ int selectionHighlight_foodMenu = 0;
 string mainMenuPrint_foodMenu[menuSize_foodMenu] = { "View Menu", "Add Item", "Edit Item", "Delete Item", "Return" };
 
 void FoodMenuAdminMenuDisplay() {
-	cout << "********************************\n*   Welcome to the Food Admin Menu  *\n********************************\n";
+	cout << "********************************\n*   Welcome to the Food Admin Menu  *\n* Enter 'q' at any input to exit *\n********************************\n";
 	for (int i = 0; i < menuSize_foodMenu; i++)
 	{
 		if (i == selectionHighlight_foodMenu)
@@ -770,14 +997,14 @@ void FoodMenuStaff_ViewMenu() {
 
 	// Function Variables
 	std::string line, newData;
-	int count = 1, cellBounds = 7, selection;
+	int count = 1, cellBounds = 4, selection;
 	std::vector<string> food;
 	double idChoice, targetElement;
 
 	// While Loop to populate vector users and cout cells
-	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
-	cout << "\t0: Drink\t\t\t\t$\t1: Is not Vege, Vegan or GF\n";
-	cout << "***********************************************************************************\n";
+	cout << "\nID\t1: Food\t\tName\t\t\tPrice\n";
+	cout << "\t0: Drink\t\t\t\t$\n";
+	cout << "********************************************************\n";
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -825,14 +1052,14 @@ void FoodMenuAdmin_ViewMenu() {
 
 	// Function Variables
 	std::string line, newData;
-	int count = 1, cellBounds = 7, selection;
+	int count = 1, cellBounds = 4, selection;
 	std::vector<string> food;
 	double idChoice, targetElement;
 
 	// While Loop to populate vector users and cout cells
-	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
-	cout << "\t0: Drink\t\t\t\t$\t1: Is not Vege, Vegan or GF\n";
-	cout << "***********************************************************************************\n";
+	cout << "\nID\t1: Food\t\tName\t\t\tPrice\n";
+	cout << "\t0: Drink\t\t\t\t$\n";
+	cout << "********************************************************\n";
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -865,9 +1092,6 @@ void FoodMenuAdmin_ViewMenu() {
 	fin_admin.close();
 
 	// Prompt for next action to take
-	cout << "\n1. Return to Menu\nSelection: ";
-	cin >> selection;
-
 	cout << "\n";
 	system("pause");
 
@@ -883,14 +1107,14 @@ void FoodMenuAdmin_AddItem() {
 	fout_admin.open("foodNew.csv", std::ios::out | std::ios::app);
 
 	// Function Variables
-	std::string line, newIsFood, newFoodName, newFoodPrice, newIsVege, newIsVegan, newIsGF;
-	int count = 1, count2 = 1, cellBounds = 7, selection;
+	std::string line, newIsFood, newFoodName, newFoodPrice;
+	int count = 1, count2 = 1, cellBounds = 4, selection;
 	std::vector<string> food;
 
 	// While Loop to populate vector users and cout cells
-	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
-	cout << "\t0: Drink\t\t\t\t$\t1: Is not Vege, Vegan or GF\n";
-	cout << "***********************************************************************************\n";
+	cout << "\nID\t1: Food\t\tName\t\t\tPrice\n";
+	cout << "\t0: Drink\t\t\t\t$\n";
+	cout << "*************************************************************\n";
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -933,72 +1157,97 @@ void FoodMenuAdmin_AddItem() {
 		{
 			cout << "\nWhat is the price of " << newFoodName << "?\n[$]: ";
 			cin >> newFoodPrice;
-			if (isNumber(newFoodPrice))
+			if (isDecimalNumber(newFoodPrice))
 			{
-				cout << "\nIs " << newFoodName << " Vegetarian? 0: Yes, 1: No\n[0 or 1]: ";
-				cin >> newIsVege;
-				if (newIsVege == "0" || newIsVege == "1")
+				for (int i = 0; i < food.size(); i++)
 				{
-					cout << "\nIs " << newFoodName << " Vegan? 0: Yes, 1: No\n[0 or 1]: ";
-					cin >> newIsVegan;
-					if (newIsVegan == "0" || newIsVegan == "1")
+					if (count2 % cellBounds == 0)
 					{
-						cout << "\nIs " << newFoodName << " Gluten Free? 0: Yes, 1: No\n[0 or 1]: ";
-						cin >> newIsGF;
-						if (newIsGF == "0" || newIsGF == "1")
-						{
-							for (int i = 0; i < food.size(); i++)
-							{
-								if (count2 % cellBounds == 0)
-								{
-									fout_admin << food[i] << "\n";
-									count2++;
-								}
-								else
-								{
-									fout_admin << food[i] << ',';
-									count2++;
-								}
-							}
-
-							fout_admin << ((count / cellBounds) + 1) << ',' << newIsFood << ',' << newFoodName << ',' << newFoodPrice << ',' << newIsVege << ',' << newIsVegan << ',' << newIsGF << "\n";
-						}
-						else
-						{
-							cout << "Incorrect entry. Please enter a 0 for Yes, or 1 for No\n";
-						}
+						fout_admin << food[i] << "\n";
+						count2++;
 					}
 					else
 					{
-						cout << "Incorrect entry. Please enter a 0 for Yes, or 1 for No\n";
+						fout_admin << food[i] << ',';
+						count2++;
 					}
 				}
-				else
-				{
-					cout << "Incorrect entry. Please enter a 0 for Yes, or 1 for No\n";
-				}
+
+				fout_admin << ((count / cellBounds) + 1) << ',' << newIsFood << ',' << newFoodName << ',' << newFoodPrice  << "\n";
+			}
+			else if (newFoodPrice == "q")
+			{
+				system("pause");
+				fin_admin.close();
+				fout_admin.close();
+				std::remove("foodNew.csv");
+				system("cls");
+				FoodMenuAdminMenuDisplay();
+				FoodMenuAdmin();
 			}
 			else
 			{
-				cout << "Incorrect entry. Please enter a price amount\n";
+				cout << "Incorrect input\n";
+				system("pause");
+				fin_admin.close();
+				fout_admin.close();
+				std::remove("foodNew.csv");
+				system("cls");
+				FoodMenuAdminMenuDisplay();
+				FoodMenuAdmin();
 			}
+		}
+		else if (newFoodName == "q")
+		{
+			system("pause");
+			fin_admin.close();
+			fout_admin.close();
+			std::remove("foodNew.csv");
+			system("cls");
+			FoodMenuAdminMenuDisplay();
+			FoodMenuAdmin();
 		}
 		else
 		{
-			cout << "Incorrect entry. Food item needs a name\n";
+			cout << "Incorrect input\n";
+			system("pause");
+			fin_admin.close();
+			fout_admin.close();
+			std::remove("foodNew.csv");
+			system("cls");
+			FoodMenuAdminMenuDisplay();
+			FoodMenuAdmin();
 		}
+	}
+	else if (newIsFood == "q")
+	{
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
 	}
 	else
 	{
-		cout << "Incorrect entry. Enter a 1 for Food or 0 for Drink only.\n";
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
 	}
 
 	fin_admin.close();
 	fout_admin.close();
 
-	//Deletes old CSV and renames new CSV to old CSV
 	std::remove("food.csv");
-	std::rename("foodNew.csv", "food.csv");
+	if (std::rename("foodNew.csv", "food.csv")) {
+		std::perror("Error renaming");
+	}
 
 	// Prompt for next action to take
 	cout << "\nWould you like to add another item?\n1. Add another item\n2. Return to Menu\nSelection: ";
@@ -1007,9 +1256,12 @@ void FoodMenuAdmin_AddItem() {
 	switch (selection)
 	{
 	case 1:
+		system("cls");
 		FoodMenuAdmin_AddItem();
 		break;
 	case 2:
+		system("cls");
+		FoodMenuAdminMenuDisplay();
 		FoodMenuAdmin();
 		break;
 	default:
@@ -1025,10 +1277,10 @@ void FoodMenuAdmin_EditItem() {
 	fout_admin.open("foodNew.csv", std::ios::out | std::ios::app);
 
 	// Function Variables
-	std::string line, newData;
-	int count = 1, cellBounds = 7, selection;
+	std::string line, newData, temp;
+	int count = 1, cellBounds = 4, selection, targetElement;
 	std::vector<string> food;
-	double idChoice, targetElement;
+	double idChoice = 0;
 
 	// While Loop to populate vector users and cout cells
 	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
@@ -1065,9 +1317,63 @@ void FoodMenuAdmin_EditItem() {
 
 	// Prompt to choose ID to edit
 	cout << "\nWhich Food ID to edit?\n[ID]: ";
-	cin >> idChoice;
-	cout << "\nWhich element to edit for Food Item?\n1. Is Food, 2. Name, 3. Price, 4. Vege Flag, 5. Vegan Flag or 6. Gluten Flag [ Food ID: " << idChoice << "]: ";
-	cin >> targetElement;
+	cin >> temp;
+
+	if (isNumber(temp))
+	{
+		idChoice = stoi(temp);
+	}
+	else if (temp == "q")
+	{
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
+	}
+
+	cout << "\nWhich element to edit for Food Item?\n1. Is Food, 2. Name, 3. Price [ Food ID: " << idChoice << "]: ";
+	cin >> temp;
+
+	if (temp == "q")
+		{
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
+	}
+	else if (isNumber(temp))
+	{
+		targetElement = stod(temp);
+	}
+	else
+	{
+		cout << "Incorrect entry.\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
+	}
+
 	cin.ignore();
 	cout << "\nWhat would you like to change that element to?\n[New Data]: ";
 	getline(cin, newData);
@@ -1084,8 +1390,14 @@ void FoodMenuAdmin_EditItem() {
 			}
 			else
 			{
-				cout << "Invalid selection, must enter a 1 or 0. Try again.\n";
-				FoodMenuAdmin_EditItem();
+				cout << "Incorrect input\n";
+				system("pause");
+				fin_admin.close();
+				fout_admin.close();
+				std::remove("foodNew.csv");
+				system("cls");
+				FoodMenuAdminMenuDisplay();
+				FoodMenuAdmin();
 			}
 		}
 		else if (targetElement == 2)
@@ -1093,12 +1405,18 @@ void FoodMenuAdmin_EditItem() {
 			if (!newData.empty())
 			{
 				food.at((cellBounds * (idChoice - 1)) + targetElement) = newData;
-				cout << food[(cellBounds * (idChoice - 1)) + targetElement];
+				cout << food[(cellBounds * (idChoice - 1)) + round(targetElement)];
 			}
 			else
 			{
-				cout << "Invalid selection, must enter a name. Try again.\n";
-				FoodMenuAdmin_EditItem();
+				cout << "Incorrect input\n";
+				system("pause");
+				fin_admin.close();
+				fout_admin.close();
+				std::remove("foodNew.csv");
+				system("cls");
+				FoodMenuAdminMenuDisplay();
+				FoodMenuAdmin();
 			}
 		}
 		else if (targetElement == 3)
@@ -1106,68 +1424,53 @@ void FoodMenuAdmin_EditItem() {
 			if (isNumber(newData))
 			{
 				food.at((cellBounds * (idChoice - 1)) + targetElement) = newData;
-				cout << food[(cellBounds * (idChoice - 1)) + targetElement];
+				cout << food[(cellBounds * (idChoice - 1)) + round(targetElement)];
 			}
 			else
 			{
-				cout << "Invalid selection, must enter a price without $. Try again.\n";
-				FoodMenuAdmin_EditItem();
-			}
-		}
-		else if (targetElement == 4)
-		{
-			if (newData == "1" || newData == "0")
-			{
-				food.at((cellBounds * (idChoice - 1)) + targetElement) = newData;
-				cout << food[(cellBounds * (idChoice - 1)) + targetElement];
-			}
-			else
-			{
-				cout << "Invalid selection, must enter a 1 or 0. Try again.\n";
-				FoodMenuAdmin_EditItem();
-			}
-		}
-		else if (targetElement == 5)
-		{
-			if (newData == "1" || newData == "0")
-			{
-				food.at((cellBounds * (idChoice - 1)) + targetElement) = newData;
-				cout << food[(cellBounds * (idChoice - 1)) + targetElement];
-			}
-			else
-			{
-				cout << "Invalid selection, must enter a 1 or 0. Try again.\n";
-				FoodMenuAdmin_EditItem();
-			}
-		}
-		else if (targetElement == 6)
-		{
-			if (newData == "1" || newData == "0")
-			{
-				food.at((cellBounds * (idChoice - 1)) + targetElement) = newData;
-				cout << food[(cellBounds * (idChoice - 1)) + targetElement];
-			}
-			else
-			{
-				cout << "Invalid selection, must enter a 1 or 0. Try again.\n";
-				FoodMenuAdmin_EditItem();
+				cout << "Incorrect input\n";
+				system("pause");
+				fin_admin.close();
+				fout_admin.close();
+				std::remove("foodNew.csv");
+				system("cls");
+				FoodMenuAdminMenuDisplay();
+				FoodMenuAdmin();
 			}
 		}
 		else
 		{
-			cout << "Invalid selection, must enter 1, 2, 3, 4, 5 or 6.\n";
-			FoodMenuAdmin_EditItem();
+			cout << "Incorrect input\n";
+			system("pause");
+			fin_admin.close();
+			fout_admin.close();
+			std::remove("foodNew.csv");
+			system("cls");
+			FoodMenuAdminMenuDisplay();
+			FoodMenuAdmin();
 		}
 	}
 	else if (targetElement == 0)
 	{
-		cout << "You cannot edit the ID for a food item\n";
-		FoodMenuAdmin_EditItem();
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
 	}
 	else
 	{
-		cout << "Invalid selection, try again.\n";
-		FoodMenuAdmin_EditItem();
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
 	}
 
 	// Filestreaming into new file, foodNew.csv
@@ -1190,7 +1493,9 @@ void FoodMenuAdmin_EditItem() {
 
 	//Deletes old CSV and renames new CSV to old CSV
 	std::remove("food.csv");
-	std::rename("foodNew.csv", "food.csv");
+	if (std::rename("foodNew.csv", "food.csv")) {
+		std::perror("Error renaming");
+	}
 
 	// Prompt for next action to take
 	cout << "\nWould you like to edit another item?\n1. Edit another item\n2. Return to Menu\nSelection: ";
@@ -1199,9 +1504,12 @@ void FoodMenuAdmin_EditItem() {
 	switch (selection)
 	{
 	case 1:
+		system("cls");
 		FoodMenuAdmin_EditItem();
 		break;
 	case 2:
+		system("cls");
+		FoodMenuAdminMenuDisplay();
 		FoodMenuAdmin();
 		break;
 	default:
@@ -1217,10 +1525,10 @@ void FoodMenuAdmin_DelItem() {
 	fout_admin.open("foodNew.csv", std::ios::out | std::ios::app);
 
 	//Function Variables
-	std::string line, newData;
-	int count = 1, cellBounds = 7, selection;
+	std::string line, newData, temp;
+	int count = 1, cellBounds = 4, selection;
 	std::vector<string> food;
-	double idChoice;
+	double idChoice = 0;
 
 	// While Loop to populate vector users and cout cells
 	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
@@ -1256,7 +1564,34 @@ void FoodMenuAdmin_DelItem() {
 	}
 
 	cout << "\nWhich ID to delete?\n[ID]: ";
-	cin >> idChoice;
+	cin >> temp;
+
+	if (isNumber(temp))
+	{
+		idChoice = stoi(temp);
+	}
+	else if (temp == "q")
+	{
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
+	}
+	else
+	{
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
+	}
+
 	cout << "\nYou are deleting Food Item [" << idChoice << "], are you sure?\n[y/n]: ";
 	cin >> newData;
 
@@ -1267,7 +1602,7 @@ void FoodMenuAdmin_DelItem() {
 		// Deletes Food from food.csv
 		for (int i = 0; i < food.size(); i++)
 		{
-			if (i < cellBounds * (idChoice - 1) || i >(cellBounds * (idChoice - 1)) + (cellBounds - 1))
+			if (i < cellBounds * (idChoice - 1) || i >(cellBounds * (idChoice - 1)) + (round(cellBounds) - 1))
 			{
 				if (count % cellBounds == 0)
 				{
@@ -1284,19 +1619,43 @@ void FoodMenuAdmin_DelItem() {
 	}
 	else if (newData == "n")
 	{
-		cout << "You chose not to delete this item.\n";
-		FoodMenuAdmin_DelItem();
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
+	}
+	else if (temp == "q")
+	{
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
 	}
 	else
 	{
-		FoodMenuAdmin_DelItem();
+		cout << "Incorrect input\n";
+		system("pause");
+		fin_admin.close();
+		fout_admin.close();
+		std::remove("foodNew.csv");
+		system("cls");
+		FoodMenuAdminMenuDisplay();
+		FoodMenuAdmin();
 	}
 
 	fin_admin.close();
 	fout_admin.close();
 
 	std::remove("food.csv");
-	std::rename("foodNew.csv", "food.csv");
+	if (std::rename("foodNew.csv", "food.csv")) {
+		std::perror("Error renaming");
+	}
 
 	cout << "\nWould you like to delete another item?\n1. Delete another item\n2. Return to Menu\nSelection: ";
 	cin >> selection;
@@ -1304,9 +1663,12 @@ void FoodMenuAdmin_DelItem() {
 	switch (selection)
 	{
 	case 1:
+		system("cls");
 		FoodMenuAdmin_DelItem();
 		break;
 	case 2:
+		system("cls");
+		FoodMenuAdminMenuDisplay();
 		FoodMenuAdmin();
 		break;
 	default:
@@ -1336,8 +1698,8 @@ void PrintOrders() {
 	double idChoice, targetElement;
 
 	// While Loop to populate vector users and cout cells
-	cout << "\nID\tChild\tMTea Food\tMTea Drink\tLunch Food\tLunch Drink\tTotal Price\n";
-	cout << "*******************************************************************************************\n";
+	cout << "\nID\tChild\tMTea F\tMTea D\tLunch F\tLunch D\tTotal Price\n";
+	cout << "****************************************************************\n";
 
 	// Statement to populate food vector with food.csv
 	while (std::getline(finUser_admin, line2))
@@ -1378,36 +1740,9 @@ void PrintOrders() {
 			}
 			else
 			{
-				if (count % cellBounds == 3)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else if (count % cellBounds == 4)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else if (count % cellBounds == 5)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else if (count % cellBounds == 6)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else
-				{
-					cout << cell << "\t";
-					orders.push_back(cell);
-					count++;
-				}
+				cout << cell << "\t";
+				orders.push_back(cell);
+				count++;
 			}
 		}
 	}
@@ -1436,8 +1771,8 @@ void PrintSales() {
 	double idChoice, targetElement, fullPrice = 0;
 
 	// While Loop to populate vector users and cout cells
-	cout << "\nID\tChild\tMTea Food\tMTea Drink\tLunch Food\tLunch Drink\tTotal Price\n";
-	cout << "*******************************************************************************************\n";
+	cout << "\nID\tChild\tMTea F\tMTea D\tLunch F\tLunch D\tTotal Price\n";
+	cout << "*************************************************************\n";
 
 	// Statement to populate food vector with food.csv
 	while (std::getline(finUser_admin, line2))
@@ -1479,36 +1814,9 @@ void PrintSales() {
 			}
 			else
 			{
-				if (count % cellBounds == 3)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else if (count % cellBounds == 4)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else if (count % cellBounds == 5)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else if (count % cellBounds == 6)
-				{
-					cout << food[std::stoi(cell) - 1] << "\t";
-					orders.push_back(cell);
-					count++;
-				}
-				else 
-				{
-					cout << cell << "\t";
-					orders.push_back(cell);
-					count++;
-				}
+				cout << cell << "\t";
+				orders.push_back(cell);
+				count++;
 			}
 		}
 	}
@@ -1645,10 +1953,14 @@ void FeedbackAdmin() {
 /*------------------------- MISC FUNCTIONS -------------------------*/
 
 //--- Checks if string is a number and returns true if so ---//
-bool isNumber(const string& str)
+bool isNumber(const string& s)
 {
-	for (char const& c : str) {
-		if (std::isdigit(c) == 0) return false;
-	}
-	return true;
+	return !s.empty() && std::find_if(s.begin(),
+		s.end(), [](char c) { return !(std::isdigit(c));  }) == s.end();
+}
+
+bool isDecimalNumber(const string& s)
+{
+	return !s.empty() && std::find_if(s.begin(),
+		s.end(), [](char c) { return !(std::isdigit(c) || c == '.');  }) == s.end();
 }
