@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <vector>
 #include <stdio.h>
+#include <ctype.h>
 
 /*Defines*/
 #define KEY_UP 72

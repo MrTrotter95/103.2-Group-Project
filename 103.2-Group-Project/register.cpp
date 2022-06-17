@@ -1,5 +1,6 @@
 #include "main.h"
 #include "register.h"
+#include "admin.h"
 
 
 void PrintArray_AccountCreationMenu();
@@ -88,6 +89,7 @@ void PrintArray_AccountCreationMenu() {
 void ArrowSelectionMenu_AccountCreation() {
     //--- Temporary Variables ---//
     int ch, ch2;
+    string temp;
     bool loop = true;
     int InputUserPin;     // To Store User Input And Compare To AdminPin
     int adminPin = 1234; //To Grant Access To Admin 
@@ -161,28 +163,31 @@ void ArrowSelectionMenu_AccountCreation() {
             case 2:
                 //--- Request Admin Pin ---//
                 cout << "Please enter pin: ";
-                cin >> InputUserPin;
+                cin >> temp;
 
-
-                //--- While loop to ensure the userinput is a valid number ---//
-                while (std::cin.fail()) {
-                    std::cout << "\nPlease input a valid integer" << std::endl;
-                    std::cin.clear();
-                    std::cin.ignore(256, '\n');
-                    std::cin >> InputUserPin;
+                if (temp == "q")
+                {
+                    system("pause");
+                    system("cls");
+                    PrintArray_AccountCreationMenu();
+                    ArrowSelectionMenu_AccountCreation();
+                }
+                //--- This statement will check if the input temporary string has any numbers ---//
+                else if (isNumber(temp) && temp.size() == 4)
+                {
+                    InputUserPin = stoi(temp);
+                }
+                else
+                {
+                    cout << "Incorrect input. [FOR TESTER: Input is 1234]\n";
+                    system("pause");
+                    system("cls");
+                    PrintArray_AccountCreationMenu();
+                    ArrowSelectionMenu_AccountCreation();
                 }
 
-
-                //--- If user input is wrong ---//
-                if (InputUserPin != adminPin) {
-                    cout << "Pin is not correct, press enter to be redirected to menu\n";
-                    int ch;
-                    ch = _getch();
-                    registerMain();
-                    //Implement Functionality to try again / go back to main menu
-                }
                 //--- If user input is correct ---//
-                else if (InputUserPin == adminPin) {
+                if (InputUserPin == adminPin) {
                     CreateAdminAcc();
                 }
                 break;
@@ -197,81 +202,202 @@ void ArrowSelectionMenu_AccountCreation() {
 }
 /*-------------------------END OF CREATE ACCOUNT MENU SECTION -------------------------*/
 void CreateParentAcc() {
-    cout << "--- Creating Parent account ---\n\n";
-
-
+    cout << "--- Creating Parent account ---\n\n[Press any key to begin..]\n\n";
     //--- Temporary Variables For Account Registration ---//
-    char input_Gender;
+    char input_Gender = 'm';
     int input_PhoneNum;
-    string input_Name, input_dob, input_email, input_password;
+    string input_Name, input_dob, input_email, input_password, temp;
+    string check = " ", emailCheck1 = "@", emailCheck2 = ".";
     int userAccType = 1;       // To Determine What Account They Would Like To Create
 
-
     //--- Name ---//
-    cout << "--- Please enter your first name ---\nName:";
-    cin >> input_Name;
-    while (input_Name.size() > 15) { //--- Max Input Size ---//
-        cout << "15 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_Name;
+    cin.ignore();
+    cout << "--- Please enter your first name ---\nName: ";
+    std::getline(cin, temp);
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
-    while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
-        cout << "Numbers found in name, please only use characters\n";
-        std::cin.clear();
-        cin >> input_Name;
+    //--- This statement will check if the input temporary string has any spaces ---//
+    else if (temp.find(check) == std::string::npos)
+    {
+        if (temp.size() < 15)
+        {
+            if (!isDecimalNumber(temp))
+            {
+                input_Name = temp;
+            }
+            else
+            {
+                cout << "No numbers or characters allowed\n";
+                system("pause");
+                system("cls");
+                PrintArray_AccountCreationMenu();
+                ArrowSelectionMenu_AccountCreation();
+            }
+        }
+        else
+        {
+            cout << "Please keep it to 15 character limit\n";
+            system("pause");
+            system("cls");
+            PrintArray_AccountCreationMenu();
+            ArrowSelectionMenu_AccountCreation();
+        }
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Gender ---//
-    cin.ignore();
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
-    cout << "Example: F | M | O\nGender:";
-    cin >> input_Gender;
-    while (input_Gender != 'f' && input_Gender != 'F' && input_Gender != 'm' && input_Gender != 'M' && input_Gender != 'o' && input_Gender != 'O') {     //--- Approved Characters Only ---//
-        cout << "invalid input\nPlease enter select one from the following: f , F , m , M , o , O\n";
-        cin >> input_Gender;
+    cout << "Example: F | M | O\nGender: ";
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any spaces ---//
+    else if (temp.find(check) == std::string::npos)
+    {
+        if (temp == "f" || temp == "F" || temp == "m" || temp == "M" || temp == "o" || temp == "O" )
+        {
+            input_Gender = temp.at(0);
+        }
+        else
+        {
+            cout << "Incorrect input\n";
+            system("pause");
+            system("cls");
+            PrintArray_AccountCreationMenu();
+            ArrowSelectionMenu_AccountCreation();
+        }
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Phone Number ---//
-    cin.ignore();
     cout << "\n--- Please enter your phone number ---\nNumber:";
-    cin >> input_PhoneNum;
-    while (std::cin.fail()) {
-        std::cout << "\nPlease enter only numeric values" << std::endl;
-        std::cin >> input_PhoneNum;
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (isNumber(temp) && temp.size() < 15)
+    {
+        input_PhoneNum = stoi(temp);
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
-
     //--- Date of birth ---//
-    cin.ignore();
-    cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
-    cin >> input_dob;
-    while (input_dob[2] != '/' || input_dob[5] != '/') {
-        cout << "Invalid input\nPlease ensure format is dd/mm/yyyy\n:";
-        cin >> input_dob;
+    cout << "\n--- Please enter your date of birth ---\nExample [DDMMYYYY]:";
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (isNumber(temp) && temp.size() == 8)
+    {
+        input_dob = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure it is in the format of [DDMMYYYY]\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Email ---//
-    cin.ignore();
     cout << "\n--- Please enter your email address ---\nEmail:";
-    cin >> input_email;
-    while (input_email.size() > 25) { //--- Max Input Size ---//
-        cout << "25 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_email;
+
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has the right criteria for an email ---//
+    else if (temp.size() < 25 && temp.find(emailCheck1) != std::string::npos && temp.find(emailCheck2) != std::string::npos)
+    {
+        input_email = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure you are using a domain name in your email\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
     //--- Password ---//
-    cin.ignore();
     cout << "\n--- Please input your password ---\nPassword:";
-    cin >> input_password;
-    while (input_password.size() > 15) { //--- Max Input Size ---//
-        cout << "15 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_password;
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (input_password.size() < 15)
+    {
+        input_password = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure it is less than 15 characters\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
@@ -285,83 +411,204 @@ void CreateParentAcc() {
 }
 
 void CreateStaffAcc() {
-    cout << "--- Creating Staff account ---\n\n";
+    cout << "--- Creating Staff account ---\n\n[Press any key to begin..]\n\n";
 
 
     //--- Temporary Variables For Account Registration ---//
-    char input_Gender;
-    long int input_PhoneNum;
-    string input_Name, input_dob, input_email, input_password;
-    int userAccType = 2;       // To Determine What Account They Would Like To Create
-
+    char input_Gender = 'm';
+    int input_PhoneNum;
+    string input_Name, input_dob, input_email, input_password, temp;
+    string check = " ", emailCheck1 = "@", emailCheck2 = ".";
+    int userAccType = 1;       // To Determine What Account They Would Like To Create
 
     //--- Name ---//
     cin.ignore();
-    cout << "--- Please enter your first name ---\nName:";
-    cin >> input_Name;
-    while (input_Name.size() > 15) { //--- Max Input Size ---//
-        cout << "15 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_Name;
+    cout << "--- Please enter your first name ---\nName: ";
+    std::getline(cin, temp);
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
-    while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
-        cout << "Numbers found in name, please only use characters\n";
-        std::cin.clear();
-        cin >> input_Name;
+    //--- This statement will check if the input temporary string has any spaces ---//
+    else if (temp.find(check) == std::string::npos)
+    {
+        if (temp.size() < 15)
+        {
+            if (!isDecimalNumber(temp))
+            {
+                input_Name = temp;
+            }
+            else
+            {
+                cout << "No numbers or characters allowed\n";
+                system("pause");
+                system("cls");
+                PrintArray_AccountCreationMenu();
+                ArrowSelectionMenu_AccountCreation();
+            }
+        }
+        else
+        {
+            cout << "Please keep it to 15 character limit\n";
+            system("pause");
+            system("cls");
+            PrintArray_AccountCreationMenu();
+            ArrowSelectionMenu_AccountCreation();
+        }
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
-  
+
     //--- Gender ---//
-    cin.ignore();
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
-    cout << "Example: F | M | O\nGender:";
-    cin >> input_Gender;
-    while (input_Gender != 'f' && input_Gender != 'F' && input_Gender != 'm' && input_Gender != 'M' && input_Gender != 'o' && input_Gender != 'O') {     //--- Approved Characters Only ---//
-        cout << "invalid input\nPlease enter select one from the following: f , F , m , M , o , O\n";
-        cin >> input_Gender;
+    cout << "Example: F | M | O\nGender: ";
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any spaces ---//
+    else if (temp.find(check) == std::string::npos)
+    {
+        if (temp == "f" || temp == "F" || temp == "m" || temp == "M" || temp == "o" || temp == "O")
+        {
+            input_Gender = temp.at(0);
+        }
+        else
+        {
+            cout << "Incorrect input\n";
+            system("pause");
+            system("cls");
+            PrintArray_AccountCreationMenu();
+            ArrowSelectionMenu_AccountCreation();
+        }
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Phone Number ---//
-    cin.ignore();
     cout << "\n--- Please enter your phone number ---\nNumber:";
-    cin >> input_PhoneNum;
-    while (std::cin.fail()) {
-        std::cout << "\nPlease enter only numeric values" << std::endl;
-        std::cin.clear();
-        std::cin.ignore(256, '\n');
-        std::cin >> input_PhoneNum;
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (isNumber(temp) && temp.size() < 15)
+    {
+        input_PhoneNum = stoi(temp);
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Date of birth ---//
-    cin.ignore();
-    cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
-    cin >> input_dob;
-    while (input_dob[2] != '/' || input_dob[5] != '/') {
-        cout << "Invalid input\nPlease ensure format is dd/mm/yyyy\n:";
-        cin >> input_dob;
+    cout << "\n--- Please enter your date of birth ---\nExample [DDMMYYYY]:";
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (isNumber(temp) && temp.size() == 8)
+    {
+        input_dob = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure it is in the format of [DDMMYYYY]\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Email ---//
-    cin.ignore();
     cout << "\n--- Please enter your email address ---\nEmail:";
-    cin >> input_email;
-    while (input_email.size() > 25) { //--- Max Input Size ---//
-        cout << "25 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_email;
+
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has the right criteria for an email ---//
+    else if (temp.size() < 25 && temp.find(emailCheck1) != std::string::npos && temp.find(emailCheck2) != std::string::npos)
+    {
+        input_email = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure you are using a domain name in your email\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
     //--- Password ---//
-    cin.ignore();
     cout << "\n--- Please input your password ---\nPassword:";
-    cin >> input_password;
-    while (input_password.size() > 15) { //--- Max Input Size ---//
-        cout << "15 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_password;
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (input_password.size() < 15)
+    {
+        input_password = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure it is less than 15 characters\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
@@ -378,84 +625,202 @@ void CreateAdminAcc() {
     cout << "--- Pin entered correctly ---\n";
     cout << "--- Creating Admin Account ---\n\n";
 
-
     //--- Temporary Variables For Account Registration ---//
-    char input_Gender;
-    long int input_PhoneNum;
-    string input_Name, input_dob, input_email, input_password;
-    int userAccType = 3;       // To Determine What Account They Would Like To Create
-
+    char input_Gender = 'm';
+    int input_PhoneNum;
+    string input_Name, input_dob, input_email, input_password, temp;
+    string check = " ", emailCheck1 = "@", emailCheck2 = ".";
+    int userAccType = 1;       // To Determine What Account They Would Like To Create
 
     //--- Name ---//
     cin.ignore();
-    cout << "--- Please enter your first name ---\nName:";
-    cin >> input_Name;
-    while (input_Name.size() > 15) { //--- Max Input Size ---//
-        cout << "15 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_Name;
+    cout << "--- Please enter your first name ---\nName: ";
+    std::getline(cin, temp);
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
-    while (std::any_of(input_Name.begin(), input_Name.end(), ::isdigit)) { //--- Characters Only ---//
-        cout << "Numbers found in name, please only use characters\n";
-        std::cin.clear();
-        cin >> input_Name;
+    //--- This statement will check if the input temporary string has any spaces ---//
+    else if (temp.find(check) == std::string::npos)
+    {
+        if (temp.size() < 15)
+        {
+            if (!isDecimalNumber(temp))
+            {
+                input_Name = temp;
+            }
+            else
+            {
+                cout << "No numbers or characters allowed\n";
+                system("pause");
+                system("cls");
+                PrintArray_AccountCreationMenu();
+                ArrowSelectionMenu_AccountCreation();
+            }
+        }
+        else
+        {
+            cout << "Please keep it to 15 character limit\n";
+            system("pause");
+            system("cls");
+            PrintArray_AccountCreationMenu();
+            ArrowSelectionMenu_AccountCreation();
+        }
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Gender ---//
-    cin.ignore();
     cout << "--- Please select your gender ---\nFemale\nMale\nOther\n";
-    cout << "Example: F | M | O\nGender:";
-    cin >> input_Gender;
-    while (input_Gender != 'f' && input_Gender != 'F' && input_Gender != 'm' && input_Gender != 'M' && input_Gender != 'o' && input_Gender != 'O') {     //--- Approved Characters Only ---//
-        cout << "invalid input\nPlease enter select one from the following: f , F , m , M , o , O\n";
-        cin >> input_Gender;
+    cout << "Example: F | M | O\nGender: ";
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any spaces ---//
+    else if (temp.find(check) == std::string::npos)
+    {
+        if (temp == "f" || temp == "F" || temp == "m" || temp == "M" || temp == "o" || temp == "O")
+        {
+            input_Gender = temp.at(0);
+        }
+        else
+        {
+            cout << "Incorrect input\n";
+            system("pause");
+            system("cls");
+            PrintArray_AccountCreationMenu();
+            ArrowSelectionMenu_AccountCreation();
+        }
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Phone Number ---//
-    cin.ignore();
     cout << "\n--- Please enter your phone number ---\nNumber:";
-    cin >> input_PhoneNum;
-    while (std::cin.fail()) {
-        std::cout << "\nPlease enter only numeric values" << std::endl;
-        std::cin.clear();
-        std::cin.ignore(256, '\n');
-        std::cin >> input_PhoneNum;
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (isNumber(temp) && temp.size() < 15)
+    {
+        input_PhoneNum = stoi(temp);
+    }
+    else
+    {
+        cout << "Incorrect input\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Date of birth ---//
-    cin.ignore();
-    cout << "\n--- Please enter your date of birth ---\nExample dd/mm/yyyy:";
-    cin >> input_dob;
-    while (input_dob[2] != '/' || input_dob[5] != '/') {
-        cout << "Invalid input\nPlease ensure format is dd/mm/yyyy\n:";
-        cin >> input_dob;
+    cout << "\n--- Please enter your date of birth ---\nExample [DDMMYYYY]:";
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (isNumber(temp) && temp.size() == 8)
+    {
+        input_dob = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure it is in the format of [DDMMYYYY]\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
     }
 
 
     //--- Email ---//
-    cin.ignore();
     cout << "\n--- Please enter your email address ---\nEmail:";
-    cin >> input_email;
-    while (input_email.size() > 25) { //--- Max Input Size ---//
-        cout << "25 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_email;
-    }
 
+    cin >> temp;
+
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has the right criteria for an email ---//
+    else if (temp.size() < 25 && temp.find(emailCheck1) != std::string::npos && temp.find(emailCheck2) != std::string::npos)
+    {
+        input_email = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure you are using a domain name in your email\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
 
     //--- Password ---//
-    cin.ignore();
     cout << "\n--- Please input your password ---\nPassword:";
-    cin >> input_password;
-    while (input_password.size() > 15) { //--- Max Input Size ---//
-        cout << "15 character limit reached. Please try again\n";
-        std::cin.clear();
-        cin >> input_password;
-    }
+    cin >> temp;
 
+    if (temp == "q")
+    {
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
+    //--- This statement will check if the input temporary string has any numbers ---//
+    else if (input_password.size() < 15)
+    {
+        input_password = temp;
+    }
+    else
+    {
+        cout << "Incorrect input. Ensure it is less than 15 characters\n";
+        system("pause");
+        system("cls");
+        PrintArray_AccountCreationMenu();
+        ArrowSelectionMenu_AccountCreation();
+    }
 
     //--- Passing user input to constructor ---//
     User account(input_Name, input_Gender, input_PhoneNum, input_dob, input_email, input_password, userAccType);
@@ -498,8 +863,7 @@ void SaveLoginDetails(User account) {
         << account.S_Name << ","
         << account.S_Email << ","
         << account.S_Password << ","
-        << account.I_accessLevel << ","
-        << account.F_DiscountValue << "\n";
+        << account.I_accessLevel << "\n";
     fout.close();
     //--- End of file writing logic ---//
 }
@@ -535,7 +899,8 @@ void SaveUserDetails(User account) {
     fout << newId << ","
         << account.C_Gender << ","
         << account.I_PhoneNum << ","
-        << account.S_Dob << "\n";
+        << account.S_Dob << ","
+        << account.F_DiscountValue << "\n";
     fout.close();
     //--- End of file writing logic ---//
 
