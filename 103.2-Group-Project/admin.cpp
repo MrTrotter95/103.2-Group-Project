@@ -148,7 +148,6 @@ void ArrowSelectionMenu_AdminMenu() {
 
 /*------------------------- END OF ADMIN MAIN MENU SECTION -------------------------*/
 /*------------------------- START OF ADMIN ACCOUNT SECTION -------------------------*/
-
 const int menuSize_accountMenu = 4;
 int selectionHighlight_accountMenu = 0;
 string mainMenuPrint_accountMenu[menuSize_accountMenu] = { "Edit Account", "Delete Account", "Change Password", "Return" };
@@ -876,7 +875,6 @@ void AccountAdmin_ChangePass() {
 
 /*------------------------- END OF ADMIN ACCOUNT SECTION -------------------------*/
 /*------------------------- START OF ADMIN FOOD MENU SECTION -------------------------*/
-
 const int menuSize_foodMenu = 5;
 int selectionHighlight_foodMenu = 0;
 string mainMenuPrint_foodMenu[menuSize_foodMenu] = { "View Menu", "Add Item", "Edit Item", "Delete Item", "Return" };
@@ -1165,6 +1163,7 @@ void FoodMenuAdmin_AddItem() {
 					{
 						fout_admin << food[i] << "\n";
 						count2++;
+
 					}
 					else
 					{
@@ -1834,7 +1833,6 @@ void PrintSales() {
 	AdminMenuDisplay();
 	AdminArrowKeys();
 }
-
 
 /*------------------------- END OF ADMIN SALES SECTION -------------------------*/
 /*------------------------- START OF ADMIN DISCOUNT SECTION -------------------------*/

@@ -28,7 +28,7 @@ public:
     User() {
     
     }
-    
+
 
     //--- Constructor with Arguments ---//
     User(string name, char gender, int phoneNum, string dob, string email, string password, int accessLevel) {
@@ -41,7 +41,7 @@ public:
         I_accessLevel = accessLevel;
     }
 
-    
+
     //--- Might not need this ---//
     void accountCreated() {
         cout << "\nYour account has been succesfully created!\n";
@@ -69,6 +69,7 @@ string MenuPrint_AccountCreation[menuSize_AccountCreation] = { "Parent", "Staff"
 
 void PrintArray_AccountCreationMenu() {
     cout << "********************************\n*   Register Your New Account  *\n********************************\n";
+
     for (int i = 0; i < menuSize_AccountCreation; i++)
     {
         if (i == selectionHighlight_AccountCreation)
@@ -537,6 +538,6 @@ void SaveUserDetails(User account) {
         << account.S_Dob << "\n";
     fout.close();
     //--- End of file writing logic ---//
-   
+
     account.accountCreated();
 }

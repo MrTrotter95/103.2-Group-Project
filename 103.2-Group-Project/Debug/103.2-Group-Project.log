@@ -1,8 +1,0 @@
-﻿  feedback.cpp
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\feedback.cpp(743,46): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\feedback.cpp(747,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\feedback.cpp(864,50): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\feedback.cpp(868,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\feedback.cpp(985,49): warning C4244: 'argument': conversion from 'double' to 'const unsigned int', possible loss of data
-C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\103.2-Group-Project\feedback.cpp(989,20): warning C4018: '<': signed/unsigned mismatch
-  103.2-Group-Project.vcxproj -> C:\Users\jorda\Desktop\YooBee_Work\CS103\Project2\Debug\103.2-Group-Project.exe

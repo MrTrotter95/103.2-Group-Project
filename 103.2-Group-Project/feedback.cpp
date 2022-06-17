@@ -1,4 +1,4 @@
-#include "main.h"
+﻿#include "main.h"
 #include "feedback.h"
 #include "login.h"
 #include "admin.h"
@@ -6,7 +6,6 @@
 /*Start of Feedback functionality*/
 void feedbackMain(string userId, string userName, string userEmail, string accessLevel) // This must have a User ID comming into it and or access level?
 {
-
 	//--- Parent ---//
 	if (accessLevel == "1") {
 		system("cls");
@@ -177,6 +176,7 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	token += 1;
 
 
+
 	//--- Outputing the user message details to the csv file. ---//
 	fout << token << ","
 		 << actioned << ","
@@ -256,6 +256,7 @@ void SendComplaint(string userId, string userName, string userEmail) {
 
 	//--- Temporary Variables ---//
 	string userMessage, actioned = "No";
+
 	std::string id, line;
 	int token;
 
@@ -477,7 +478,6 @@ void ViewCompliments() {
 		getline(lineStream, fileName, ',');
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
-
 
 		if (fileResolved == "No") {
 			cout << fileName << "\t";

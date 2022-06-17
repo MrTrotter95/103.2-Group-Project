@@ -52,6 +52,7 @@ void VerifyAccount(string inputEmail, string inputPassword) {
 
 }
 
+
 const int menuSize_parent = 5;
 int selectionHighlight_parent = 0;
 string mainMenuPrint_parent[menuSize_parent] = { "Place Order", "Order History", "Add Child", "Feedback", "Return" };
@@ -400,7 +401,6 @@ void AdminArrowKeys() {
 
 //--- To Compare User Input Password Matches CSV ---//
 void CheckPassword(string userId, string userPassword, string userAccessLvl, string inputPassword) {
-
         //--- If password is correct ---//
         if (inputPassword == userPassword) {
 
