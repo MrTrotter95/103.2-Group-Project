@@ -83,7 +83,7 @@ void ArrowSelectionMenu_AccountCreation() {
     int ch, ch2;
     string temp;
     bool loop = true;
-    int InputUserPin = 0;     // To Store User Input And Compare To AdminPin
+    int InputUserPin = 0; // To Store User Input And Compare To AdminPin
     int adminPin = 1234; //To Grant Access To Admin 
 
     while (loop)
@@ -201,6 +201,7 @@ void CreateParentAcc() {
     string input_Name, input_dob, input_email, input_password, temp;
     string check = " ", emailCheck1 = "@", emailCheck2 = ".";
     int userAccType = 1;       //--- To Determine What Account They Would Like To Create ---//
+
 
     //--- Name ---//
     cin.ignore();

@@ -27,7 +27,6 @@ void PrintArray_ParentFeedbackMenu() {
 }
 
 void ArrowSelectionMenu_ParentFeedback(string userId, string userName, string userEmail) {
-	//cout << "Use arrow keys to make selection\n\n";
 	int ch, ch2;
 	bool loop = true;
 
@@ -121,10 +120,12 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	std::fstream fout;
 	std::ifstream  data("GeneralContact.csv");
 
+
 	//--- Temporary Variables ---//
 	string userMessage, actioned = "No";
 	std::string id, line;
 	int token;
+
 
 	cin.ignore();
 	//--- User Instructions ---//p
@@ -135,6 +136,7 @@ void GeneralContact(string userId, string userName, string userEmail) {
 		std::cin.clear();
 		getline(cin, userMessage);
 	}
+
 
 	//--- Start of file writing logic ---//
 	fout.open("GeneralContact.csv", std::ios::out | std::ios::app);
@@ -150,7 +152,6 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	std::istringstream(id) >> token;
 	//--- Takes last row in csv file and adds 1 to create a new unique ID. ---//
 	token += 1;
-
 
 
 	//--- Outputing the user message details to the csv file. ---//
@@ -170,7 +171,6 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	system("cls"); //--- Clears previous console output ---//
 	ParentMenuDisplay();
 	ParentArrowKeys(userId, userName, userEmail);
-	//ArrowSelectionMenu_MainMenu(); // Replace with correct menu might need to pass user ID back through
 }
 
 void SendCompliment(string userId, string userName, string userEmail) {
@@ -185,6 +185,7 @@ void SendCompliment(string userId, string userName, string userEmail) {
 	std::string id, line;
 	int token;
 
+
 	cin.ignore();
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
@@ -198,6 +199,8 @@ void SendCompliment(string userId, string userName, string userEmail) {
 
 	//--- Start of file writing logic ---//
 	fout.open("Compliments.csv", std::ios::out | std::ios::app);
+
+
 	//--- This loops through each row in csv file and only checks the first cell of each row. ---//
 	while (std::getline(data, line))
 	{
@@ -208,6 +211,8 @@ void SendCompliment(string userId, string userName, string userEmail) {
 
 	//--- Converting string to int. ---//
 	std::istringstream(id) >> token;
+
+
 	//--- Takes last row in csv file and adds 1 to create a new unique ID. ---//
 	token += 1;
 
@@ -236,11 +241,12 @@ void SendComplaint(string userId, string userName, string userEmail) {
 	std::fstream fout;
 	std::ifstream  data("Complaints.csv");
 
+
 	//--- Temporary Variables ---//
 	string userMessage, actioned = "No";
-
 	std::string id, line;
 	int token;
+
 
 	cin.ignore();
 	//--- User Instructions ---//
@@ -255,6 +261,8 @@ void SendComplaint(string userId, string userName, string userEmail) {
 
 	//--- Start of file writing logic ---//
 	fout.open("Complaints.csv", std::ios::out | std::ios::app);
+
+
 	//--- This loops through each row in csv file and only checks the first cell of each row. ---//
 	while (std::getline(data, line))
 	{
@@ -265,6 +273,8 @@ void SendComplaint(string userId, string userName, string userEmail) {
 
 	//--- Converting string to int. ---//
 	std::istringstream(id) >> token;
+
+
 	//--- Takes last row in csv file and adds 1 to create a new unique ID. ---//
 	token += 1;
 
@@ -313,7 +323,6 @@ void PrintArray_StaffFeedbackMenu() {
 }
 
 void ArrowSelectionMenu_StaffFeedback() {
-	//cout << "Use arrow keys to make selection\n\n";
 	int ch, ch2;
 	bool loop = true;
 
@@ -411,6 +420,7 @@ void ViewGeneralMessages() {
 	//--- Temporary Variables ---//
 	std::string fileToken, fileResolved, fileName, fileEmail, fileMessage, fileLine;
 
+
 	//--- User Display ---//
 	cout << "Viewing all unread messages\n\n";
 	cout << "Name\t\tMessage\n";
@@ -459,6 +469,7 @@ void ViewCompliments() {
 	std::string fileId, fileResolved, fileName, fileEmail, fileMessage, fileLine;
 
 
+	//--- Printing Table Header ---//
 	cout << "Name\t\tMessage\n";
 
 
@@ -505,6 +516,7 @@ void ViewComplaints() {
 	std::string fileId, fileResolved, fileName, fileEmail, fileMessage, fileLine;
 
 
+	//--- Print table header ---//
 	cout << "Name\t\tMessage\n";
 
 
@@ -565,7 +577,6 @@ void PrintArray_AdminFeedbackMenu(string userId, string userEmail) {
 }
 
 void ArrowSelectionMenu_AdminFeedback(string userId, string userEmail) {
-	//cout << "Use arrow keys to make selection\n\n";
 	int ch, ch2;
 	bool loop = true;
 

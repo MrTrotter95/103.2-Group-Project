@@ -9,7 +9,7 @@
 #include "admin.h"
 #include "discount.h"
 
-/*Global Variables*/
+//--- Variables for menu display ---//
 const int menuSize_main = 4;
 int selectionHighlight_main = 0;
 string mainMenuPrint_main[menuSize_main] = { "Login", "Register", "Contact", "Exit" };
@@ -52,9 +52,8 @@ void PrintArray_MainMenu() {
 	}
 }
 
-/*Function to get character for arrow keys selection menu*/
+//--- Function to get character for arrow keys selection menu ---//
 void ArrowSelectionMenu_MainMenu() {
-	//cout << "Use arrow keys to make selection\n\n";
 	int ch, ch2;
 	bool loop = true;
 
@@ -120,10 +119,10 @@ void ArrowSelectionMenu_MainMenu() {
 			switch (selectionHighlight_main)
 			{
 			case 0:
-				loginMain();                //Calls main function from login.cpp
+				loginMain();               
 				break;
 			case 1:
-				registerMain();             //Calls main function from register.cpp
+				registerMain();         
 				break;
 			case 2:
 				system("cls");
@@ -132,7 +131,7 @@ void ArrowSelectionMenu_MainMenu() {
 				BeginProgram();
 				break;
 			case 3:
-				exit(0);					//Exits the program
+				exit(0);			
 			default:
 				break;
 			}

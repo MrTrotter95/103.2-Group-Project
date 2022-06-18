@@ -3,7 +3,7 @@
 #include "admin.h"
 #include "login.h"
 
-//file pointer
+//--- file pointer ---//
 std::fstream fout;
 std::fstream fin;
 std::fstream finUser;
@@ -31,7 +31,7 @@ void discountDisplayArray() {
 
 
 
-/*Start of Discount functionality*/
+//--- Start of Discount functionality ---//
 void discountMain()
 {
     int ch, ch2;
@@ -119,9 +119,9 @@ void discountMain()
     }
 }
 
-/*Making a new discount*/
+//--- Making a new discount ---//
 void AddDiscount() {
-
+    //--- Temporary Variables ---//
     double value = 0;
     std::string name, line, word, temp;
     std::vector<std::string> row;
@@ -129,7 +129,8 @@ void AddDiscount() {
 
     fin.open("discounts.csv", std::ios::in);
 
-    // Statement to populate discContent vector with discounts.csv
+
+    //--- Statement to populate discContent vector with discounts.csv ---//
     while (getline(fin, line))
     {
         row.clear();
@@ -142,11 +143,14 @@ void AddDiscount() {
         }
     }
 
+
+    //--- Output for the user ---//
     cout << "List of available discounts and their discount value:\n";
 
     bool isDiscName = true;
 
-    // Statement to print the discounts
+
+    //--- Statement to print the discounts ---//
     for (int i = 0; i < discContent.size(); i++)
     {
         for (int j = 0; j < discContent[i].size(); j++)
@@ -172,13 +176,13 @@ void AddDiscount() {
 
     fin.close();
 
-    //opens existing csv or creates new file
+    //--- Opens existing csv or creates new file ---//
     fout.open("discounts.csv", std::ios::out | std::ios::app);
     cin.ignore();
     cout << "******************************\nMake a new discount\n";
-
     cout << "Discount name [string]: ";
     getline(cin, temp);
+
 
     if (temp.size() > 0 && temp.size() < 15)
     {
@@ -253,23 +257,22 @@ void AddDiscount() {
     }
 }
 
-/*Setting a discount as Parents discount value*/
+//--- Setting a discount as Parents discount value ---//
 void SetDiscount() {
-    //Apply discount value to Parent discount value
-
-    //open discount csv
-    //open parent info csv
+    //--- Function Streams ---//
     fin.open("discounts.csv", std::ios::in);
     finUser.open("userDetails.csv", std::ios::in);
     fout.open("userDetailsNew.csv", std::ios::out | std::ios::app);
 
 
+    //--- Temporary Variables ---//
     std::string line, lineDisc, temp;
     int count = 1, count2 = 1, idCount = 1, selection;
     std::vector<string> users, discs;
     double idChoice = 0, discChoice = 0;
 
-    // Statement to populate users vector with userDetails
+
+    //--- Statement to populate users vector with userDetails ---//
     while (std::getline(finUser, line))
     {
         std::stringstream lineStream(line);
@@ -291,8 +294,12 @@ void SetDiscount() {
         }
     }
 
+
+    //--- Output for the user ---//
     cout << "\n" << "************************\nDiscounts available:\n";
-    // Statement to print discs vector
+
+
+    //--- Statement to print discs vector ---//
     while (std::getline(fin, lineDisc))
     {
         std::stringstream discSs(lineDisc);
@@ -377,9 +384,10 @@ void SetDiscount() {
     }
 
 
-    // Statement to change selected user's discount value to selected discount value
+    //--- Statement to change selected user's discount value to selected discount value ---//
     users.at((5 * (idChoice - 1)) + 4) = discs[(discChoice * 2) - 1];
     cout << users[(5 * (idChoice - 1)) + 4];
+
 
     for (int i = 0; i < users.size(); i++)
     {
@@ -395,17 +403,22 @@ void SetDiscount() {
         }
     }
 
-    // Statement to close up filestreams
+
+    //--- Statement to close up filestreams ---//
     fin.close();
     finUser.close();
     fout.close();
 
-    // Statement to remove old csv and rename new csv
+
+    //--- Statement to remove old csv and rename new csv ---//
     std::remove("userDetails.csv");
     std::rename("userDetailsNew.csv", "userDetails.csv");
 
+
+    //--- User Instructions ---//
     cout << "\nWould you like to set another discount?\n1. Set another discount\n2. Return to Menu\nSelection: ";
     cin >> selection;
+
 
     switch (selection)
     {
@@ -427,7 +440,7 @@ void SetDiscount() {
 
 }
 
-/*Deleting a Discount*/
+//---Deleting a Discount ---//
 void DeleteDiscount() {
     std::string deleteName, deleteNameRow, line, word, name, value, temp;
     std::vector<std::string> row;
@@ -476,10 +489,13 @@ void DeleteDiscount() {
         }
     }
 
+
+    //--- User Instructions ---//
     cin.ignore();
     cout << "Enter the name of the discount to be deleted\n";
     getline(cin, temp);
     
+
     if (temp == "q")
     {
         system("pause");
@@ -547,6 +563,8 @@ void DeleteDiscount() {
 
     int selection;
 
+
+    //--- User instructions ---//
     cout << "\nWould you like to delete another discount?\n1. Delete another discount\n2. Return to Menu\nSelection: ";
     cin >> selection;
 

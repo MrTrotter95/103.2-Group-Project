@@ -4,6 +4,8 @@
 #include "discount.h"
 #include "feedback.h"
 
+
+//--- File stream ---//
 std::ifstream data;
 
 //--- To Check Account Exists on CSV ---//

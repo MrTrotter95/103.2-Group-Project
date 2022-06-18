@@ -3,6 +3,8 @@
 #include "discount.h"
 #include "login.h"
 
+
+
 //--- Global Variables ---//
 const int menuSize_admin = 6;
 int selectionHighlight_admin = 0;
@@ -15,11 +17,15 @@ string mainMenuPrint_admin[menuSize_admin] = {
 											"Return to Main Menu"
 };
 
+
+
 //--- File Pointers ---//
 std::fstream fout_admin;														//Creates file stream for writing to files
 std::fstream fin_admin;															//Creates file stream for reading files
 std::fstream finUser_admin;														//Creates second file stream for reading files
 std::fstream foutUser_admin;													//Creates second file stream for writing to files
+
+
 
 //--- Admin Main Function ---//
 void adminMain()
@@ -30,10 +36,13 @@ void adminMain()
 	ArrowSelectionMenu_AdminMenu();												//Enables arrow key interaction
 }
 
-/*------------------------- START OF ADMIN MAIN MENU SECTION -------------------------*/
+
+
+/*------------------------- START OF ADMIN MAIN MENU -------------------------*/
 //--- Prints Array for Main Menu ---//
 void PrintArray_AdminMenu() {
-	for (int i = 0; i < menuSize_admin; i++)									//For loop running through the admin menu size
+	//---For loop running through the admin menu size ---//
+	for (int i = 0; i < menuSize_admin; i++)
 	{
 		if (i == selectionHighlight_admin)
 		{
@@ -48,9 +57,11 @@ void PrintArray_AdminMenu() {
 	}
 }
 
+
+
 //--- Allows for keystrokes in menu selection ---//
 void ArrowSelectionMenu_AdminMenu() {
-	//cout << "Use arrow keys to make selection\n\n";
+	//--- Temporary Varaiables ---//
 	int ch, ch2;
 	bool loop = true;
 
@@ -122,35 +133,39 @@ void ArrowSelectionMenu_AdminMenu() {
 			switch (selectionHighlight_admin)
 			{
 			case 0:
-				AccountAdmin();                //Calls account function
+				AccountAdmin();
 				break;
 			case 1:
-				FoodMenuAdmin();             //Calls food menu function
+				FoodMenuAdmin();
 				break;
 			case 2:
-				FeedbackAdmin();            //Calls feedback function
+				FeedbackAdmin();
 				break;
 			case 3:
-				PrintSales();                 //Calls sales report function
+				PrintSales();
 				break;
 			case 4:
-				discountMain();             //Calls discount function
+				discountMain();
 				break;
 			case 5:
 				loop = false;
-				BeginProgram();	//Calls main menu function
+				BeginProgram();
 			default:
 				break;
 			}
 		}
 	}
 }
-
 /*------------------------- END OF ADMIN MAIN MENU SECTION -------------------------*/
+
+
+
 /*------------------------- START OF ADMIN ACCOUNT SECTION -------------------------*/
+//--- Variables for menu selection ---//
 const int menuSize_accountMenu = 4;
 int selectionHighlight_accountMenu = 0;
 string mainMenuPrint_accountMenu[menuSize_accountMenu] = { "Edit Account", "Delete Account", "Change Password", "Return" };
+
 
 void AccountAdminMenuDisplay() {
 	cout << "**********************************\n*   Welcome to the Account Menu  *\n* Enter 'q' at any input to exit *\n**********************************\n";
@@ -168,6 +183,8 @@ void AccountAdminMenuDisplay() {
 		}
 	}
 }
+
+
 
 //--- Main Menu for Administration of Accounts ---//
 void AccountAdmin() {
@@ -256,22 +273,30 @@ void AccountAdmin() {
 	}
 }
 
+
+
 //--- Submenu for Editing of Account Details (userDetails.csv) ---//
 void AccountAdmin_EditAcc() {
 
-	// Function Streams
+
+	//--- Function Streams ---//
 	finUser_admin.open("userDetails.csv", std::ios::in);
 	fout_admin.open("userDetailsNew.csv", std::ios::out | std::ios::app);
 
-	// Function Variables
+
+	//--- Function Variables ---//
 	std::string line, newData, temp;
 	int count = 1, cellBounds = 5, selection;
 	std::vector<string> users;
 	double idChoice = 0, targetElement = 0;
 
+
+	//--- User Instructions ---//
 	cout << "\nID\tGender\tPh Num\tD.O.B.\tDiscount Value\n";
 	cout << "***************************************************\n";
-	// While Loop to populate vector users and cout cells
+
+
+	//--- While Loop to populate vector users and cout cells ---//
 	while (std::getline(finUser_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -293,10 +318,13 @@ void AccountAdmin_EditAcc() {
 		}
 	}
 
-	// Prompt to choose ID to edit
+
+	//--- Prompt to choose ID to edit ---//
 	cout << "\nWhich ID to edit?\n[ID]: ";
 	cin >> temp;
 
+
+	//--- "q" escape loop functionality ---//
 	if (temp == "q")
 	{
 		system("pause");
@@ -307,7 +335,8 @@ void AccountAdmin_EditAcc() {
 		AccountAdminMenuDisplay();
 		AccountAdmin();
 	}
-	else if (isNumber(temp))
+	//--- This continues program if user instruction is correct ---//
+	else if (isNumber(temp)) 
 	{
 		idChoice = stod(temp);
 	}
@@ -323,9 +352,13 @@ void AccountAdmin_EditAcc() {
 		AccountAdmin_EditAcc();
 	}
 
+
+	//--- User Instructions ---//
 	cout << "\nWhich element to edit for User?\n[1] Gender, [2] Phone Number or [3] Date of Birth [" << idChoice << "]: ";
 	cin >> temp;
 
+
+	//--- "q" escape loop functionality ---//
 	if (temp == "q")
 	{
 		system("pause");
@@ -336,6 +369,7 @@ void AccountAdmin_EditAcc() {
 		AccountAdminMenuDisplay();
 		AccountAdmin();
 	}
+	//--- This continues program if user instruction is correct ---//
 	else if (isNumber(temp))
 	{
 		targetElement = stod(temp);
@@ -352,10 +386,13 @@ void AccountAdmin_EditAcc() {
 		AccountAdmin_EditAcc();
 	}
 
+
+	//--- User instructions ---//
 	cout << "\nWhat would you like to change that element to?\n[New Data]: ";
 	cin >> newData;
 
-	// Checking if input is correct, then setting targetted cell as newData, else recursion of this function
+
+	//--- Checking if input is correct, then setting targetted cell as newData, else recursion of this function ---//
 	if (targetElement >= 1 && targetElement <= 3)
 	{
 		if (targetElement == 1)
@@ -461,7 +498,8 @@ void AccountAdmin_EditAcc() {
 		AccountAdmin();
 	}
 
-	// Filestreaming into new file, userDetailsNew.csv
+
+	//--- Filestreaming into new file, userDetailsNew.csv ---//
 	for (int i = 0; i < users.size(); i++)
 	{
 		if (count % cellBounds == 0)
@@ -484,7 +522,7 @@ void AccountAdmin_EditAcc() {
 		std::perror("Error renaming");
 	}
 
-	// Prompt for next action to take
+	//--- Prompt for next action to take ---//
 	cout << "\nWould you like to edit another account?\n1. Edit another account\n2. Return to Menu\nSelection: ";
 	cin >> selection;
 
@@ -511,21 +549,26 @@ void AccountAdmin_EditAcc() {
 //--- Submenu for Deleting Accounts (userDetails.csv and login.csv) ---//
 void AccountAdmin_DelAcc() {
 
-	// Function Streams
+
+	//--- Function Streams ---//
 	fin_admin.open("userDetails.csv", std::ios::in);
 	fout_admin.open("userDetailsNew.csv", std::ios::out | std::ios::app);
 	finUser_admin.open("login.csv", std::ios::in);
 	foutUser_admin.open("loginNew.csv", std::ios::out | std::ios::app);
 
-	//Function Variables
+
+	//--- Function Variables ---//
 	std::string line, line2, newData, temp;
 	int count = 1, count2 = 1, cellBounds = 5, loginCellBounds = 5, selection;
 	std::vector<string> users, logins;
 	double idChoice = 0;
 
+	//--- Printing table headers ---//
 	cout << "\nID\tName\tEmail\tPassword\tAccess Lvl\n";
 	cout << "***************************************************\n";
-	// Statement to push csv into users vector
+
+
+	//--- Statement to push csv into users vector ---//
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -547,7 +590,7 @@ void AccountAdmin_DelAcc() {
 		}
 	}
 
-	// Statement to push csv into logins vector
+	//--- Statement to push csv into logins vector ---//
 	while (std::getline(finUser_admin, line2))
 	{
 		std::stringstream lineStream(line2);
@@ -569,9 +612,10 @@ void AccountAdmin_DelAcc() {
 		}
 	}
 
-	// Statement to show prompt for deleting User
+	//--- Statement to show prompt for deleting User ---//
 	cout << "\nWhich ID to delete?\n[ID]: ";
 	cin >> temp;
+
 
 	if (isNumber(temp))
 	{
@@ -609,17 +653,20 @@ void AccountAdmin_DelAcc() {
 		AccountAdmin();
 	}
 
+
+	//--- User Instructions ---//
 	cout << "\nYou are deleting User [" << idChoice << "], are you sure?\n[y/n]: ";
 	cin >> newData;
 
-	// Statement to check if input is y or n
+
+	//--- Statement to check if input is y or n ---//
 	if (idChoice != 0)
 	{
 		if (newData == "y")
 		{
 			cout << "Account [" << idChoice << "] deleted.\n";
 
-			// Deletes User from userDetails.csv
+			//--- Deletes User from userDetails.csv ---//
 			for (int i = 0; i < users.size(); i++)
 			{
 				if (i < cellBounds * (idChoice - 1) || i >(cellBounds * (idChoice - 1)) + (round(cellBounds) - 1))
@@ -637,7 +684,7 @@ void AccountAdmin_DelAcc() {
 				}
 			}
 
-			// Deletes User from login csv 
+			//--- Deletes User from login csv ---//
 			for (int i = 0; i < logins.size(); i++)
 			{
 				if (i < loginCellBounds * (idChoice - 1) || i >(loginCellBounds * (idChoice - 1)) + (round(loginCellBounds) - 1))
@@ -685,25 +732,29 @@ void AccountAdmin_DelAcc() {
 		}
 	}
 
-	// Close the files off
+
+	//--- Close the files off ---//
 	fin_admin.close();
 	fout_admin.close();
 	finUser_admin.close();
 	foutUser_admin.close();
 
-	// Remove old userDetails csv and rename new csv
+
+	//--- Remove old userDetails csv and rename new csv ---//
 	std::remove("userDetails.csv");
 	if (std::rename("userDetailsNew.csv", "userDetails.csv")) {
 		std::perror("Error renaming");
 	}
 
-	// Remove old login csv and rename new csv
+
+	//--- Remove old login csv and rename new csv ---//
 	std::remove("login.csv");
 	if (std::rename("loginNew.csv", "login.csv")) {
 		std::perror("Error renaming");
 	}
 
-	// Loop menu prompt
+
+	//--- Loop menu prompt ---//
 	cout << "\nWould you like to edit another account?\n1. Edit another account\n2. Return to Menu\nSelection: ";
 	cin >> selection;
 
@@ -730,17 +781,19 @@ void AccountAdmin_DelAcc() {
 //--- Submenu for Changing User Password ---//
 void AccountAdmin_ChangePass() {
 
-	// Open up file streams
+	//--- Open up file streams ---//
 	finUser_admin.open("login.csv", std::ios::in);
 	fout_admin.open("loginNew.csv", std::ios::out | std::ios::app);
 
-	// Variables
+
+	//--- Temporary Variables ---//
 	std::string line, lineDisc, newData, temp;
 	int count = 1, idCount = 1, loginCellBounds = 5, selection;
 	std::vector<string> users;
 	double idChoice = 0;
 
-	// While loop to push userDetails csv into vector
+
+	//--- While loop to push userDetails csv into vector ---//
 	while (std::getline(finUser_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -771,10 +824,12 @@ void AccountAdmin_ChangePass() {
 		}
 	}
 
-	// Prompt for id to change pass
+	//--- Prompt for id to change pass ---//
 	cout << "\nWhich ID to change password?\n[ID]: ";
 	cin >> temp;
 
+
+	//--- "q" escape loop functionality ---//
 	if (temp == "q")
 	{
 		system("pause");
@@ -802,9 +857,12 @@ void AccountAdmin_ChangePass() {
 	}
 
 
+	//--- User Instructions ---//
 	cout << "\nWhat would you like to change the password to?\n[New Password]: ";
 	cin >> temp;
 
+
+	//--- "q" escape loop functionality ---//
 	if (temp == "q")
 	{
 		system("pause");
@@ -820,11 +878,13 @@ void AccountAdmin_ChangePass() {
 		newData = temp;
 	}
 
-	// Statement to change password at selected ID
+
+	//--- Statement to change password at selected ID ---//
 	users.at((loginCellBounds * (idChoice - 1)) + 3) = newData;
 	cout << users[(loginCellBounds * (idChoice - 1)) + 3];
 
-	// Statement to output vector with changed password into userDetailsNew.csv
+
+	//--- Statement to output vector with changed password into userDetailsNew.csv ---//
 	for (int i = 0; i < users.size(); i++)
 	{
 		if (count % loginCellBounds == 0)
@@ -839,17 +899,20 @@ void AccountAdmin_ChangePass() {
 		}
 	}
 
-	// Close up the filestreams
+
+	//--- Close up the filestreams ---//
 	finUser_admin.close();
 	fout_admin.close();
 
-	// Statements to remove old login.dsv and rename new to old name
+
+	//--- Statements to remove old login.dsv and rename new to old name ---//
 	std::remove("login.csv");
 	if (std::rename("loginNew.csv", "login.csv")) {
 		std::perror("Error renaming");
 	}
+	 
 
-	// Prompt for loop menu
+	//--- Prompt for loop menu ---//
 	cout << "\nWould you like to edit another password?\n1. Edit another password\n2. Return to Menu\nSelection: ";
 	cin >> selection;
 
@@ -872,8 +935,9 @@ void AccountAdmin_ChangePass() {
 		break;
 	}
 }
-
 /*------------------------- END OF ADMIN ACCOUNT SECTION -------------------------*/
+
+
 /*------------------------- START OF ADMIN FOOD MENU SECTION -------------------------*/
 const int menuSize_foodMenu = 5;
 int selectionHighlight_foodMenu = 0;
@@ -990,16 +1054,18 @@ void FoodMenuAdmin() {
 }
 
 void FoodMenuStaff_ViewMenu() {
-	// Function Streams
+	//--- Function Streams ---//
 	fin_admin.open("food.csv", std::ios::in);
 
-	// Function Variables
+
+	//--- Function Variables ---//
 	std::string line, newData;
 	int count = 1, cellBounds = 4, selection;
 	std::vector<string> food;
 	double idChoice, targetElement;
 
-	// While Loop to populate vector users and cout cells
+
+	//--- While Loop to populate vector users and cout cells ---//
 	cout << "\nID\t1: Food\t\tName\t\t\tPrice\n";
 	cout << "\t0: Drink\t\t\t\t$\n";
 	cout << "********************************************************\n";
@@ -1031,12 +1097,13 @@ void FoodMenuStaff_ViewMenu() {
 			}
 		}
 	}
-
 	fin_admin.close();
 
-	// Prompt for next action to take
+
+	//--- Prompt for next action to take ---//
 	cout << "\n";
 	system("pause");
+
 
 	system("cls");
 	StaffMenuDisplay();
@@ -1045,16 +1112,18 @@ void FoodMenuStaff_ViewMenu() {
 
 //--- Submenu to Display Currently Active Menu ---//
 void FoodMenuAdmin_ViewMenu() {
-	// Function Streams
+	//--- Function Streams ---//
 	fin_admin.open("food.csv", std::ios::in);
 
-	// Function Variables
+
+	//--- Function Variables ---//
 	std::string line, newData;
 	int count = 1, cellBounds = 4, selection;
 	std::vector<string> food;
 	double idChoice, targetElement;
 
-	// While Loop to populate vector users and cout cells
+
+	//--- While Loop to populate vector users and cout cells ---//
 	cout << "\nID\t1: Food\t\tName\t\t\tPrice\n";
 	cout << "\t0: Drink\t\t\t\t$\n";
 	cout << "********************************************************\n";
@@ -1086,12 +1155,13 @@ void FoodMenuAdmin_ViewMenu() {
 			}
 		}
 	}
-
 	fin_admin.close();
 
-	// Prompt for next action to take
+
+	//--- Prompt for next action to take ---//
 	cout << "\n";
 	system("pause");
+
 
 	system("cls");
 	AdminMenuDisplay();
@@ -1100,16 +1170,18 @@ void FoodMenuAdmin_ViewMenu() {
 
 //--- Submenu to Add Food Item to Currently Active Menu ---//
 void FoodMenuAdmin_AddItem() {
-	// Function Streams
+	//--- Function Streams ---//
 	fin_admin.open("food.csv", std::ios::in);
 	fout_admin.open("foodNew.csv", std::ios::out | std::ios::app);
 
-	// Function Variables
+
+	//--- Function Variables ---//
 	std::string line, newIsFood, newFoodName, newFoodPrice;
 	int count = 1, count2 = 1, cellBounds = 4, selection;
 	std::vector<string> food;
 
-	// While Loop to populate vector users and cout cells
+
+	//--- While Loop to populate vector users and cout cells ---//
 	cout << "\nID\t1: Food\t\tName\t\t\tPrice\n";
 	cout << "\t0: Drink\t\t\t\t$\n";
 	cout << "*************************************************************\n";
@@ -1142,8 +1214,8 @@ void FoodMenuAdmin_AddItem() {
 		}
 	}
 
-	// Prompt to choose ID to edit
 
+	//--- Prompt to choose ID to edit ---//
 	cout << "\nIs your new item a 1: Food or 0: Drink?\n[1 or 0]: ";
 	cin >> newIsFood;
 	if (newIsFood == "1" || newIsFood == "0")
@@ -1248,7 +1320,8 @@ void FoodMenuAdmin_AddItem() {
 		std::perror("Error renaming");
 	}
 
-	// Prompt for next action to take
+
+	//--- Prompt for next action to take ---//
 	cout << "\nWould you like to add another item?\n1. Add another item\n2. Return to Menu\nSelection: ";
 	cin >> selection;
 
@@ -1271,17 +1344,17 @@ void FoodMenuAdmin_AddItem() {
 
 //--- Submenu to Edit Food Item within Currently Active Menu ---//
 void FoodMenuAdmin_EditItem() {
-	// Function Streams
+	//--- Function Streams ---//
 	fin_admin.open("food.csv", std::ios::in);
 	fout_admin.open("foodNew.csv", std::ios::out | std::ios::app);
 
-	// Function Variables
+	//--- Function Variables ---//
 	std::string line, newData, temp;
 	int count = 1, cellBounds = 4, selection, targetElement;
 	std::vector<string> food;
 	double idChoice = 0;
 
-	// While Loop to populate vector users and cout cells
+	//--- While Loop to populate vector users and cout cells ---//
 	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
 	cout << "\t0: Drink\t\t\t\t$\t1: Is not Vege, Vegan or GF\n";
 	cout << "***********************************************************************************\n";
@@ -1314,7 +1387,7 @@ void FoodMenuAdmin_EditItem() {
 		}
 	}
 
-	// Prompt to choose ID to edit
+	//--- Prompt to choose ID to edit ---//
 	cout << "\nWhich Food ID to edit?\n[ID]: ";
 	cin >> temp;
 
@@ -1322,6 +1395,7 @@ void FoodMenuAdmin_EditItem() {
 	{
 		idChoice = stoi(temp);
 	}
+	//--- "q" escape loop functionality ---//
 	else if (temp == "q")
 	{
 		system("pause");
@@ -1344,9 +1418,13 @@ void FoodMenuAdmin_EditItem() {
 		FoodMenuAdmin();
 	}
 
+
+	//--- User Instructions ---//
 	cout << "\nWhich element to edit for Food Item?\n1. Is Food, 2. Name, 3. Price [ Food ID: " << idChoice << "]: ";
 	cin >> temp;
 
+
+	//--- "q" escape loop functionality ---//
 	if (temp == "q")
 		{
 		system("pause");
@@ -1373,11 +1451,13 @@ void FoodMenuAdmin_EditItem() {
 		FoodMenuAdmin();
 	}
 
+	//--- User Instructions ---//
 	cin.ignore();
 	cout << "\nWhat would you like to change that element to?\n[New Data]: ";
 	getline(cin, newData);
 
-	// Checking if input is correct, then setting targetted cell as newData, else recursion of this function
+
+	//--- Checking if input is correct, then setting targetted cell as newData, else recursion of this function ---//
 	if (targetElement >= 1 && targetElement <= 6)
 	{
 		if (targetElement == 1)
@@ -1472,7 +1552,7 @@ void FoodMenuAdmin_EditItem() {
 		FoodMenuAdmin();
 	}
 
-	// Filestreaming into new file, foodNew.csv
+	//--- Filestreaming into new file, foodNew.csv ---//
 	for (int i = 0; i < food.size(); i++)
 	{
 		if (count % cellBounds == 0)
@@ -1487,18 +1567,22 @@ void FoodMenuAdmin_EditItem() {
 		}
 	}
 
+
 	fin_admin.close();
 	fout_admin.close();
 
-	//Deletes old CSV and renames new CSV to old CSV
+
+	//--- Deletes old CSV and renames new CSV to old CSV ---//
 	std::remove("food.csv");
 	if (std::rename("foodNew.csv", "food.csv")) {
 		std::perror("Error renaming");
 	}
 
-	// Prompt for next action to take
+
+	//--- Prompt for next action to take ---//
 	cout << "\nWould you like to edit another item?\n1. Edit another item\n2. Return to Menu\nSelection: ";
 	cin >> selection;
+
 
 	switch (selection)
 	{
@@ -1519,17 +1603,17 @@ void FoodMenuAdmin_EditItem() {
 
 //--- Submenu to Delete Food Item within Currently Active Menu ---//
 void FoodMenuAdmin_DelItem() {
-	// Function Streams
+	//--- Function Streams ---//
 	fin_admin.open("food.csv", std::ios::in);
 	fout_admin.open("foodNew.csv", std::ios::out | std::ios::app);
 
-	//Function Variables
+	//--- Function Variables ---//
 	std::string line, newData, temp;
 	int count = 1, cellBounds = 4, selection;
 	std::vector<string> food;
 	double idChoice = 0;
 
-	// While Loop to populate vector users and cout cells
+	//--- While Loop to populate vector users and cout cells ---//
 	cout << "\nID\t1: Food\t\tName\t\t\tPrice\tVege\tVegan\tGluten Free\n";
 	cout << "\t0: Drink\t\t\t\t$\t1: Is not Vege, Vegan or GF\n";
 	cout << "***********************************************************************************\n";
@@ -1562,13 +1646,17 @@ void FoodMenuAdmin_DelItem() {
 		}
 	}
 
+
+	//--- User Instructions ---//
 	cout << "\nWhich ID to delete?\n[ID]: ";
 	cin >> temp;
+
 
 	if (isNumber(temp))
 	{
 		idChoice = stoi(temp);
 	}
+	//--- "q" escape loop functionality ---//
 	else if (temp == "q")
 	{
 		system("pause");
@@ -1591,8 +1679,11 @@ void FoodMenuAdmin_DelItem() {
 		FoodMenuAdmin();
 	}
 
+
+	//--- User Instructions ---//
 	cout << "\nYou are deleting Food Item [" << idChoice << "], are you sure?\n[y/n]: ";
 	cin >> newData;
+
 
 	if (newData == "y")
 	{
@@ -1626,6 +1717,7 @@ void FoodMenuAdmin_DelItem() {
 		FoodMenuAdminMenuDisplay();
 		FoodMenuAdmin();
 	}
+	//--- "q" escape loop functionality ---//
 	else if (temp == "q")
 	{
 		system("pause");
@@ -1675,32 +1767,28 @@ void FoodMenuAdmin_DelItem() {
 		break;
 	}
 }
-
 /*------------------------- END OF ADMIN FOOD MENU SECTION -------------------------*/
-/*------------------------- START OF ADMIN FEEDBACK SECTION -------------------------*/
 
-// moved to feedback.cpp
 
-/*------------------------- END OF ADMIN FEEDBACK SECTION -------------------------*/
 /*------------------------- START OF ADMIN SALES SECTION -------------------------*/
 
 //--- Main Menu for Sales Reports ---//
 void PrintOrders() {
-	// Function Streams
+	//--- Function Streams ---//
 	fin_admin.open("orders.csv", std::ios::in);
 	finUser_admin.open("food.csv", std::ios::in);
 
-	// Function Variables
+	//--- Function Variables ---//
 	std::string line, line2, newData;
 	int count = 1, count2 = 1, cellBounds = 7, selection;
 	std::vector<string> orders, food;
 	double idChoice, targetElement;
 
-	// While Loop to populate vector users and cout cells
+	//--- While Loop to populate vector users and cout cells ---//
 	cout << "\nID\tChild\tMTea F\tMTea D\tLunch F\tLunch D\tTotal Price\n";
 	cout << "****************************************************************\n";
 
-	// Statement to populate food vector with food.csv
+	//--- Statement to populate food vector with food.csv ---//
 	while (std::getline(finUser_admin, line2))
 	{
 		std::stringstream lineStream(line2);
@@ -1724,7 +1812,7 @@ void PrintOrders() {
 		}
 	}
 
-	// Statement to populate orders vector with orders.csv
+	//--- Statement to populate orders vector with orders.csv ---//
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -1749,9 +1837,11 @@ void PrintOrders() {
 	fin_admin.close();
 	finUser_admin.close();
 
-	// Prompt for next action to take
+
+	//--- Prompt for next action to take ---//
 	cout << "\n";
 	system("pause");
+
 
 	system("cls");
 	StaffMenuDisplay();
@@ -1759,21 +1849,21 @@ void PrintOrders() {
 }
 
 void PrintSales() {
-	// Function Streams
+	//--- Function Streams ---//
 	fin_admin.open("orders.csv", std::ios::in);
 	finUser_admin.open("food.csv", std::ios::in);
 
-	// Function Variables
+	//--- Function Variables ---//
 	std::string line, line2, newData;
 	int count = 1, count2 = 1, cellBounds = 7, selection;
 	std::vector<string> orders, food;
 	double idChoice, targetElement, fullPrice = 0;
 
-	// While Loop to populate vector users and cout cells
+	//--- While Loop to populate vector users and cout cells ---//
 	cout << "\nID\tChild\tMTea F\tMTea D\tLunch F\tLunch D\tTotal Price\n";
 	cout << "*************************************************************\n";
 
-	// Statement to populate food vector with food.csv
+	//--- Statement to populate food vector with food.csv ---//
 	while (std::getline(finUser_admin, line2))
 	{
 		std::stringstream lineStream(line2);
@@ -1797,7 +1887,7 @@ void PrintSales() {
 		}
 	}
 
-	// Statement to populate orders vector with orders.csv
+	//--- Statement to populate orders vector with orders.csv ---//
 	while (std::getline(fin_admin, line))
 	{
 		std::stringstream lineStream(line);
@@ -1820,23 +1910,27 @@ void PrintSales() {
 		}
 	}
 
+	//--- Output ---//
 	cout << "\nThe full sales are: $" << fullPrice << endl;
+
 
 	fin_admin.close();
 	finUser_admin.close();
 
-	// Prompt for next action to take
+
+	//--- Prompt for next action to take ---//
 	cout << "\n";
 	system("pause");
+
 
 	system("cls");
 	AdminMenuDisplay();
 	AdminArrowKeys();
 }
-
 /*------------------------- END OF ADMIN SALES SECTION -------------------------*/
-/*------------------------- START OF ADMIN DISCOUNT SECTION -------------------------*/
 
+
+/*------------------------- START OF ADMIN DISCOUNT SECTION -------------------------*/
 //--- Main Menu for Administration of Discount ---//
 const int menuSize_feedMenu = 4;
 int selectionHighlight_feedMenu = 0;
@@ -1945,11 +2039,10 @@ void FeedbackAdmin() {
 		}
 	}
 }
-
 /*-------------------------END OF ADMIN DISCOUNT SECTION -------------------------*/
 
-/*------------------------- MISC FUNCTIONS -------------------------*/
 
+/*------------------------- MISC FUNCTIONS -------------------------*/
 //--- Checks if string is a number and returns true if so ---//
 bool isNumber(const string& s)
 {
