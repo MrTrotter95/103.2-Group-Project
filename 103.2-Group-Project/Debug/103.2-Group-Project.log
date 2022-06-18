@@ -1,24 +1,10 @@
-﻿  main.cpp
-  menu.cpp
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(28,16): warning C4129: 'T': unrecognized character escape sequence
+﻿  menu.cpp
 C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(95,21): warning C4018: '<': signed/unsigned mismatch
 C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(120,16): warning C4129: 'D': unrecognized character escape sequence
 C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(121,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(270,44): warning C4551: function call missing argument list
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(281,38): warning C4551: function call missing argument list
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(321,40): warning C4551: function call missing argument list
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(389,40): warning C4551: function call missing argument list
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(509,3): warning C4809: switch statement has redundant 'default' label; all possible 'case' labels are given
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(578,20): warning C4551: function call missing argument list
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(590,20): warning C4551: function call missing argument list
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(603,20): warning C4551: function call missing argument list
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(616,20): warning C4551: function call missing argument list
-  Generating Code...
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(446): warning C4715: 'GetItemName': not all control paths return a value
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(475): warning C4715: 'GetPrice': not all control paths return a value
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(711): warning C4715: 'menuMain': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(510,3): warning C4809: switch statement has redundant 'default' label; all possible 'case' labels are given
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(447): warning C4715: 'GetItemName': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(476): warning C4715: 'GetPrice': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(716): warning C4715: 'menuMain': not all control paths return a value
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
-menu.obj : error LNK2019: unresolved external symbol "void __cdecl AddChild(int)" (?AddChild@@YAXH@Z) referenced in function "void __cdecl CheckChild(int)" (?CheckChild@@YAXH@Z)
-    Hint on symbols that are defined and could potentially match:
-      "int __cdecl AddChild(void)" (?AddChild@@YAHXZ)
-C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
+  103.2-Group-Project.vcxproj -> C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe

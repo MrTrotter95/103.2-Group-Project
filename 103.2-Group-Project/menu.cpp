@@ -25,7 +25,7 @@ void ViewMenu() {
 	int count{ 0 };
 	if (menu.is_open()) {
 
-		std::cout << "Displaying full menu: \nMenu ID\t\Type\tItem Name\t\tPrice\n";
+		std::cout << "Displaying full menu: \n Menu ID \t Type \t Item Name \t\t Price \n";
 
 		menuFood.clear();
 		menuDrink.clear();
@@ -219,7 +219,7 @@ void ViewOrders(int child) {
 
 /*-------------------------START OF CHILD FUNCTIONALITY -------------------------*/
 /*function to view add a new child:*/
-int AddChild() {
+void AddChild(int childid) {
 	//pointers to file//
 	std::fstream fout;
 	std::fstream fin;
@@ -267,7 +267,7 @@ int AddChild() {
 		//creating new childs profile
 		std::cout << "Enter childs year level (4-6)\n";
 		std::cin >> yearLevel;
-		while (yearLevel < 4 || yearLevel > 6 || !isdigit) {
+		while (yearLevel < 4 || yearLevel > 6 || !isdigit(yearLevel)) {
 			std::cout << "Yeear out of range\n";
 			cin >> yearLevel;
 		}
@@ -278,7 +278,7 @@ int AddChild() {
 		std::cout << "Enter childs teacher: 1. Mr Terrance \t 2. Mrs Roopy \t 3. Mr Pong)\n";
 		std::cin >> choice;
 
-		while (choice < 1 || choice > 3 || !isdigit) {//making sure only numbers entered and numbers are 1 2 or 3//
+		while (choice < 1 || choice > 3 || !isdigit(choice)) {//making sure only numbers entered and numbers are 1 2 or 3//
 			std::cout << "Input invalid, please try again...\n";
 			cin >> choice;
 		}
@@ -318,7 +318,7 @@ int AddChild() {
 		childProfile.push_back(",");
 		std::cout << "Enter Gender: \n 1.Male\t 2.Female \n";
 		std::cin >> choice;
-		while (choice == 1 || choice == 2 || !isdigit) {//making sure only numbers entered and numbers are 1 or 2 //
+		while (choice == 1 || choice == 2 || !isdigit(choice)) {//making sure only numbers entered and numbers are 1 or 2 //
 			std::cout << "Invalid input, please try again....\n";
 			std::cin >> choice;
 		}
@@ -345,9 +345,10 @@ int AddChild() {
 
 		std::cout << "Child successfully added, " << name << "'s child ID is: " << childProfile[0] << "\n\n\t\t****** IMPORTANT: ******" <<
 			"\n\t\tMake sure you record this as you will need it to use program.\n";
-		return stol(childId);
 	
 		fout.close();
+
+		CheckChild(stol(childProfile[0]));
 }
 
 
@@ -386,13 +387,13 @@ void CheckChild(int input) {
 
 				std::cout << "Child id not found, What would you like to do? \n 1. Add new child \t 2. Try Again\n";
 				std::cin >> choice;
-				while (choice < 1 || choice > 2 || !isdigit) {
+				while (choice < 1 || choice > 2 || !isdigit(choice)) {
 					std::cout << "Invalid input.... Try again.....";
 					std::cin >> choice;
 				}
 				switch (choice) {
 				case 1:
-					AddChild(123);//add child
+					AddChild(choice);//add child
 					break;
 				case 2:
 					std::cin >> choice;
@@ -575,7 +576,7 @@ void PlaceOrder(int child) {
 		//user menu selector//
 		std::cout << "\nEnter ID of morningTea item: \n";
 		std::cin >> choice;
-		while (choice || !isdigit) {
+		while (choice || !isdigit(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
@@ -587,7 +588,7 @@ void PlaceOrder(int child) {
 		//#2//
 		std::cout << "\nEnter ID of morningTea food: \n";
 		std::cin >> choice;
-		while (choice || !isdigit) {
+		while (choice || !isdigit(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
@@ -600,7 +601,7 @@ void PlaceOrder(int child) {
 		std::cout << "\nEnter ID of lunch item 1: \n";
 		std::cout << "\nEnter ID of morningTea item: \n";
 		std::cin >> choice;
-		while (choice || !isdigit) {
+		while (choice || !isdigit(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
@@ -613,7 +614,7 @@ void PlaceOrder(int child) {
 		std::cout << "\nEnter ID of lunch item 2: \n";
 		std::cout << "\nEnter ID of morningTea item: \n";
 		std::cin >> choice;
-		while (choice || !isdigit) {
+		while (choice || !isdigit(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
@@ -686,6 +687,10 @@ int menuMain()
 	//food order functinoality starts with checking a childs existence in the system
 	std::cout << "Enter child ID\n";
 	std::cin >> childId;
+	while (!isdigit(childId)) {
+		std::cout << "Must only be numbers";
+	}
+	cin >> childId;
 	CheckChild(childId);
 	
 	retryMain:
