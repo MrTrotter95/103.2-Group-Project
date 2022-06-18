@@ -1,15 +1,7 @@
 #include "main.h"
 #include "register.h"
 #include "admin.h"
-
-
-void PrintArray_AccountCreationMenu();
-void ArrowSelectionMenu_AccountCreation();
-void CreateParentAcc();
-void CreateStaffAcc();
-void CreateAdminAcc();
-void SaveLoginDetails(class User);
-void SaveUserDetails(class User);
+#include "login.h"
 
 class User {
 public:
@@ -46,9 +38,9 @@ public:
     //--- Might not need this ---//
     void accountCreated() {
         cout << "\nYour account has been succesfully created!\n";
-        cout << "Your username to login is: " << S_Email;
-        cout << "\nYour Access level is: " << I_accessLevel << endl;
-        // Call the relevant function to take user to new menu
+        cout << "Your username to login is: " << S_Email << endl;
+        system("pause");
+        loginMain();
     }
 };
 
@@ -91,7 +83,7 @@ void ArrowSelectionMenu_AccountCreation() {
     int ch, ch2;
     string temp;
     bool loop = true;
-    int InputUserPin;     // To Store User Input And Compare To AdminPin
+    int InputUserPin = 0;     // To Store User Input And Compare To AdminPin
     int adminPin = 1234; //To Grant Access To Admin 
 
     while (loop)
@@ -205,10 +197,10 @@ void CreateParentAcc() {
     cout << "--- Creating Parent account ---\n\n[Press any key to begin..]\n\n";
     //--- Temporary Variables For Account Registration ---//
     char input_Gender = 'm';
-    int input_PhoneNum;
+    int input_PhoneNum = 0;
     string input_Name, input_dob, input_email, input_password, temp;
     string check = " ", emailCheck1 = "@", emailCheck2 = ".";
-    int userAccType = 1;       // To Determine What Account They Would Like To Create
+    int userAccType = 1;       //--- To Determine What Account They Would Like To Create ---//
 
     //--- Name ---//
     cin.ignore();
@@ -416,7 +408,7 @@ void CreateStaffAcc() {
 
     //--- Temporary Variables For Account Registration ---//
     char input_Gender = 'm';
-    int input_PhoneNum;
+    int input_PhoneNum = 0;
     string input_Name, input_dob, input_email, input_password, temp;
     string check = " ", emailCheck1 = "@", emailCheck2 = ".";
     int userAccType = 1;       // To Determine What Account They Would Like To Create
@@ -627,7 +619,7 @@ void CreateAdminAcc() {
 
     //--- Temporary Variables For Account Registration ---//
     char input_Gender = 'm';
-    int input_PhoneNum;
+    int input_PhoneNum = 0;
     string input_Name, input_dob, input_email, input_password, temp;
     string check = " ", emailCheck1 = "@", emailCheck2 = ".";
     int userAccType = 1;       // To Determine What Account They Would Like To Create

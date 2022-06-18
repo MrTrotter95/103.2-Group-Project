@@ -7,7 +7,7 @@
 std::ifstream data;
 
 //--- To Check Account Exists on CSV ---//
-void CheckPassword(string, string, string, string);
+void CheckPassword(string, string, string, string, string, string);
 
 void VerifyAccount(string inputEmail, string inputPassword) {
     //--- Creating a instance of ifstream ---//
@@ -15,7 +15,7 @@ void VerifyAccount(string inputEmail, string inputPassword) {
 
 
     //--- Temporary Variables ---//
-    std::string fileId, fileName, fileEmail, filePass, fileAccessLvl, fileLine, userId, userEmail, userPass, userAccessLvl;
+    std::string fileId, fileName, fileEmail, filePass, fileAccessLvl, fileLine, userId, userName, userEmail, userPass, userAccessLvl;
 
 
     //---This loops through each row of the CSV file ---//
@@ -32,6 +32,7 @@ void VerifyAccount(string inputEmail, string inputPassword) {
         //--- If fileEmail matches the users input, save that rows data ---//
         if (fileEmail == inputEmail) {
             userId = fileId;
+            userName = fileName;
             userEmail = fileEmail;
             userPass = filePass;
             userAccessLvl = fileAccessLvl;
@@ -45,8 +46,8 @@ void VerifyAccount(string inputEmail, string inputPassword) {
     }
     //--- If users input matches the csv email, call check password function ---//
     else if (userEmail == inputEmail) {
-        //--- Passing the csv userID, csv userPass, and the inputted password to check ---//
-        CheckPassword(userId, userPass, userAccessLvl, inputPassword);
+        //--- Passing the csv info to CheckPassword Function ---//
+        CheckPassword(userId, userName, userEmail, userPass, userAccessLvl, inputPassword);
         data.close();
     }
 
@@ -55,7 +56,7 @@ void VerifyAccount(string inputEmail, string inputPassword) {
 
 const int menuSize_parent = 5;
 int selectionHighlight_parent = 0;
-string mainMenuPrint_parent[menuSize_parent] = { "Place Order", "Order History", "Add Child", "Feedback", "Return" };
+string mainMenuPrint_parent[menuSize_parent] = { "Place Order", "Order History", "Add Child", "Feedback", "Log Out" };
 
 void ParentMenuDisplay() {
     cout << "********************************\n*  Welcome to the Parent Menu  *\n********************************\n";
@@ -74,7 +75,7 @@ void ParentMenuDisplay() {
     }
 }
 
-void ParentArrowKeys() {
+void ParentArrowKeys(string userId, string userName, string userEmail) {
     int ch, ch2;
     bool loop = true;
 
@@ -152,8 +153,9 @@ void ParentArrowKeys() {
                 //TODO: order history
                 break;
             case 3:
+                system("cls"); //--- Clears previous console output ---//
                 PrintArray_ParentFeedbackMenu();
-                //ArrowSelectionMenu_ParentFeedback(userId, userPass, userAccessLvl);
+                ArrowSelectionMenu_ParentFeedback(userId, userName, userEmail);
                 break;
             case 4:
                 BeginProgram();
@@ -167,7 +169,7 @@ void ParentArrowKeys() {
 
 const int menuSize_staff = 4;
 int selectionHighlight_staff = 0;
-string mainMenuPrint_staff[menuSize_staff] = { "View Menu", "Display Orders", "Feedback", "Return" };
+string mainMenuPrint_staff[menuSize_staff] = { "View Menu", "Display Orders", "Feedback", "Log Out" };
 
 void StaffMenuDisplay() {
     cout << "********************************\n*   Welcome to the Staff Menu  *\n********************************\n";
@@ -273,7 +275,7 @@ void StaffArrowKeys() {
 
 const int menuSize_adminMenu = 6;
 int selectionHighlight_adminMenu = 0;
-string mainMenuPrint_adminMenu[menuSize_adminMenu] = { "Accounts", "Menu", "Feedback", "Sales Reports", "Discounts", "Return" };
+string mainMenuPrint_adminMenu[menuSize_adminMenu] = { "Accounts", "Menu", "Feedback", "Sales Reports", "Discounts", "Log Out" };
 
 void AdminMenuDisplay() {
     cout << "********************************\n*   Welcome to the Admin Menu  *\n********************************\n";
@@ -400,7 +402,7 @@ void AdminArrowKeys() {
 }
 
 //--- To Compare User Input Password Matches CSV ---//
-void CheckPassword(string userId, string userPassword, string userAccessLvl, string inputPassword) {
+void CheckPassword(string userId, string userName, string userEmail, string userPassword, string userAccessLvl, string inputPassword) {
         //--- If password is correct ---//
         if (inputPassword == userPassword) {
 
@@ -410,8 +412,8 @@ void CheckPassword(string userId, string userPassword, string userAccessLvl, str
                 system("cls");
                 ParentMenuDisplay();
                 cout << "\nWelcome to the Parent Main Menu.\nChoose an option to proceed.\n";
-                ParentArrowKeys();
-
+                //--- Passing parameters to allow users to place feedback and save their information to the csv ---//
+                ParentArrowKeys(userId, userName, userEmail);
             }
             else if (userAccessLvl == "2")
             {
@@ -433,11 +435,8 @@ void CheckPassword(string userId, string userPassword, string userAccessLvl, str
             {
                 cout << "Something went wrong\n";
             }
-
-
             int ch;
             ch = _getch();
-            // Pass userId to loginMain
         }
         //--- If Password is incorrect ---//
         else if (inputPassword != userPassword) {

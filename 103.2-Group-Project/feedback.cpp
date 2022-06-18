@@ -3,32 +3,6 @@
 #include "login.h"
 #include "admin.h"
 
-/*Start of Feedback functionality*/
-void feedbackMain(string userId, string userName, string userEmail, string accessLevel) // This must have a User ID comming into it and or access level?
-{
-	//--- Parent ---//
-	if (accessLevel == "1") {
-		system("cls");
-		PrintArray_ParentFeedbackMenu();
-		cout << "\nWelcome Parent to the feedback zone.\n";
-		ArrowSelectionMenu_ParentFeedback(userId, userName, userEmail);
-	}
-	//--- Staff ---//
-	else if (accessLevel == "2") {
-		system("cls");
-		PrintArray_StaffFeedbackMenu();
-		cout << "\nWelcome Staff to the feedback zone.\n";
-		ArrowSelectionMenu_StaffFeedback();
-	}
-	//--- Admin ---//
-	else if (accessLevel == "3") {
-		system("cls");
-		PrintArray_AdminFeedbackMenu(userId, userEmail);
-		cout << "\nWelcome Admin to the feedback zone.\n";
-		ArrowSelectionMenu_AdminFeedback(userId, userEmail);
-	}
-}
-
 
 /*-------------------------START OF PARENT FEEDBACK MENU SECTION -------------------------*/
 const int menuSize_ParentFeedBack = 4;
@@ -101,7 +75,7 @@ void ArrowSelectionMenu_ParentFeedback(string userId, string userName, string us
 			switch (selectionHighlight_ParentFeedback)
 			{
 			case 0:
-				cout << "\nGeneral Contact\n";
+				cout << "\nSend us a general message\n";
 				break;
 			case 1:
 				cout << "\nSend us a compliment\n";
@@ -110,7 +84,7 @@ void ArrowSelectionMenu_ParentFeedback(string userId, string userName, string us
 				cout << "\nSubmit a complaint\n";
 				break;
 			case 3:
-				cout << "\nExit the program\n";
+				cout << "\nReturn to parent menu\n";
 				break;
 			}
 			break;
@@ -131,7 +105,9 @@ void ArrowSelectionMenu_ParentFeedback(string userId, string userName, string us
 				break;
 			case 3:
 				loop = false;
-				BeginProgram();	//Calls main menu function
+				system("cls");
+				ParentMenuDisplay();
+				ParentArrowKeys(userId, userName, userEmail);
 			default:
 				break;
 			}
@@ -150,8 +126,8 @@ void GeneralContact(string userId, string userName, string userEmail) {
 	std::string id, line;
 	int token;
 
-
-	//--- User Instructions ---//
+	cin.ignore();
+	//--- User Instructions ---//p
 	cout << "Please enter your message.\n\n";
 	getline(cin, userMessage);
 	while (userMessage.size() > 75) { //--- Max Input Size ---//
@@ -188,13 +164,17 @@ void GeneralContact(string userId, string userName, string userEmail) {
 
 
 	//--- User instructions to end ---//
-	cout << "Thank you for getting in touch.\n\nPress enter to return to main menu";
+	cout << "Thank you for getting in touch.\n\nPress enter to return to main menu\n";
 	int ch;
 	ch = _getch();
-	ArrowSelectionMenu_MainMenu(); // Replace with correct menu might need to pass user ID back through
+	system("cls"); //--- Clears previous console output ---//
+	ParentMenuDisplay();
+	ParentArrowKeys(userId, userName, userEmail);
+	//ArrowSelectionMenu_MainMenu(); // Replace with correct menu might need to pass user ID back through
 }
 
 void SendCompliment(string userId, string userName, string userEmail) {
+
 	//--- Creating a instance of fstream ---//
 	std::fstream fout;
 	std::ifstream  data("Compliments.csv");
@@ -205,7 +185,7 @@ void SendCompliment(string userId, string userName, string userEmail) {
 	std::string id, line;
 	int token;
 
-
+	cin.ignore();
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
 	getline(cin, userMessage);
@@ -243,10 +223,12 @@ void SendCompliment(string userId, string userName, string userEmail) {
 
 
 	//--- User instructions to end ---//
-	cout << "Thank you for your feedback!\n\nPress enter to return to main menu";
+	cout << "Thank you for your feedback!\n\nPress enter to return to main menu\n";
 	int ch;
 	ch = _getch();
-	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
+	system("cls"); //--- Clears previous console output ---//
+	ParentMenuDisplay();
+	ParentArrowKeys(userId, userName, userEmail);
 }
 
 void SendComplaint(string userId, string userName, string userEmail) {
@@ -260,6 +242,7 @@ void SendComplaint(string userId, string userName, string userEmail) {
 	std::string id, line;
 	int token;
 
+	cin.ignore();
 	//--- User Instructions ---//
 	cout << "Please enter your message.\n\n";
 	getline(cin, userMessage);
@@ -297,10 +280,12 @@ void SendComplaint(string userId, string userName, string userEmail) {
 
 
 	//--- User instructions to end ---//
-	cout << "Thank you for your feedback, we will get back to you as soon as possible.\n\nPress enter to return to main menu";
+	cout << "Thank you for your feedback, we will get back to you as soon as possible.\n\nPress enter to return to main menu\n";
 	int ch;
 	ch = _getch();
-	ArrowSelectionMenu_MainMenu(); // Replace with correct menu
+	system("cls"); //--- Clears previous console output ---//
+	ParentMenuDisplay();
+	ParentArrowKeys(userId, userName, userEmail);
 }
 /*-------------------------END OF PARENT FEEDBACK FUNCTIONALITY -------------------------*/
 /*-------------------------START OF STAFF FEEDBACK MENU SECTION -------------------------*/
@@ -688,9 +673,16 @@ void RespondGeneralMessages(string userId, string userEmail) {
 			{	
 				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3) // First 3 columns
 				{
-					cout << cell << "\t";
-					general.push_back(cell);
-					count_gen++;
+					if (count_gen % cellBounds == 3 && cell.size() < 8) {
+						cout << cell << "\t\t";
+						general.push_back(cell);
+						count_gen++;
+					}
+					else {
+						cout << cell << "\t";
+						general.push_back(cell);
+						count_gen++;
+					}
 				}
 				else if (count_gen % cellBounds == 4) // 4th column
 				{ 
@@ -810,9 +802,16 @@ void RespondCompliments(string userId, string userEmail) {
 			{
 				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3) // First 3 columns
 				{
-					cout << cell << "\t";
-					compliments.push_back(cell);
-					count_gen++;
+					if (count_gen % cellBounds == 3 && cell.size() < 8) {
+						cout << cell << "\t\t";
+						compliments.push_back(cell);
+						count_gen++;
+					}
+					else {
+						cout << cell << "\t";
+						compliments.push_back(cell);
+						count_gen++;
+					}
 				}
 				else if (count_gen % cellBounds == 4) // 4th column
 				{
@@ -932,9 +931,16 @@ void RespondComplaints(string userId, string userEmail) {
 			{
 				if (count_gen % cellBounds == 1 || count_gen % cellBounds == 2 || count_gen % cellBounds == 3) // First 3 columns
 				{
-					cout << cell << "\t";
-					complaints.push_back(cell);
-					count_gen++;
+					if (count_gen % cellBounds == 3 && cell.size() < 8) {
+						cout << cell << "\t\t";
+						complaints.push_back(cell);
+						count_gen++;
+					}
+					else {
+						cout << cell << "\t";
+						complaints.push_back(cell);
+						count_gen++;
+					}
 				}
 				else if (count_gen % cellBounds == 4) // 4th column
 				{
