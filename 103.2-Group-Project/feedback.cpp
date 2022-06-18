@@ -411,7 +411,8 @@ void ViewGeneralMessages() {
 	//--- Temporary Variables ---//
 	std::string fileToken, fileResolved, fileName, fileEmail, fileMessage, fileLine;
 
-
+	//--- User Display ---//
+	cout << "Viewing all unread messages\n\n";
 	cout << "Name\t\tMessage\n";
 
 
@@ -425,9 +426,16 @@ void ViewGeneralMessages() {
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
+		//--- This condition checks to see if the message has been resolved by an admin ---//
 		if (fileResolved == "No") {
-			cout << fileName << "\t\t";
-			cout << fileMessage << endl;
+			if (fileName.size() > 7) { //--- This condition is for output formating ---//
+				cout << fileName << "\t";
+				cout << fileMessage << endl;
+			}
+			else {
+				cout << fileName << "\t\t";
+				cout << fileMessage << endl;
+			}
 		}
 	}
 
@@ -464,16 +472,22 @@ void ViewCompliments() {
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
+		//--- This condition checks to see if the message has been resolved by an admin ---//
 		if (fileResolved == "No") {
-			cout << fileName << "\t";
-			cout << fileMessage << endl;
+			if (fileName.size() > 7) { //--- This condition is for output formating ---//
+				cout << fileName << "\t";
+				cout << fileMessage << endl;
+			}
+			else {
+				cout << fileName << "\t\t";
+				cout << fileMessage << endl;
+			}
 		}
 	}
 
 
 	//--- User instructions to end ---//
 	data.close();
-	cout << "Press enter to return to main menu\n";
 	system("pause");
 	system("cls");
 	PrintArray_StaffFeedbackMenu();
@@ -504,10 +518,16 @@ void ViewComplaints() {
 		getline(lineStream, fileEmail, ',');
 		getline(lineStream, fileMessage, ',');
 
-
+		//--- This condition checks to see if the message has been resolved by an admin ---//
 		if (fileResolved == "No") {
-			cout << fileName << "\t";
-			cout << fileMessage << endl;
+			if (fileName.size() > 7) { //--- This condition is for output formating ---//
+				cout << fileName << "\t";
+				cout << fileMessage << endl;
+			}
+			else {
+				cout << fileName << "\t\t";
+				cout << fileMessage << endl;
+			}
 		}
 	}
 
@@ -757,7 +777,7 @@ void RespondGeneralMessages(string userId, string userEmail) {
 	std::remove("GeneralContact.csv");
 	std::rename("GeneralContactNew.csv", "GeneralContact.csv");
 
-	cout << "\nSuccess!\n";
+	cout << "\nYou have successfully responded to the customer.\n";
 	system("pause");
 	system("cls");
 	AdminMenuDisplay();
@@ -886,7 +906,7 @@ void RespondCompliments(string userId, string userEmail) {
 	std::remove("Compliments.csv");
 	std::rename("ComplimentsNew.csv", "Compliments.csv");
 
-	cout << "\nSuccess!\n";
+	cout << "\nYou have successfully responded to the customer.\n";
 	system("pause");
 	system("cls");
 	AdminMenuDisplay();
@@ -1016,7 +1036,7 @@ void RespondComplaints(string userId, string userEmail) {
 	std::remove("Complaints.csv");
 	std::rename("ComplaintsNew.csv", "Complaints.csv");
 
-	cout << "\nSuccess!\n";
+	cout << "\nYou have successfully resolved this complaint with the customer.\n";
 	system("pause");
 	system("cls");
 	AdminMenuDisplay();
