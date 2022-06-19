@@ -17,4 +17,3 @@ void ViewMenu();
 int menuMain();
 double GetPrice(int id);
 std::string GetItemName(int id);
-void CheckFoodOrDrink(int id);

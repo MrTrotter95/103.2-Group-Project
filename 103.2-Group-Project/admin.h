@@ -15,4 +15,4 @@ void FoodMenuAdmin_EditItem();
 void FoodMenuAdmin_DelItem();
 void FeedbackAdmin();
 void SalesReportAdmin();
-bool isNumber(const string& str);
+bool isNumber(const std::string& str);

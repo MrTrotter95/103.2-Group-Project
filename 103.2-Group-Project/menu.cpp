@@ -10,7 +10,10 @@
 #include <stdio.h>
 #include <algorithm>
 #include <iomanip>
+#include <limits>
 #include "menu.h"
+#include "admin.h"
+
 
 /*-------------------------START OF VIEWING FUNCTIONALITY -------------------------*/
 void ViewMenu() {
@@ -136,7 +139,7 @@ void ViewOrders(int child) {
 	std::vector<std::string> history;
 	std::string strId{ std::to_string(child) };
 	std::fstream historyOrder;
-	std::string line, cell, name,orderId,childId, food1,food2,drink1,drink2,cost;
+	std::string line, cell, name,orderId,childId, f1,f2,f3,f4,cost;
 	std::vector<std::string> allOrders;
 	
 
@@ -149,7 +152,7 @@ void ViewOrders(int child) {
 		std::cout << "Order History for " << name << "\n";
 
 		//formatting for order view//
-		std::cout << "Order Number \t Child ID \t Morning Tea \t Lunch \t Total \n";
+		std::cout << "Order Number \t Child ID \t Morning Tea \t Lunch \t\t Total \n\n";
 		while (std::getline(historyOrder, line))
 		{
 			std::stringstream  lineStream(line);
@@ -157,23 +160,29 @@ void ViewOrders(int child) {
 			//grabbing all the variables ill need to display
 			std::getline(lineStream, orderId, ',');
 			std::getline(lineStream, childId, ',');
-			std::getline(lineStream, food1, ',');
-			std::getline(lineStream, drink1, ',');
-			std::getline(lineStream, food2, ',');
-			std::getline(lineStream, drink2, ',');
+			std::getline(lineStream, f1, ',');
+			std::getline(lineStream, f2, ',');
+			std::getline(lineStream, f3, ',');
+			std::getline(lineStream, f4, ',');
 			std::getline(lineStream,cost , ',');
 
 			//specifying which child's orders to display
 			if (strId == childId) {
-				std::cout << orderId <<  "\t\t" << childId << "\t";
+				std::cout << orderId <<  "\t\t" << childId << "\t\t";
+				std::cout << GetItemName(stoi(f1));
+				std::cout << "\t";
+				std::cout << GetItemName(stoi(f3));
+				std::cout << "\t";
+				std::cout << "$" << stod(cost);
+				std::cout << "\n\t\t\t\t";
+				std::cout << GetItemName(stoi(f2));
+				std::cout << "\t";
+				std::cout << GetItemName(stoi(f4));
+				std::cout << "\n\n";
 			}
 
-			std::cout << GetItemName(stoi(food1)) << "\t";
-			std::cout << GetItemName(stoi(food2)) << "\t";
-			std::cout << GetItemName(stoi(drink1)) << "\n\t\t\t";
-			std::cout << GetItemName(stoi(drink2)) << "\t\t\t\t";
-			std::cout << "$" << stod(cost) << "\n";
 			
+
 		}
 
 		//while loop to grab cells//
@@ -379,7 +388,7 @@ void CheckChild(int input) {
 				}
 				name = cell;
 				std::cout << "Viewing " << name << "'s Profile:\n\n";
-
+			
 				fin.close();
 				}
 			}
@@ -387,17 +396,16 @@ void CheckChild(int input) {
 
 				std::cout << "Child id not found, What would you like to do? \n 1. Add new child \t 2. Try Again\n";
 				std::cin >> choice;
-				while (choice < 1 || choice > 2 || !isdigit(choice)) {
-					std::cout << "Invalid input.... Try again.....";
-					std::cin >> choice;
-				}
+				
 				switch (choice) {
 				case 1:
 					AddChild(choice);//add child
 					break;
 				case 2:
+					std::cout << "Enter Child ID:\n";
 					std::cin >> choice;
 					CheckChild(choice);//enter again, try again
+					cin.ignore();
 					break;
 				default:
 					std::cout << "Something went wrong, Lets go back to the main menu.\n";
@@ -475,47 +483,6 @@ double GetPrice(int id) {
 		}
 	}
 
-void CheckFoodOrDrink(int input) {
-	std::fstream fin;
-	std::string line, cell;
-	std::string userInput = std::to_string(input);
-	int choice;
-	fin.open("food.csv", std::ios::in);
-
-	while (getline(fin, line)) {
-
-		std::stringstream lineStream(line);
-
-		getline(lineStream, cell, ','); // getting menu ID//
-		
-	}
-
-		//switch to warn user
-		switch (userInput != cell) {
-			
-		case 0:
-				std::cout << "Must be drink...\n Enter valid drink item\n";
-				std::cin >> choice;
-				CheckFoodOrDrink(choice);
-				break;
-		case 1:
-				std::cout << "Must be food...\n Enter valid food item\n";
-				std::cin >> choice;
-				CheckFoodOrDrink(choice);
-				break;
-		default:
-			std::cout << "Something Went Wrong...";
-
-			break;
-		}
-
-		fin.close();
-	}
-
-
-
-
-
 
 
 /*-------------------------START OF PLACE ORDER FUNCTIONALITY-------------------------*/
@@ -524,7 +491,7 @@ void PlaceOrder(int child) {
 
 	//variables used in funciton//
 	long orderId;
-	int choice;
+	std::string choice;
 	int intChild = child;
 
 	bool notorder = true;
@@ -574,66 +541,81 @@ void PlaceOrder(int child) {
 
 	
 		//user menu selector//
-		std::cout << "\nEnter ID of morningTea item: \n";
+		std::cout << "\nEnter ID of morningTea item 1: \n";
 		std::cin >> choice;
-		while (choice || !isdigit(choice)) {
+		while (!isNumber(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
-		CheckFoodOrDrink(choice);
-		std::cout << "Entered: " << GetItemName(choice);
-		total += GetPrice(choice);//tally price//
-		currentOrder.push_back(std::to_string(choice));//push to 'cart'//
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));//tally price//
+		currentOrder.push_back(choice);//push to 'cart'//
 
 		//#2//
-		std::cout << "\nEnter ID of morningTea food: \n";
+		std::cout << "\nEnter ID of morningTea item 2: \n";
 		std::cin >> choice;
-		while (choice || !isdigit(choice)) {
+		while (!isNumber(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
-		CheckFoodOrDrink(choice);
-		std::cout << "Entered: " << GetItemName(choice);
-		total += GetPrice(choice);
-		currentOrder.push_back(std::to_string(choice));
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));
+		currentOrder.push_back(choice);
 
 		//#3//
 		std::cout << "\nEnter ID of lunch item 1: \n";
-		std::cout << "\nEnter ID of morningTea item: \n";
 		std::cin >> choice;
-		while (choice || !isdigit(choice)) {
+		while (!isNumber(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
-		CheckFoodOrDrink(choice);
-		std::cout << "Entered: " << GetItemName(choice);
-		total += GetPrice(choice);
-		currentOrder.push_back(std::to_string(choice));
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));
+		currentOrder.push_back(choice);
 
 		//#4//
 		std::cout << "\nEnter ID of lunch item 2: \n";
-		std::cout << "\nEnter ID of morningTea item: \n";
 		std::cin >> choice;
-		while (choice || !isdigit(choice)) {
+		while (!isNumber(choice)) {
 			std::cout << "Out of Range.... Try again\n";
 			std::cin >> choice;
 		}
-		CheckFoodOrDrink(choice);
-		std::cout << "Entered: " << GetItemName(choice);
-		total += GetPrice(choice);
-		currentOrder.push_back(std::to_string(choice));
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));
+		currentOrder.push_back(choice);
 
 		//pushing final price to order cart//
 		currentOrder.push_back(std::to_string(total));
 
 		//for loop to print current order as bill//
-		std::cout << "\n\nBill :\n Order Number \t Child ID \t morning tea: \t Lunch: \n\t";
+		std::cout << "\n\nBill :\n Order Number \t Child ID \t Morning Tea: \t\t\t Lunch: \n\t";
 
-		for (unsigned int j = 0; j < (currentOrder.size()-1); j++) {
-			std::cout  << currentOrder[j] << "\t";
+		for (unsigned int j = 0; j < (currentOrder.size()); j++) {
+			
+			switch (j) {
+			case 2:
+				std::cout << "\t" << GetItemName(stoi(currentOrder[j])) << " & " << GetItemName(stoi(currentOrder[j + 1])) << "\t";
+				break;
+			case 3:
+				break;
+			case 4:
+				std::cout << "\t" << GetItemName(stoi(currentOrder[j])) << " & " << GetItemName(stoi(currentOrder[j + 1])) << "\t";
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			default:
+				std::cout << currentOrder[j] << "\t";
+				break;
+			}
 		}
 
-		std::cout << "\n\n Total Order: $" << total;
+		std::cout << "\n\n Total Order: $" << total << "\n\n";
 
 		//pushing bill to order.csv//
 		for (unsigned int k = 0; k < currentOrder.size(); k++) {
@@ -644,7 +626,7 @@ void PlaceOrder(int child) {
 		retryOptions:
 		std::cout << "Would you like to: \t 1. Place another order \t 2. View all orders for child \t 3. Change child \t 4. Exit";
 		std::cin >> choice;
-		switch (choice) {
+		switch (stoi(choice)) {
 		case 1:
 			PlaceOrder(intChild);
 			break;
@@ -654,11 +636,10 @@ void PlaceOrder(int child) {
 		case 3:
 			cout << "Enter Child ID";
 			cin >> choice;
-			CheckChild(choice);
+			CheckChild(stoi(choice));
 			break;
 		default:
-			std::cout << "something went wrong here";
-			goto retryOptions;//retry function
+			std::cout << "Exiting Program... Thanks!\n\n";
 			break;
 
 		}
@@ -673,30 +654,44 @@ void PlaceOrder(int child) {
 
 
 
-
 /*-------------------------START OF MENU MAIN-------------------------*/
 /*main menu function, user input to get child id, checks it then switches it as per user request*/
 int menuMain()
 {
 	
-
-	//variables needed//
 	int choice;
-	int childId;
-	
+	long childId;
+
 	//food order functinoality starts with checking a childs existence in the system
-	std::cout << "Enter child ID\n";
-	std::cin >> childId;
-	while (!isdigit(childId)) {
-		std::cout << "Must only be numbers";
+retry:
+	try {
+		std::cout << "Enter childs ID: \n\n";
+		cin >> childId;
+		if (!cin) {
+			throw childId;
+		}
+		else {
+			CheckChild(childId);
+			
+		}
+
 	}
-	cin >> childId;
-	CheckChild(childId);
+	catch (char) {
+		std::cout << "Error values must be numeric.\n";
+		std::cin.clear(); // Clear error flags
+		std::cin.ignore(); // Clear out the input buffer
+		goto retry;
+	}
+
 	
-	retryMain:
+	
+retryMain:
+
+	
 	//menu main options
 	std::cout << "Choose: \n 1: View Previous Orders 2.PlaceOrder 3.Exit:";
 	std::cin >> choice;
+
 	switch (choice) {
 	case 1:
 		ViewOrders(childId);
