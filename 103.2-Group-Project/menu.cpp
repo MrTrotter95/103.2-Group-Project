@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <algorithm>
 #include <iomanip>
+#include <cstdlib>
 #include <limits>
 #include "menu.h"
 #include "admin.h"
@@ -212,11 +213,12 @@ void ViewOrders(int child) {
 		PlaceOrder(child);
 		break;
 	case 2:
-		cout << "Enter Child ID";
-		cin >> choice;
+		std::cout << "Enter Child ID";
+		std::cin >> choice;
 		CheckChild(choice);
 	case 3:
-		cout << "Thanks!!!!!!";
+		std::cout << "Thanks!!!!!!";
+		exit(0);
 	default:
 		std::cout << "something went wrong here";
 		goto retryOptions;
@@ -235,82 +237,114 @@ void AddChild(int childid) {
 
 	//function variables//
 
-	std::string lastId,childId,teacherCode,childName,line,value;
+	std::string lastId, childId, teacherCode, childName, line, value;
 	int yearLevel, choice;
+	char error{ 'n' };
 	long int count;
 	std::vector<std::string> childProfile;
-	
+
 
 	//opening file to read//
 	fin.open("children.csv", std::ios::in);
-	fout.open("children.csv", std::ios::app);
+	fout.open("children.csv", std::ios::out | std::ios::app );
+	
 	//finding last child profile in file//
-		while (std::getline(fin, line))
-		{
-			childProfile.clear();
-
-			std::stringstream lineStream(line);
-			while (getline(lineStream,value, ','))
-			{
-				
-				childProfile.push_back(value);
-				
-			}
-		}
-		for (auto i = childProfile.rbegin(); i != childProfile.rend(); i++) {
-			
-			lastId = *i;//assigning variable to store last known child id in file
-		}
-		fin.close();
-
-		count = stol(lastId);
-		
-		count++;
-
-		childId = std::to_string(count); // new child id ready for use//
-		
+	while (std::getline(fin, line))
+	{
 		childProfile.clear();
-		
-		childProfile.push_back(childId);//pushing child id into vector as first value//
-		
-		//creating new childs profile
+
+		std::stringstream lineStream(line);
+		while (getline(lineStream, value, ','))
+		{
+
+			childProfile.push_back(value);
+
+		}
+	}
+	for (auto i = childProfile.rbegin(); i != childProfile.rend(); i++) {
+
+		lastId = *i;//assigning variable to store last known child id in file
+	}
+	fin.close();
+
+	count = stol(lastId);
+
+	count++;
+
+	childId = std::to_string(count); // new child id ready for use//
+
+	childProfile.clear();
+
+	childProfile.push_back(childId);//pushing child id into vector as first value//
+
+	//creating new childs profile
+yearTry:
+	try {
 		std::cout << "Enter childs year level (4-6)\n";
 		std::cin >> yearLevel;
-		while (yearLevel < 4 || yearLevel > 6 || !isdigit(yearLevel)) {
-			std::cout << "Yeear out of range\n";
-			cin >> yearLevel;
+	
+
+		throw yearLevel;
+
+	}
+
+	
+
+		catch (int) {
+			if (yearLevel < 4 || yearLevel > 6) {
+				std::cout << "Year out of range (must be 4 , 5 or 6)\n";
+				cin.clear();
+				goto yearTry;
+			}
+			else {
+				childProfile.push_back(std::to_string(yearLevel));
+			}
 		}
-			childProfile.push_back(std::to_string(yearLevel));//adding year level to profile//
 		
 
+
+
 		//switch to determine class rooom//
-		std::cout << "Enter childs teacher: 1. Mr Terrance \t 2. Mrs Roopy \t 3. Mr Pong)\n";
-		std::cin >> choice;
-
-		while (choice < 1 || choice > 3 || !isdigit(choice)) {//making sure only numbers entered and numbers are 1 2 or 3//
-			std::cout << "Input invalid, please try again...\n";
-			cin >> choice;
+	teacherTry:
+		try {
+			std::cout << "Enter childs teacher: 1. Mr Terrance \t 2. Mrs Roopy \t 3. Mr Pong)\n";
+			std::cin >> choice;
+			throw choice;
 		}
-
-		switch (choice) {
-		case 1:
-			std::cout << "Confirming child in TR\n";
-			childProfile.push_back("TR");
-			break;
-		case 2:
-			std::cout << "Confirming child in RP\n";
-			childProfile.push_back("RP");
-			break;
-		case 3:
-			std::cout << "Confirming child in PO\n";
-			childProfile.push_back("PO");
-			break;
-
-		default:
-			std::cout << "That teacher dont Exist\n";
-			childProfile.push_back("unknown");
-			break;
+		catch (char) {
+			std::cout << "Must be number\n";
+			goto teacherTry;
 		}
+		catch (int) {
+			if (choice < 1 || choice > 3) {
+				std::cout << "Input out of range (must be 1, 2 or 3)\n";
+				goto teacherTry;
+			}
+			else {
+				switch (choice) {
+				case 1:
+					std::cout << "Confirming child in TR\n";
+					childProfile.push_back("TR");
+					break;
+				case 2:
+					std::cout << "Confirming child in RP\n";
+					childProfile.push_back("RP");
+					break;
+				case 3:
+					std::cout << "Confirming child in PO\n";
+					childProfile.push_back("PO");
+					break;
+
+				default:
+					std::cout << "That teacher dont Exist\n";
+					childProfile.push_back("unknown");
+					break;
+				}
+			}
+		}
+			
+		
+
 
 		//entering childs name//
 		std::cout << "Enter Child First Name: \n";
@@ -324,36 +358,56 @@ void AddChild(int childid) {
 		}
 
 		childProfile.push_back(name);//name valid, add to file//
-		childProfile.push_back(",");
-		std::cout << "Enter Gender: \n 1.Male\t 2.Female \n";
-		std::cin >> choice;
-		while (choice == 1 || choice == 2 || !isdigit(choice)) {//making sure only numbers entered and numbers are 1 or 2 //
-			std::cout << "Invalid input, please try again....\n";
-			std::cin >> choice;
-		}
-		switch (choice) {
-		case 1:
-			std::cout << "Confirming: Male\n";
-			childProfile.push_back("Male");
-			break;
-		case 2:
-			std::cout << "Confirming: Female\n";
-			childProfile.push_back("Female");
-			break;
-		default:
-			childProfile.push_back("Unknown");
-			break;
-		}
 
-		std::cout << "\n Your Child profile: \n" << "ID \t NAME \t YEAR \t TEACHER CODE \t GENDER \n";
-		for (unsigned int i = 0; i < childProfile.size(); i++) {
-			std::cout << childProfile[i] << "\t";
-			fout << childProfile[i] << ',';//add to csv file
+		gender:
+		try {
+			std::cout << "Enter Gender: \n 1.Male\t 2.Female \n";
+			std::cin >> choice;
+			throw choice;
 		}
-		fout << "\n";
+		catch (char) {
+			std::cout << "Must be number\n";
+			std::cin.clear();
+			goto teacherTry;
+		}
+		catch (int) {
+			if (yearLevel < 1 || yearLevel < 2) {
+				std::cout << "Must choose male or female.\n";
+				goto teacherTry;
+			}
+			else {
+				switch (choice) {
+				case 1:
+					std::cout << "Confirming: Male\n";
+					childProfile.push_back("Male");
+					break;
+				case 2:
+					std::cout << "Confirming: Female\n";
+					childProfile.push_back("Female");
+					break;
+				default:
+					childProfile.push_back("Unknown");
+					break;
+				}
+			}
+		}
+		
+		
+
+		
+				std::cout << "\n Your Child profile: \n" << "ID \t YEAR \t TEACHER CODE \t NAME \t GENDER \n";
+				for (unsigned int i = 0; i < childProfile.size(); i++) {
+
+					std::cout << childProfile[i] << "\t";
+					fout << childProfile[i] << ',';//add to csv file
+
+				}
+				fout << "\n";
+
+		
 
 		std::cout << "Child successfully added, " << name << "'s child ID is: " << childProfile[0] << "\n\n\t\t****** IMPORTANT: ******" <<
-			"\n\t\tMake sure you record this as you will need it to use program.\n";
+			"\n\t\tMake sure you record this as you will need it to use program.\n\n\n";
 	
 		fout.close();
 
@@ -372,31 +426,32 @@ void CheckChild(int input) {
 	std::string strId = std::to_string(input);
 	std::string line, cell, name;
 	bool isFound = false;
-	
+
 	//opening file to read//
 	fin.open("children.csv", std::ios::in);
 
 	while (!isFound) {//bool condition while child to be found
-	while (std::getline(fin, line)) {
-		std::stringstream lineStream(line);
-		std::getline(lineStream, cell, ',');
+		while (std::getline(fin, line)) {
+			std::stringstream lineStream(line);
+			std::getline(lineStream, cell, ',');
 			if (strId == cell) {
-			std::cout << "Child found...";
-				isFound = true;
+				std::cout << "Child found...";
+				
 				for (int i = 0; i < 3; i++) {
 					std::getline(lineStream, cell, ',');//finds child name from file//
 				}
 				name = cell;
 				std::cout << "Viewing " << name << "'s Profile:\n\n";
-			
+				isFound = true;
+				isFound;
 				fin.close();
-				}
 			}
-			if (fin.eof() && !isFound) {//if file ends and child still not found
-
+		}
+		if (fin.eof()) {//if file ends
+			if (!isFound) {
 				std::cout << "Child id not found, What would you like to do? \n 1. Add new child \t 2. Try Again\n";
 				std::cin >> choice;
-				
+
 				switch (choice) {
 				case 1:
 					AddChild(choice);//add child
@@ -412,9 +467,10 @@ void CheckChild(int input) {
 					menuMain();
 				}
 			}
-		
+		}
 	}
 }
+
 /*-------------------------END OF CHILD FUNCTIONALITY -------------------------*/
 
 

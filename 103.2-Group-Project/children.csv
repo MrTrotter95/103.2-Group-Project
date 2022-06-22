@@ -5,8 +5,6 @@
 2805,5,PO,John,Male
 2806,6,TR,Jaxton,Female
 2807,6,RP,Benton,Male
-2808,,,5,,,PO,,,brooklyn,,,Male,,,
-2809,,,4,,,unknown,,,,,,Unknown,,,
-2810,,,5,,,unknown,,,,,,Unknown,,,
-2811,,,5,,,RP,,,test,,,Unknown,,,
-2812,,,5,,,RP,,,hello,,,Unknown,,,
+2808,4,PO,br,Male,
+2809,4,RP,jeff,Male,
+2810,4,PO,monty,Male,
