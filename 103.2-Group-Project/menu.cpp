@@ -1,10 +1,9 @@
 // testest.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #include "admin.h"
-#include "menu.h"
 #include "main.h"
 #include "login.h"
-
+#include "menu.h"
 /*-------------------------START OF VIEWING FUNCTIONALITY -------------------------*/
 void ViewMenu() {
 	bool foodOrDrink;
