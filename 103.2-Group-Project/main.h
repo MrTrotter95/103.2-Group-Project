@@ -10,6 +10,7 @@
 #include <vector>
 #include <stdio.h>
 #include <ctype.h>
+#include <iomanip>
 
 /*Defines*/
 #define KEY_UP 72
