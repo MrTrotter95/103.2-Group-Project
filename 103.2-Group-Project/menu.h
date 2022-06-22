@@ -16,4 +16,4 @@ void ViewOrders(int child);
 void ViewMenu();
 int menuMain();
 double GetPrice(int id);
-std::string GetItemName(int id);
+string GetItemName(string id);
