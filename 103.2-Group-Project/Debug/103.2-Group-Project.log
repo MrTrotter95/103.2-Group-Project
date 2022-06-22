@@ -1,0 +1,11 @@
+﻿  menu.cpp
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(99,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(124,16): warning C4129: 'D': unrecognized character escape sequence
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(125,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(362,9): warning C4102: 'gender': unreferenced label
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(682,15): warning C4102: 'retryOptions': unreferenced label
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(511): warning C4715: 'GetItemName': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(540): warning C4715: 'GetPrice': not all control paths return a value
+C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\103.2-Group-Project\menu.cpp(767): warning C4715: 'menuMain': not all control paths return a value
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
+  103.2-Group-Project.vcxproj -> C:\Users\bwrob\OneDrive\Desktop\gitRepo\groupProj\Debug\103.2-Group-Project.exe

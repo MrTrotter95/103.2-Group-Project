@@ -9,99 +9,151 @@
 #include <sstream>
 #include <stdio.h>
 #include <algorithm>
-
+#include <iomanip>
+#include <cstdlib>
+#include <limits>
 #include "menu.h"
+#include "admin.h"
+
 
 /*-------------------------START OF VIEWING FUNCTIONALITY -------------------------*/
 void ViewMenu() {
-	int foodId;
 	bool foodOrDrink;
-	std::string itemName;
+	std::string menuId,itemName;
 	double price;
 	std::ifstream menu;
 	menu.open("food.csv", std::ios::in);
-	std::vector<std::string> fullMenu;
+	std::vector<std::string> menuFood;
+	std::vector<std::string> menuDrink;
 	std::string line, cell;
 	int count{ 0 };
 	if (menu.is_open()) {
 
-		std::cout << "\n menu.csv is open\n";//debug
+		std::cout << "Displaying full menu: \n Menu ID \t Type \t Item Name \t\t Price \n";
 
-		std::cout << "Displaying full menu: \n-Menu ID---Type-\t-Item Name-\t-Price-\t-----------------------Dietary Information-------------\n";
-
+		menuFood.clear();
+		menuDrink.clear();
 		//while in file, read a row(line)
 		while (std::getline(menu, line)) {
-			std::cout << "\n";
-
+			
 			std::stringstream lineStream(line);
+
 			while (std::getline(lineStream, cell, ',')) {//read each word as a cell
 
-				//switch where count is the position of each menu element in the line
+
+				//switch where count is the position of each menu element in the line//
+				//changing display of bools to 'food' or 'drink' for readability//
+				
 				switch (count) {
 				case 0:
-					std::cout << "  " << cell << "\t";
-					foodId = std::stoi(cell);
+					menuId = cell;
+					count++;
 					break;
 				case 1:
 					if (cell == "0") {
-						std::cout << "  " << "drink\t\t";
+						menuDrink.push_back(menuId);
+						menuDrink.push_back("Drink");
 						foodOrDrink = true;
 					}
-					else {
-						std::cout << "  " << "food\t\t";
+					else if (cell == "1"){
+						menuFood.push_back(menuId);
+						menuFood.push_back("Food");
 						foodOrDrink = false;
 					}
+					count++;
+					//count++;
 					break;
 				case 2:
-					std::cout << cell << "\t";
+					switch (foodOrDrink) {
+					case true:
+						menuDrink.push_back(cell);
+						break;
+					case false:
+						menuFood.push_back(cell);
+					}
 					itemName = cell;
+					count++;
 					break;
 				case 3:
-					std::cout << "$" << cell << "\t\t";
+					switch (foodOrDrink) {
+					case true:
+						menuDrink.push_back("$" + cell);
+						break;
+					case false:
+						menuFood.push_back("$" + cell);
+					}
 					price = stod(cell);
-					break;
-				case 4:
-					std::cout << "\n" << "  " << cell << "\t";//new line//
 					count = 0;
 					break;
 				default:
-					std::cout << "something went wrong...?";
 					break;
 				}
-				count++;
-				fullMenu.push_back(cell);
-
 			}
-
-
-
 		}
 
+
+		//displaying food//
+		int k{ 0 };
+
+		std::cout << "\nFOOD ITEMS: \n ID \t Type \t\t Item \t\t Price\n";
+		for (int i = 0; i < menuFood.size(); i++) {
+
+			k++;
+				switch (k) {
+				case 3:
+					std::cout << std::setw(20);//field size is 20 char for formatting menu alignment//
+					std::cout << menuFood[i] << "\t";
+					
+					break;
+
+				case 4:
+					std::cout << menuFood[i];
+					std::cout << "\n";
+					k = 0;
+					break;
+				default:
+					std::cout << menuFood[i] << "\t";
+					break;
+					break;
+				}
+
+			
+
+		}
+		//displaying drinks//
+		std::cout << "\n\DRINK ITEMS: \n ID \t Type \t Item \t Price\n";
+		for (int i = 0; i < menuDrink.size(); i++) {
+			std::cout << menuDrink[i] << "\t";
+			k ++;
+			if (k == 4) {
+				std::cout << "\n\n";
+				k = 0;
+			}
+		}
 	}
 	menu.close();
 }
 
 /*function to view previous orders of child:*/
 void ViewOrders(int child) {
+	int choice;
 	std::vector<std::string> history;
 	std::string strId{ std::to_string(child) };
 	std::fstream historyOrder;
-	std::string line, cell, name,orderId,childId, food1,food2,drink1,drink2,cost;
+	std::string line, cell, name,orderId,childId, f1,f2,f3,f4,cost;
 	std::vector<std::string> allOrders;
-	//double cost;
-
+	
 
 	//open the order csv//
 	historyOrder.open("orders.csv", std::ios::in);
 
-	//if its open, while we are still in the file, read each line.
+	//if its open, while we are still in the file, read each line.//
 	if (historyOrder.is_open()) {
-		std::cout << "\n order.csv is open\n";//debug//
 
 		std::cout << "Order History for " << name << "\n";
 
 		//formatting for order view//
-		std::cout << "Order Number \t Child ID \t morning tea \t lunch \t total \n";
+		std::cout << "Order Number \t Child ID \t Morning Tea \t Lunch \t\t Total \n\n";
 		while (std::getline(historyOrder, line))
 		{
 			std::stringstream  lineStream(line);
@@ -109,22 +161,29 @@ void ViewOrders(int child) {
 			//grabbing all the variables ill need to display
 			std::getline(lineStream, orderId, ',');
 			std::getline(lineStream, childId, ',');
-			std::getline(lineStream, food1, ',');
-			std::getline(lineStream, drink1, ',');
-			std::getline(lineStream, food2, ',');
-			std::getline(lineStream, drink2, ',');
+			std::getline(lineStream, f1, ',');
+			std::getline(lineStream, f2, ',');
+			std::getline(lineStream, f3, ',');
+			std::getline(lineStream, f4, ',');
 			std::getline(lineStream,cost , ',');
 
 			//specifying which child's orders to display
 			if (strId == childId) {
-				std::cout << orderId <<  "\t\t" << childId << "\t";
+				std::cout << orderId <<  "\t\t" << childId << "\t\t";
+				std::cout << GetItemName(stoi(f1));
+				std::cout << "\t";
+				std::cout << GetItemName(stoi(f3));
+				std::cout << "\t";
+				std::cout << "$" << stod(cost);
+				std::cout << "\n\t\t\t\t";
+				std::cout << GetItemName(stoi(f2));
+				std::cout << "\t";
+				std::cout << GetItemName(stoi(f4));
+				std::cout << "\n\n";
 			}
-			std::cout << GetItemName(stoi(food1)) << "\t";
-			std::cout << GetItemName(stoi(food2)) << "\t";
-			std::cout << GetItemName(stoi(drink1)) << "\t\t\t";
-			std::cout << GetItemName(stoi(drink2)) << "\t\t\t";
-			std::cout << "$" << stod(cost) << "\n";
+
 			
+
 		}
 
 		//while loop to grab cells//
@@ -137,205 +196,222 @@ void ViewOrders(int child) {
 				allOrders.push_back(cell);
 				allOrders.push_back(",");
 
-
-				//for (int i = 0; i < allOrders.size(); i++) {
-				//	cout << allOrders[i];
-				//}
-
-
-				//allOrders.push_back(cell);
-				//if (cell == strId) {
-
-				//	//history.push_back(cell);
-				//	for (int i = 0; i < allOrders.size(); i++) {
-				//		if (cell == strId) {
-				//			history.push_back(allOrders[i]);
-				//		}
-				//	}
-
-				//	for (int i = 0; i < history.size(); i++) {
-
-				//		std::cout << "\t" << history[i] << "\t";
-				//		std::cout << "allorders: " << allOrders[i];
-				//	}
-				/*	std::cout << "\n";
-				}*/
-				
-			
 			}
 			allOrders.push_back("\n");
-			//std::cout << "\n";
-			
-			
-			////for loop to print vector//
-			//for (int i = 0; i < 6; i++) {
-			//	std::cout << "\t" << history[i] << "\t";
-			//}
-			//std::cout << "\n";
-
 		}
 		historyOrder.close();
 	}
 	else {
 		std::cout << "Orders.csv: file not found";
 	}
+
+	retryOptions:
+	std::cout << "Would you like to: \t 1. Place Order  \t 2. Change child \t 3. Exit";
+	std::cin >> choice;
+	switch (choice) {
+	case 1:
+		PlaceOrder(child);
+		break;
+	case 2:
+		std::cout << "Enter Child ID";
+		std::cin >> choice;
+		CheckChild(choice);
+	case 3:
+		std::cout << "Thanks!!!!!!";
+		exit(0);
+	default:
+		std::cout << "something went wrong here";
+		goto retryOptions;
+		break;
+
+	}
 }
 /*-------------------------END OF VIEWING FUNCTIONALITY -------------------------*/
 
 /*-------------------------START OF CHILD FUNCTIONALITY -------------------------*/
 /*function to view add a new child:*/
-int AddChild(int input) {
+void AddChild(int childid) {
 	//pointers to file//
 	std::fstream fout;
 	std::fstream fin;
 
 	//function variables//
 
-	std::string lastId,childId,teacherCode,childName,line,value;
+	std::string lastId, childId, teacherCode, childName, line, value;
 	int yearLevel, choice;
+	char error{ 'n' };
 	long int count;
 	std::vector<std::string> childProfile;
-	
+
 
 	//opening file to read//
 	fin.open("children.csv", std::ios::in);
-	fout.open("children.csv", std::ios::app);
+	fout.open("children.csv", std::ios::out | std::ios::app );
+	
 	//finding last child profile in file//
-		while (std::getline(fin, line))
-		{
-			childProfile.clear();
-
-			std::stringstream lineStream(line);
-			while (getline(lineStream,value, ','))
-			{
-				
-				childProfile.push_back(value);
-				
-			}
-		}
-		for (auto i = childProfile.rbegin(); i != childProfile.rend(); i++) {
-			
-			lastId = *i;//assigning variable to store last known child id in file
-		}
-
-		count = stol(lastId);
-		
-		count++;
-
-		childId = std::to_string(count); // new child id ready for use//
-		
+	while (std::getline(fin, line))
+	{
 		childProfile.clear();
-		
-		childProfile.push_back(childId);
-		childProfile.push_back(",");//pushing child id into vector as first value//
-		retry:
-		//creating new childs profile
+
+		std::stringstream lineStream(line);
+		while (getline(lineStream, value, ','))
+		{
+
+			childProfile.push_back(value);
+
+		}
+	}
+	for (auto i = childProfile.rbegin(); i != childProfile.rend(); i++) {
+
+		lastId = *i;//assigning variable to store last known child id in file
+	}
+	fin.close();
+
+	count = stol(lastId);
+
+	count++;
+
+	childId = std::to_string(count); // new child id ready for use//
+
+	childProfile.clear();
+
+	childProfile.push_back(childId);//pushing child id into vector as first value//
+
+	//creating new childs profile
+yearTry:
+	try {
 		std::cout << "Enter childs year level (4-6)\n";
 		std::cin >> yearLevel;
-		if (yearLevel < 4 || yearLevel > 6) {
-			std::cout << "Yeear out of range\n";
-			goto retry;
+	
+
+		throw yearLevel;
+
+	}
+
+	
+
+		catch (int) {
+			if (yearLevel < 4 || yearLevel > 6) {
+				std::cout << "Year out of range (must be 4 , 5 or 6)\n";
+				cin.clear();
+				goto yearTry;
+			}
+			else {
+				childProfile.push_back(std::to_string(yearLevel));
+			}
 		}
-		else {
-			childProfile.push_back(std::to_string(yearLevel));//adding year level to profile//
-			childProfile.push_back(",");
-		}
+		
+
+
 
 		//switch to determine class rooom//
-		std::cout << "Enter childs teacher: 1. Mr Terrance \t 2. Mrs Roopy \t 3. Mr Pong)\n";
-		std::cin >> choice;
-		switch (choice) {
-		case 1:
-			std::cout << "Confirming child in TR\n";
-			childProfile.push_back("TR");
-			childProfile.push_back(",");
-			break;
-		case 2:
-			std::cout << "Confirming child in RP\n";
-			childProfile.push_back("RP");
-			childProfile.push_back(",");
-			break;
-		case 3:
-			std::cout << "Confirming child in PO\n";
-			childProfile.push_back("PO");
-			childProfile.push_back(",");
-			break;
-
-		default:
-			std::cout << "That teacher dont Exist\n";
-			childProfile.push_back("unknown");
-			childProfile.push_back(",");
-			break;
+	teacherTry:
+		try {
+			std::cout << "Enter childs teacher: 1. Mr Terrance \t 2. Mrs Roopy \t 3. Mr Pong)\n";
+			std::cin >> choice;
+			throw choice;
 		}
+		catch (char) {
+			std::cout << "Must be number\n";
+			goto teacherTry;
+		}
+		catch (int) {
+			if (choice < 1 || choice > 3) {
+				std::cout << "Input out of range (must be 1, 2 or 3)\n";
+				goto teacherTry;
+			}
+			else {
+				switch (choice) {
+				case 1:
+					std::cout << "Confirming child in TR\n";
+					childProfile.push_back("TR");
+					break;
+				case 2:
+					std::cout << "Confirming child in RP\n";
+					childProfile.push_back("RP");
+					break;
+				case 3:
+					std::cout << "Confirming child in PO\n";
+					childProfile.push_back("PO");
+					break;
+
+				default:
+					std::cout << "That teacher dont Exist\n";
+					childProfile.push_back("unknown");
+					break;
+				}
+			}
+		}
+			
+		
+
 
 		//entering childs name//
 		std::cout << "Enter Child First Name: \n";
 		std::string name;
-		cin >> name;
-		childProfile.push_back(name);
-		childProfile.push_back(",");
-		std::cout << "Enter Gender: \n 1.Male\t 2.Female \n";
-		cin >> choice;
-		switch (choice) {
-		case 1:
-			std::cout << "Confirming: Male\n";
-			childProfile.push_back("Male");
-			childProfile.push_back(",");
-			break;
-		case 2:
-			std::cout << "Confirming: Female\n";
-			childProfile.push_back("Female");
-			childProfile.push_back(",");
-			break;
-		default:
-			childProfile.push_back("Unknown");
-			childProfile.push_back(",");
-			break;
+		std::cin >> name;
+
+		while (std::any_of(name.begin(), name.end(), ::isdigit)) { //--- Characters Only ---//
+			std::cout << "Numbers found in name, please only use characters\n";
+			std::cin.clear();
+			std::cin >> name;
 		}
 
-		//
-		////adding & assigning dietary flags//
-		//std::string flagNames[3]{ "Vegetarian","Vegan","Gluten Free" };
+		childProfile.push_back(name);//name valid, add to file//
 
-		//flag:
-		//std::cout << "ALLERGIES OR DIERTARY REQUIREMENTS\n\n";
-		//for (int i = 0; i < 3; i++) {
-		//	std::cout << "Is your child " << flagNames[i] << "?\n 1. Yes \t 2. No \n";//loop prints new flag name to choose
-		//	cin >> choice;
-
-		//	switch (choice) {
-		//	case 1:
-		//		childProfile.push_back("0");//true
-		//		childProfile.push_back(",");
-		//		break;
-		//	case 2:
-		//		childProfile.push_back("1");//false
-		//		childProfile.push_back(",");
-		//		break;
-		//	default:
-		//		cout << "You must enter a value!";
-		//		if (choice != 1) {
-		//			goto flag;
-		//		}
-		//		if(choice != 2) {
-		//		goto flag;
-		//		}
-		//		break;
-		//	}
-		//}
-		fin.close();
-
-		std::cout << "Your Child profile: \n";
-
-		for (unsigned int i = 0; i < childProfile.size(); i++) {
-			fout << childProfile[i] << ',';//add to csv file
+		gender:
+		try {
+			std::cout << "Enter Gender: \n 1.Male\t 2.Female \n";
+			std::cin >> choice;
+			throw choice;
 		}
-		fout << "\n";
-		std::cout << "Child successfully added, " << name << "'s child ID is: " << childProfile[0] << "\n\n IMPORTANT: " <<
-			"Make sure you record this as you will need it to use program.\n";
-		return stol(childId);
+		catch (char) {
+			std::cout << "Must be number\n";
+			std::cin.clear();
+			goto teacherTry;
+		}
+		catch (int) {
+			if (yearLevel < 1 || yearLevel < 2) {
+				std::cout << "Must choose male or female.\n";
+				goto teacherTry;
+			}
+			else {
+				switch (choice) {
+				case 1:
+					std::cout << "Confirming: Male\n";
+					childProfile.push_back("Male");
+					break;
+				case 2:
+					std::cout << "Confirming: Female\n";
+					childProfile.push_back("Female");
+					break;
+				default:
+					childProfile.push_back("Unknown");
+					break;
+				}
+			}
+		}
+		
+		
+
+		
+				std::cout << "\n Your Child profile: \n" << "ID \t YEAR \t TEACHER CODE \t NAME \t GENDER \n";
+				for (unsigned int i = 0; i < childProfile.size(); i++) {
+
+					std::cout << childProfile[i] << "\t";
+					fout << childProfile[i] << ',';//add to csv file
+
+				}
+				fout << "\n";
+
+		
+
+		std::cout << "Child successfully added, " << name << "'s child ID is: " << childProfile[0] << "\n\n\t\t****** IMPORTANT: ******" <<
+			"\n\t\tMake sure you record this as you will need it to use program.\n\n\n";
 	
 		fout.close();
+
+		CheckChild(stol(childProfile[0]));
 }
 
 
@@ -350,45 +426,54 @@ void CheckChild(int input) {
 	std::string strId = std::to_string(input);
 	std::string line, cell, name;
 	bool isFound = false;
-	
+
 	//opening file to read//
 	fin.open("children.csv", std::ios::in);
 
 	while (!isFound) {//bool condition while child to be found
-	while (std::getline(fin, line)) {
-		std::stringstream lineStream(line);
-		std::getline(lineStream, cell, ',');
+		while (std::getline(fin, line)) {
+			std::stringstream lineStream(line);
+			std::getline(lineStream, cell, ',');
 			if (strId == cell) {
-			std::cout << "Child found...";
-				isFound = true;
+				std::cout << "Child found...";
+				
 				for (int i = 0; i < 3; i++) {
 					std::getline(lineStream, cell, ',');//finds child name from file//
 				}
 				name = cell;
 				std::cout << "Viewing " << name << "'s Profile:\n\n";
-
+				isFound = true;
+				isFound;
 				fin.close();
-				}
 			}
-			if (fin.eof() && !isFound) {//if file ends and child still not found
-
-				std::cout << "Child id not found, would you like to add child? \n 1. Yes \t 2. No";
+		}
+		if (fin.eof()) {//if file ends
+			if (!isFound) {
+				std::cout << "Child id not found, What would you like to do? \n 1. Add new child \t 2. Try Again\n";
 				std::cin >> choice;
-				if (choice == 1) {
-					AddChild(input);//add child
-					isFound = true;
-					fin.close();
-				}
-				else {
-					std::cout << "try again....\n Enter child id";
+
+				switch (choice) {
+				case 1:
+					AddChild(choice);//add child
+					break;
+				case 2:
+					std::cout << "Enter Child ID:\n";
 					std::cin >> choice;
 					CheckChild(choice);//enter again, try again
+					cin.ignore();
+					break;
+				default:
+					std::cout << "Something went wrong, Lets go back to the main menu.\n";
+					menuMain();
 				}
 			}
-		
+		}
 	}
 }
+
 /*-------------------------END OF CHILD FUNCTIONALITY -------------------------*/
+
+
 
 /*-------------------------START OF ORDER FUNCTIONALITY -------------------------*/
 /*function to get item name from menuid parameter:*/
@@ -455,94 +540,6 @@ double GetPrice(int id) {
 	}
 
 
-//void CheckFlags(int id) {
-//	//file pointers//
-//	std::fstream menuin, childin;
-//	std::string selection = std::to_string(id);
-//	std::string line, cell, childName, foodType, flag;
-//	//int foodFlags[3];
-//	//int childFlags[3];
-//	int count{ 0 };
-//
-//	menuin.open("food.csv", std::ios::in);
-//	
-//
-//	//read food file//
-//	while (std::getline(menuin, line)) {
-//
-//		//read line to get full item details//
-//		std::stringstream lineStream(line);
-//		for (int i = 0; i < 1; i++) {
-//			std::getline(lineStream, foodType, ',');//getting the 'food or drink flag'
-//		}
-//
-//		//switch to warn user
-//		switch (stoi(foodType)) {
-//			int choice;
-//		case 0:
-//			if (foodType != selection) {
-//				std::cout << "Must be drink...\n Enter valid drink item";
-//				cin >> choice;
-//				CheckFlags(choice);
-//			}
-//			else {
-//				break;
-//			}
-//		case 1:
-//			if (foodType != selection) {
-//				std::cout << "Must be food...\n Enter valid food item";
-//				cin >> choice;
-//				CheckFlags(choice);
-//			}
-//			else {
-//				break;
-//			}
-//		default:
-//			std::cout << "Food weird...";
-//			break;
-//		}
-//
-//		//line.clear();
-//		////loop to get dietary flags from food file//
-//		//for (int i = 0; i < 6; i++) {
-//		//	std::getline(lineStream, flag, ',');
-//		//	foodFlags[i] = flag.at(i);
-//		//}
-//		menuin.close();
-//	}
-//		////start reading chlid file//
-//		//childin.open("children.csv", std::ios::in);
-//
-//		//while (std::getline(menuin, line)) {
-//		//	
-//		//	std::stringstream lineStream(line);
-//		//	while (std::getline(lineStream, cell, ',')) {
-//		//		
-//		//		if (id == stoi(cell)) {
-//		//			
-//		//			for (int i = 0; i < 3; i++) {
-//		//				std::getline(lineStream, flag, ',');
-//		//				flags[i] = flag;
-//		//			}
-//		//		}
-//		//	
-//		//	
-//		//	}
-//
-//
-//		//}
-//		//
-//
-//		//
-//
-//		//if (flag != selection) {
-//		//	std::cout << "WARNING:\n\n Make sure you are aware of your childs dietary requirements...";
-//		//}
-//		//	child.close();
-//		//	menu.close();
-//		//}
-//	//}
-//}
 
 /*-------------------------START OF PLACE ORDER FUNCTIONALITY-------------------------*/
 /*function toplace the order of a child, and store in order.csv  file:*/
@@ -550,13 +547,12 @@ void PlaceOrder(int child) {
 
 	//variables used in funciton//
 	long orderId;
-	int morningTeaId;
-	int morningTeaDrinkId;
-	int lunchId;
-	int lunchDrinkId;
+	std::string choice;
+	int intChild = child;
 
 	bool notorder = true;
 	double total = 0;
+
 	//file pointers//
 	std::fstream fin;
 	std::fstream fout;
@@ -564,7 +560,9 @@ void PlaceOrder(int child) {
 	std::string line, cell, lastId, newId;
 	std::string id{ std::to_string(child) };
 	int count{ 0 };
-	ViewMenu();
+	
+
+
 	fin.open("orders.csv", std::ios::in);
 	fout.open("orders.csv", std::ios::app);
 	
@@ -578,68 +576,129 @@ void PlaceOrder(int child) {
 		{
 			currentOrder.push_back(cell);
 		}
+	
+		for (auto g = currentOrder.rbegin(); g != currentOrder.rend(); g++) {
+			lastId = *g;//assigning variable to store last known order id in file
+		}
 	}
-	for (auto i = currentOrder.rbegin(); i != currentOrder.rend(); i++) {
-		std::cout << *i << " ";
-		lastId = *i;//assigning variable to store last known order id in file
-	}
+	
+	long counter = stol(lastId);//last id to long int
 
-	long int counter = stol(lastId);
-
-	counter++;
+	counter++; //increment by 1 for new id
 
 	 orderId = counter; // new child id ready for use//
 
-	currentOrder.clear();
+	 currentOrder.clear(); 
 
 	currentOrder.push_back(std::to_string(orderId));//pushing new order id into vector as first value//
-	currentOrder.push_back(std::to_string(child));//pushing child's own id//
+	currentOrder.push_back(id);//pushing child's own id//
 	
+	ViewMenu();//display menu items//
 
+	
 		//user menu selector//
-		std::cout << "Enter ID of morningTea item: 1";
-		std::cin >> morningTeaId;
-		//CheckFlags(morningTeaId);//checks input correct//
-		total += GetPrice(morningTeaId);//tally price//
-		currentOrder.push_back(GetItemName(morningTeaId));//push to 'cart'//
+		std::cout << "\nEnter ID of morningTea item 1: \n";
+		std::cin >> choice;
+		while (!isNumber(choice)) {
+			std::cout << "Out of Range.... Try again\n";
+			std::cin >> choice;
+		}
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));//tally price//
+		currentOrder.push_back(choice);//push to 'cart'//
 
 		//#2//
-		std::cout << "Enter ID of morningTea item: 2";
-		std::cin >> morningTeaDrinkId;
-		//CheckFlags(morningTeaDrinkId);
-		total += GetPrice(morningTeaDrinkId);
-		currentOrder.push_back(GetItemName(morningTeaDrinkId));
+		std::cout << "\nEnter ID of morningTea item 2: \n";
+		std::cin >> choice;
+		while (!isNumber(choice)) {
+			std::cout << "Out of Range.... Try again\n";
+			std::cin >> choice;
+		}
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));
+		currentOrder.push_back(choice);
 
 		//#3//
-		std::cout << "Enter ID of lunch item: ";
-		std::cin >> lunchId;
-		//CheckFlags(lunchId);
-		total += GetPrice(lunchId);
-		currentOrder.push_back(GetItemName(lunchId));
+		std::cout << "\nEnter ID of lunch item 1: \n";
+		std::cin >> choice;
+		while (!isNumber(choice)) {
+			std::cout << "Out of Range.... Try again\n";
+			std::cin >> choice;
+		}
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));
+		currentOrder.push_back(choice);
 
 		//#4//
-		std::cout << "Enter ID of lunch DRINK : ";
-		std::cin >> lunchDrinkId;
-		//CheckFlags(lunchDrinkId);
-		total += GetPrice(lunchDrinkId);
-		currentOrder.push_back(GetItemName(lunchDrinkId));
+		std::cout << "\nEnter ID of lunch item 2: \n";
+		std::cin >> choice;
+		while (!isNumber(choice)) {
+			std::cout << "Out of Range.... Try again\n";
+			std::cin >> choice;
+		}
+		
+		std::cout << "Entered: " << GetItemName(stoi(choice)) << "\n";
+		total += GetPrice(stoi(choice));
+		currentOrder.push_back(choice);
 
 		//pushing final price to order cart//
 		currentOrder.push_back(std::to_string(total));
 
 		//for loop to print current order as bill//
-		std::cout << "Bill :\n Order Number \t Child ID \t morning tea: \t Lunch: \n";
-		for (unsigned int i = 0; i < currentOrder.size(); i++) {
-			std::cout << currentOrder[i] << "\t";
+		std::cout << "\n\nBill :\n Order Number \t Child ID \t Morning Tea: \t\t\t Lunch: \n\t";
+
+		for (unsigned int j = 0; j < (currentOrder.size()); j++) {
+			
+			switch (j) {
+			case 2:
+				std::cout << "\t" << GetItemName(stoi(currentOrder[j])) << " & " << GetItemName(stoi(currentOrder[j + 1])) << "\t";
+				break;
+			case 3:
+				break;
+			case 4:
+				std::cout << "\t" << GetItemName(stoi(currentOrder[j])) << " & " << GetItemName(stoi(currentOrder[j + 1])) << "\t";
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			default:
+				std::cout << currentOrder[j] << "\t";
+				break;
+			}
 		}
 
-		std::cout << "\n\n\n\n Total Order: $" << total;
+		std::cout << "\n\n Total Order: $" << total << "\n\n";
 
 		//pushing bill to order.csv//
-		for (unsigned int i = 0; i < currentOrder.size(); i++) {
-			fout << currentOrder[i] << ',';
+		for (unsigned int k = 0; k < currentOrder.size(); k++) {
+			fout << currentOrder[k] << ',';
 		}
 		fout << "\n";
+
+		retryOptions:
+		std::cout << "Would you like to: \t 1. Place another order \t 2. View all orders for child \t 3. Change child \t 4. Exit";
+		std::cin >> choice;
+		switch (stoi(choice)) {
+		case 1:
+			PlaceOrder(intChild);
+			break;
+		case 2:
+			ViewOrders(intChild);
+			break;
+		case 3:
+			cout << "Enter Child ID";
+			cin >> choice;
+			CheckChild(stoi(choice));
+			break;
+		default:
+			std::cout << "Exiting Program... Thanks!\n\n";
+			break;
+
+		}
 		fin.close();
 		fout.close();
 }
@@ -651,22 +710,44 @@ void PlaceOrder(int child) {
 
 
 
-
 /*-------------------------START OF MENU MAIN-------------------------*/
 /*main menu function, user input to get child id, checks it then switches it as per user request*/
 int menuMain()
 {
-	//variables needed//
+	
 	int choice;
-	int childId;
-	//food order functinoality starts with checking a childs existence in the system
-	std::cout << "Enter child ID\n";
-	std::cin >> childId;
-	CheckChild(childId);
+	long childId;
 
+	//food order functinoality starts with checking a childs existence in the system
+retry:
+	try {
+		std::cout << "Enter childs ID: \n\n";
+		cin >> childId;
+		if (!cin) {
+			throw childId;
+		}
+		else {
+			CheckChild(childId);
+			
+		}
+
+	}
+	catch (char) {
+		std::cout << "Error values must be numeric.\n";
+		std::cin.clear(); // Clear error flags
+		std::cin.ignore(); // Clear out the input buffer
+		goto retry;
+	}
+
+	
+	
+retryMain:
+
+	
 	//menu main options
 	std::cout << "Choose: \n 1: View Previous Orders 2.PlaceOrder 3.Exit:";
 	std::cin >> choice;
+
 	switch (choice) {
 	case 1:
 		ViewOrders(childId);
@@ -679,6 +760,7 @@ int menuMain()
 		break;
 	default:
 		std::cout << "something went wrong here";
+		goto retryMain;
 		break;
 
 	}
