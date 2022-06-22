@@ -1,9 +1,10 @@
 // testest.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include "admin.h"
-#include "menu.h"
+
 #include "main.h"
+#include "admin.h"
 #include "login.h"
+#include "menu.h"
 
 /*-------------------------START OF VIEWING FUNCTIONALITY -------------------------*/
 void ViewMenu() {
@@ -710,19 +711,11 @@ int menuMain()
 	int choice;
 	long childId;
 
-	cout << "Would you Like to go back to the parent menu? 1. Yes \t 2. No\n\n";
-	cin >> choice;
-
-	switch (choice) {
-	case 1:
-		ParentMenuDisplay();
-		ParentArrowKeys(userId, userName, userEmail);
-		break;
-
-	case 2:
+	cout << "\nENTERING VIRTUAL CANTEEN.........\n\n";
+	
 	retry:
 		try {
-			cout << "Enter childs ID: \n\n";//food order functionality starts with checking a childs existence in the system
+			cout << "Enter childs ID: \n\n";//food order functionality starts with checking a childs existence in the system//
 			cin >> childId;
 			if (!cin) {
 				throw childId;
@@ -733,13 +726,13 @@ int menuMain()
 		}
 		catch (char) {
 			cout << "Error values must be numeric.\n";
-			cin.clear(); // Clear error flags
-			cin.ignore(); // Clear out the input buffer
+			cin.clear(); // Clear error flags//
+			cin.ignore(); // Clear out the input buffer//
 			goto retry;
 		}
 	retryMain:
 		//menu main options
-		cout << "Choose: \n 1: View Previous Orders 2.PlaceOrder 3.Exit:";
+		cout << "\nChoose by entering the number of the option: \n 1: View Previous Orders 2.PlaceOrder 3.Exit:\n\n";
 		cin >> choice;
 
 		switch (choice) {
@@ -757,12 +750,7 @@ int menuMain()
 			menuMain();
 			break;
 		}
-		break;
+		
 	}
-	
 
-
-
-	
-}
 /*-------------------------END OF MENU MAIN-------------------------*/

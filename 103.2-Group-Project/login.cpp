@@ -3,6 +3,7 @@
 #include "admin.h"
 #include "discount.h"
 #include "feedback.h"
+#include "menu.h"
 
 
 //--- File stream ---//
@@ -146,13 +147,13 @@ void ParentArrowKeys(string userId, string userName, string userEmail) {
             switch (selectionHighlight_parent)
             {
             case 0:
-                //TODO: place order function
+                menuMain();
                 break;
             case 1:
-                //TODO: add child function
+                menuMain();
                 break;
             case 2:
-                //TODO: order history
+                menuMain();
                 break;
             case 3:
                 system("cls"); //--- Clears previous console output ---//
